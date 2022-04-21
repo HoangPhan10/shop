@@ -1,0 +1,756 @@
+.loginButton {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  margin-top: 25px;
+  font-weight: 700;
+  line-height: 25px;
+  cursor: pointer;
+}
+
+.loginButton:hover {
+  color: #fff;
+}
+
+.modal {
+  margin-top: 150px;
+  width: 100%;
+}
+
+.modalContent p {
+  color: #212529;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.modalContent span {
+  font-size: 13px;
+  color: #dc3545;
+}
+
+.modalContent input {
+  outline: none;
+  border: 1px solid #198754;
+  border-radius: 5px;
+  width: 100%;
+  padding: 5px;
+}
+
+.modalContentErr {
+  color: #dc3545 !important;
+  font-size: 14px !important;
+}
+
+.loginBtn {
+  color: #6c757d;
+  font-size: 13px;
+}
+
+.loginBtn:hover {
+  color: #dc3545;
+}
+
+.account {
+  color: #adb5bd !important;
+  font-weight: bold;
+  font-size: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.accountDropdown a {
+  color: #adb5bd !important;
+}
+
+.accountDropdown a::after {
+  display: none;
+}
+
+.accountDropdown div a {
+  color: black !important;
+}
+
+.accountFaUserAlt {
+  margin-top: 7px;
+  margin-left: -10px;
+  font-size: 16px;
+}
+
+@media (min-width: 1025px) {
+  .dashboard {
+    position: relative;
+    top: 130px;
+    margin: 30px 70px 0 86px;
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .dashboard {
+    position: relative;
+    top: 130px;
+    font-size: 17px;
+    margin: 30px 70px 0 86px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard {
+    position: relative;
+    top: 80px;
+    font-size: 16px;
+    margin: 20px;
+  }
+}
+
+.dashboard .dashboard2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dashboard .dashboard2Link {
+  padding: 0 5px !important;
+}
+
+.dashboard .dashboard2 strong {
+  margin: 0 5px;
+}
+
+.dashboard p {
+  margin-top: 20px;
+}
+
+.dashboardBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.dashboardBtnBtn1 {
+  background-color: #fff !important;
+  color: #334852 !important;
+  font-weight: 600 !important;
+  border: 1px solid #ced4da !important;
+  width: 390px;
+  font-size: 18px !important;
+  padding: 15.5px 0 !important;
+  margin: 0 30px 30px 0;
+}
+
+.dashboardBtnBtn1:hover {
+  background-color: #334852 !important;
+  color: #fff !important;
+}
+
+@media (min-width: 1025px) {
+  .address {
+    position: relative;
+    top: 130px;
+    margin: 30px 86px 0;
+    width: 600px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .address {
+    position: relative;
+    top: 130px;
+    margin: 30px 86px 0;
+    width: 600px;
+  }
+}
+
+@media (max-width: 767px) {
+  .address {
+    position: relative;
+    top: 80px;
+    margin: 20px 20px;
+  }
+}
+
+.addressTitle {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-bottom: 1px solid black;
+  padding-bottom: 20px;
+}
+
+.addressContent {
+  background-color: #198754;
+  color: #fff;
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (min-width: 1025px) {
+  .addressContent {
+    margin: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .addressContent {
+    margin: 10px 0px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .addressContent {
+    margin: 20px 0px;
+  }
+}
+
+.addressContentHandle {
+  padding-top: 40px;
+  font-size: 20px;
+}
+
+.addressBody input {
+  padding: 4px 0 4px 7px;
+  margin-bottom: 15px;
+  outline: none;
+  border: 1px solid #198754;
+  border-radius: 5px;
+}
+
+.addressBody span {
+  color: #dc3545;
+}
+
+.addressBody1 div input {
+  margin: 0 0 20px 0px;
+  outline: none;
+  border: 1px solid #198754;
+  border-radius: 5px;
+}
+
+.addressBody1 div strong {
+  margin: 0 20px 20px 0;
+}
+
+.addressBody1 span {
+  color: #dc3545;
+}
+
+@media (min-width: 1025px) {
+  .accountInfor {
+    position: relative;
+    top: 130px;
+    margin: 20px 250px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .accountInfor {
+    position: relative;
+    top: 130px;
+    margin: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .accountInfor {
+    position: relative;
+    top: 80px;
+    margin: 20px 20px;
+  }
+}
+
+.accountInforName {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 10px !important;
+}
+
+@media (min-width: 1025px) {
+  .accountInforName {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .accountInforName {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+@media (min-width: 1025px) {
+  .accountInfor .Input {
+    width: 400px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .accountInfor .Input {
+    width: 350px;
+  }
+}
+
+@media (max-width: 767px) {
+  .accountInfor .Input {
+    width: 100%;
+  }
+}
+
+.accountInfor input {
+  padding: 5px 10px;
+  outline: none;
+  border: 1px solid #198754;
+  border-radius: 5px;
+}
+
+.accountInfor p {
+  margin: 7px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.accountInfor div {
+  margin-bottom: 20px;
+}
+
+.accountInfor div span {
+  color: #dc3545;
+}
+
+.accountInfor h5 {
+  margin-bottom: 10px;
+}
+
+.accountInfor span {
+  font-size: 15px;
+}
+
+.accountInfor .success {
+  color: green;
+}
+
+.accountInfor .err {
+  color: #dc3545;
+}
+
+.order {
+  margin-top: 20px;
+}
+
+@media (max-width: 767px) {
+  .order {
+    position: relative;
+    top: 80px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .order {
+    position: relative;
+    top: 130px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .order {
+    position: relative;
+    top: 130px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .orderTable {
+    margin-left: 76px;
+    width: 87% !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .orderTable {
+    margin-left: 16px;
+    width: 96% !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .orderTable {
+    margin-left: 5px;
+  }
+}
+
+.orderButton {
+  margin-left: 76px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.orderButton Button {
+  background-color: #c30005 !important;
+  font-weight: 700;
+  border: none !important;
+}
+
+.orderButton p {
+  font-size: 18px;
+  margin: 15px 0 0 20px;
+}
+
+@media (min-width: 1025px) {
+  .detailOrder {
+    position: relative;
+    top: 130px;
+    margin: 20px 0 0 76px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .detailOrder {
+    position: relative;
+    top: 130px;
+    margin: 30px 20px 0 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .detailOrder {
+    position: relative;
+    top: 80px;
+    margin: 0 10px;
+  }
+}
+
+.detailOrderTitle {
+  font-size: 17px;
+}
+
+.detailOrderTitle span {
+  color: #6610f2;
+}
+
+.detailOrder h4 {
+  margin-bottom: 20px;
+}
+
+.detailOrder div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 6px;
+}
+
+@media (min-width: 1025px) {
+  .detailOrder div {
+    margin-right: 186px;
+  }
+}
+
+.detailOrder div p {
+  margin-bottom: 5px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.detailOrder div span {
+  margin-bottom: 3px;
+  font-size: 15px;
+  color: #6c757d;
+}
+
+.detailOrder div strong {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.detailOrder section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.detailOrder section strong {
+  margin-right: 5px;
+}
+
+@media (min-width: 1025px) {
+  .dowload {
+    position: relative;
+    top: 130px;
+    margin-top: 20px;
+    margin-left: 76px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .dowload {
+    position: relative;
+    top: 130px;
+    margin-top: 20px;
+    margin-left: 86px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dowload {
+    position: relative;
+    top: 80px;
+    margin-left: 23px;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dowload .Button {
+    height: 40px;
+    font-size: 15px;
+    color: #fff;
+  }
+}
+
+@media (min-width: 1025px) {
+  .dowload .Button {
+    height: 40px;
+    font-size: 15px;
+    color: #fff;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .dowload .Button {
+    height: 40px;
+    font-size: 15px;
+    color: #fff;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.cart {
+  margin-top: 40px;
+  color: #adb5bd;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.cartPrice {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.cartPrice p {
+  font-size: 12px;
+  font-weight: 700;
+  padding-left: 20px;
+}
+
+.cartPrice span {
+  font-size: 15px;
+  margin-top: -2px;
+  padding-right: 4px;
+}
+
+.cartPrice .cgFormatSlash {
+  font-size: 20px;
+}
+
+.cartPrice .bsCartPlus {
+  font-size: 25px;
+  margin-top: -5px;
+}
+
+.cartPrice:hover {
+  color: #fff;
+}
+
+.cartPrice:hover .hoverCart {
+  display: block;
+}
+
+.cart .hoverCart {
+  position: absolute;
+  top: 70px;
+  border-radius: 5px;
+  right: 65px;
+  z-index: 2;
+  min-height: 100px;
+  width: 250px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  -webkit-transition: all ease-in 0.01;
+  transition: all ease-in 0.01;
+  display: none;
+}
+
+.cart .hoverCart p {
+  color: #495057;
+  padding: 20px 10px 0 10px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.cart .hoverCart::before {
+  content: "";
+  display: block;
+  top: -30px;
+  right: 0px;
+  position: absolute;
+  border-color: transparent transparent #f8f9fa transparent;
+  border-width: 20px;
+  border-style: solid;
+}
+
+.cart .hoverCart::after {
+  content: "";
+  position: absolute;
+  top: -13px;
+  right: 30px;
+  z-index: 3;
+  display: block;
+  width: 120px;
+  height: 14px;
+  background-color: transparent;
+}
+
+.cart .Search {
+  margin-top: -3px;
+}
+
+.cart .Search .cartSearch {
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.cart .Search:hover .hoverSearch {
+  display: block;
+}
+
+.cart .Search .hoverSearch {
+  position: absolute;
+  z-index: 2;
+  top: 70px;
+  right: 70px;
+  width: 250px;
+  height: 100px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  display: none;
+}
+
+.cart .Search .hoverSearch::before {
+  content: "";
+  display: block;
+  top: -30px;
+  right: 138px;
+  position: absolute;
+  border-color: transparent transparent #f8f9fa transparent;
+  border-width: 20px;
+  border-style: solid;
+}
+
+.cart .Search .hoverSearch::after {
+  position: absolute;
+  top: -13px;
+  content: "";
+  display: block;
+  width: 120px;
+  height: 15px;
+  background-color: transparent;
+}
+
+.cart .Search .hoverSearch input {
+  margin: 30px 0 0 10px;
+  padding: 5px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+}
+
+.cart .Search .hoverSearch button {
+  border: 1px solid #c30005;
+  font-size: 22px;
+  color: #fff;
+  background-color: #dc3545;
+  padding: 0 10px 3px 10px;
+  border-radius: 5px;
+}
+
+.singupmobile {
+  position: relative;
+  top: 80px;
+  margin: 20px;
+  display: block;
+}
+
+.singupmobile h5 {
+  font-weight: 700;
+}
+
+.singupmobile strong {
+  font-size: 14px;
+}
+
+.singupmobile input {
+  margin: 10px 0;
+  width: 100%;
+  outline: none;
+  border: 1px solid #198754;
+  border-radius: 5px;
+}
+
+.singupmobile .Button {
+  margin: 10px 0 30px 0;
+}
+
+.singupmobile .Button strong {
+  margin-left: 20px;
+  color: #6c757d;
+}
+
+.singupmobile span {
+  color: #dc3545;
+  display: block;
+  font-size: 14px;
+}
+/*# sourceMappingURL=Account.module.css.map */
