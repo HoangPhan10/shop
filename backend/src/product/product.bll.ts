@@ -69,6 +69,7 @@ export class NewProductBLLBase implements ProductNS.BLL {
             id:ProductNS.Generator.NewProductID(),
             code:ProductNS.Generator.NewProductCode(),
             ...params,
+            consume:0,
             ctime:Date.now(),
             mtime:Date.now()
         }
