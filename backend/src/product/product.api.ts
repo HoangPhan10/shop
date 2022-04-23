@@ -93,7 +93,9 @@ export function NewProductAPI(bll: ProductNS.BLL) {
       const params:ProductNS.CreateCommentParams={
           product_id:HttpParamValidators.MustBeString(req.body, "product_id",8),
           customer_id: HttpParamValidators.MustBeString(req.body, "customer_id",8),
-          comment: HttpParamValidators.MustBeString(req.body, "comment")
+          username: HttpParamValidators.MustBeString(req.body,"username",2),
+          comment: HttpParamValidators.MustBeString(req.body, "comment"),
+          rate: HttpParamValidators.MustBeNumber(req.body, "rate")
       }
       const comment= await bll.CreateComment(params)
       res.json(comment)

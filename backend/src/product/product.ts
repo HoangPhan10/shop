@@ -52,13 +52,17 @@ export namespace ProductNS{
         id:string;
         product_id:string;
         customer_id:string;
+        username:string;
         comment:string;
+        rate:number
     }
 
     export interface CreateCommentParams{
         product_id:string;
         customer_id:string;
+        username:string;
         comment:string;
+        rate:number
     }
     export interface viewProduct extends Product{
         comments:Comment[];

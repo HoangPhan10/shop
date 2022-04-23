@@ -113,7 +113,6 @@ export class NewProductBLLBase implements ProductNS.BLL {
                 await this.orderDAL.UpdateOrder(newOrder)
             }
         }
-        console.log(doc);
         await this.dal.UpdateProduct(doc)
         return {
             ...doc,
