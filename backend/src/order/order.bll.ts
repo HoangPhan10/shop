@@ -149,6 +149,7 @@ export class NewOrderBLLBase implements OrderNS.BLL{
       };
       const updateProduct = {
         ...product,
+        consume:product.consume+item.amount,
         amount:product.amount-item.amount,
         mtime: time,
       };

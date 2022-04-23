@@ -8,6 +8,7 @@ export namespace ProductNS{
         material:string;
         image:Array<string>;
         color:string;
+        consume:number;
         amount:number;
         origin_price:number;
         price:number;
