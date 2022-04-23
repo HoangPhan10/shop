@@ -52,6 +52,7 @@ export class NewOrderBLLBase implements OrderNS.BLL{
             status:OrderNS.OrderStatus.NEW,
             customer_id:params.customer_id,
             total:product.price* amount,
+            address:params.address,
             ctime:time,
             mtime:time
         }
@@ -106,6 +107,9 @@ export class NewOrderBLLBase implements OrderNS.BLL{
     if (params.status === OrderNS.OrderStatus.NEW) {
         //status=new
       let updateItem:OrderNS.viewOrder
+      if(params.address){
+        order.address=params.address
+      }
       if (params.itemParams) {
         order.total = params.itemParams.amount*product.price;
         const doc = await this.UpdateItem(order.id, params.itemParams);
@@ -147,6 +151,9 @@ export class NewOrderBLLBase implements OrderNS.BLL{
         status: params.status,
         mtime: time,
       };
+      if(params.address){
+        doc.address=params.address;
+      }
       const updateProduct = {
         ...product,
         consume:product.consume+item.amount,

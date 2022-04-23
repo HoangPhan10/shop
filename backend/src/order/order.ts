@@ -8,6 +8,7 @@ export namespace OrderNS{
         status:OrderStatus,
         customer_id: string,
         total:number,
+        address:string,
         ctime:number,
         mtime:number,
     }
@@ -46,11 +47,13 @@ export namespace OrderNS{
     }
     export interface CreateOrderParmas{
         customer_id:string,
+        address:string,
         itemParams:CreateItemParams
     }
 
     export interface UpdateOrderParams{
-        status?:OrderStatus
+        status?:OrderStatus,
+        address?:string,
         itemParams?:UpdateItemParams
     }
 
