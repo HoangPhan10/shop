@@ -64,6 +64,17 @@ export class NewProductBLLBase implements ProductNS.BLL {
             return viewProduct
     }
 
+    async ListProductSales(){
+        let viewProduct=[]
+            const products=await this.dal.ListProduct()
+            const filterProducts=FilterData.Many(products).filter(el=> el.origin_price!==el.price)
+            for(const p of filterProducts){
+                const product=await this.GetProduct(p.id)
+                viewProduct.push(product)
+            }
+            return viewProduct
+    }
+
     async CreateProduct(params:ProductNS.CreateProductParams){
         const doc={
             id:ProductNS.Generator.NewProductID(),
