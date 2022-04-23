@@ -15,6 +15,10 @@ export function NewProductAPI(bll: ProductNS.BLL) {
     return res.json(product);
   });
 
+  router.get('/product/sale', async (req, res) => {
+    const product = await bll.ListProductSales();
+    return res.json(product);
+  })
   router.get("/product/get", async (req, res) => {
     const id = HttpParamValidators.MustBeString(req.query, "id", 8);
     const product = await bll.GetProduct(id);
