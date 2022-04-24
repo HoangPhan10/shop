@@ -39,8 +39,6 @@ function Login() {
   };
 
   const handleBlurEmail = () => {
-
-    
     const resultEmail = re.test(String(valueEmail).toLowerCase());
     setToggleEmail(!resultEmail);
     CallApi("", "GET", null).then((res) => {

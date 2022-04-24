@@ -4,25 +4,23 @@ import { Slide } from "react-slideshow-image";
 import { Link } from "react-router-dom";
 import "react-slideshow-image/dist/styles.css";
 import { useEffect, useState } from "react";
-import CallApi from "./../../../api/callApi";
+import Service from '../../../api/shopService'
+import { FORMAT_PRICE } from '../../../../global/const';
 // 4 image
 function SlideImage(props) {
   const [arrSlideImage, setArrSlideImage] = useState([]);
   const {parentCallBack}=props
   useEffect(() => {
-    CallApi(`evaluates`, "GET", null).then((res) => {
-      const arr = res.data.filter((el) => {
-        return el.type === "Polo";
-      });
-      setArrSlideImage(arr);
-    });
+    Service.getListProduct().then((res)=>{
+      setArrSlideImage(res.data.slice(res.data.length-10))
+    })
   }, []);
 
   const slideImage = [
     {
       url1: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[0].description.image_1
+          ? arrSlideImage[0].image[0]
           : ""
         : "",
       price1: arrSlideImage
@@ -32,7 +30,7 @@ function SlideImage(props) {
         : "",
       title1: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[0].nameProduct
+          ? arrSlideImage[0].name
           : ""
         : "",
       id1: arrSlideImage
@@ -42,7 +40,7 @@ function SlideImage(props) {
         : "",
       url2: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[1].description.image_1
+          ? arrSlideImage[1].image[0]
           : ""
         : "",
       price2: arrSlideImage
@@ -52,7 +50,7 @@ function SlideImage(props) {
         : "",
       title2: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[1].nameProduct
+          ? arrSlideImage[1].name
           : ""
         : "",
       id2: arrSlideImage
@@ -62,7 +60,7 @@ function SlideImage(props) {
         : "",
       url3: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[2].description.image_1
+          ? arrSlideImage[2].image[0]
           : ""
         : "",
       price3: arrSlideImage
@@ -72,7 +70,7 @@ function SlideImage(props) {
         : "",
       title3: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[2].nameProduct
+          ? arrSlideImage[2].name
           : ""
         : "",
       id3: arrSlideImage
@@ -82,7 +80,7 @@ function SlideImage(props) {
         : "",
       url4: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[3].description.image_1
+          ? arrSlideImage[3].image[0]
           : ""
         : "",
       price4: arrSlideImage
@@ -92,7 +90,7 @@ function SlideImage(props) {
         : "",
       title4: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[3].nameProduct
+          ? arrSlideImage[3].name
           : ""
         : "",
       id4: arrSlideImage
@@ -102,7 +100,7 @@ function SlideImage(props) {
         : "",
         url5: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[8].description.image_1
+          ? arrSlideImage[8].image[0]
           : ""
         : "",
       price5: arrSlideImage
@@ -112,7 +110,7 @@ function SlideImage(props) {
         : "",
       title5: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[8].nameProduct
+          ? arrSlideImage[8].name
           : ""
         : "",
       id5: arrSlideImage
@@ -124,7 +122,7 @@ function SlideImage(props) {
     {
       url1: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[4].description.image_1
+          ? arrSlideImage[4].image[0]
           : ""
         : "",
       price1: arrSlideImage
@@ -134,7 +132,7 @@ function SlideImage(props) {
         : "",
       title1: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[4].nameProduct
+          ? arrSlideImage[4].name
           : ""
         : "",
       id1: arrSlideImage
@@ -144,7 +142,7 @@ function SlideImage(props) {
         : "",
       url2: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[5].description.image_1
+          ? arrSlideImage[5].image[0]
           : ""
         : "",
       price2: arrSlideImage
@@ -154,7 +152,7 @@ function SlideImage(props) {
         : "",
       title2: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[5].nameProduct
+          ? arrSlideImage[5].name
           : ""
         : "",
       id2: arrSlideImage
@@ -164,7 +162,7 @@ function SlideImage(props) {
         : "",
       url3: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[6].description.image_1
+          ? arrSlideImage[6].image[0]
           : ""
         : "",
       price3: arrSlideImage
@@ -174,7 +172,7 @@ function SlideImage(props) {
         : "",
       title3: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[6].nameProduct
+          ? arrSlideImage[6].name
           : ""
         : "",
       id3: arrSlideImage
@@ -184,7 +182,7 @@ function SlideImage(props) {
         : "",
       url4: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[7].description.image_1
+          ? arrSlideImage[7].image[0]
           : ""
         : "",
       price4: arrSlideImage
@@ -194,7 +192,7 @@ function SlideImage(props) {
         : "",
       title4: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[7].nameProduct
+          ? arrSlideImage[7].name
           : ""
         : "",
       id4: arrSlideImage
@@ -204,7 +202,7 @@ function SlideImage(props) {
         : "",
         url5: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[9].description.image_1
+          ? arrSlideImage[9].image[0]
           : ""
         : "",
       price5: arrSlideImage
@@ -214,7 +212,7 @@ function SlideImage(props) {
         : "",
       title5: arrSlideImage
         ? arrSlideImage.length > 0
-          ? arrSlideImage[9].nameProduct
+          ? arrSlideImage[9].name
           : ""
         : "",
       id5: arrSlideImage
@@ -238,7 +236,7 @@ function SlideImage(props) {
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url1} alt="slide1" />
                   <p>{slideImage.title1}</p>
-                  <span>{slideImage.price1}</span>
+                  <span>{FORMAT_PRICE(parseInt(slideImage.price1))}đ</span>
                   <div>
                     {slideImage.id1 && (
                       <Button
@@ -255,7 +253,7 @@ function SlideImage(props) {
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url2} alt="slide1" />
                   <p>{slideImage.title2}</p>
-                  <span>{slideImage.price2}</span>
+                  <span>{FORMAT_PRICE(parseInt(slideImage.price2))}đ</span>
                   <div>
                     {slideImage.id2 && (
                       <Button
@@ -272,7 +270,7 @@ function SlideImage(props) {
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url3} alt="slide1" />
                   <p>{slideImage.title3}</p>
-                  <span>{slideImage.price3}</span>
+                  <span>{FORMAT_PRICE(parseInt(slideImage.price3))}đ</span>
                   <div>
                     {slideImage.id3 && (
                       <Button
@@ -289,7 +287,7 @@ function SlideImage(props) {
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url4} alt="slide1" />
                   <p>{slideImage.title4}</p>
-                  <span>{slideImage.price4}</span>
+                  <span>{FORMAT_PRICE(parseInt(slideImage.price4))}đ</span>
                   <div>
                     {slideImage.id4 && (
                       <Button
@@ -306,7 +304,7 @@ function SlideImage(props) {
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url5} alt="slide1" />
                   <p>{slideImage.title5}</p>
-                  <span>{slideImage.price5}</span>
+                  <span>{FORMAT_PRICE(parseInt(slideImage.price5))}đ</span>
                   <div>
                     {slideImage.id5 && (
                       <Button

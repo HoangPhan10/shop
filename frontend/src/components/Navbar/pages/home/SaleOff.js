@@ -2,19 +2,15 @@ import styles from "./home.module.scss";
 import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import CallApi from "./../../../api/callApi";
-
-function SaleOff() {
+import Service from '../../../api/shopService';
+import {FORMAT_PRICE} from '../../../../global/const'
+function SaleOff() {  
   const [arrImageSale, setArrImageSale] = useState([]);
-  useEffect(() => {
-    CallApi(`evaluates`, "GET", null).then((res) => {
-      const arrSale = res.data.filter((el) => {
-        return el.status === "saleProduct";
-      });
-      setArrImageSale(arrSale);
-    });
-  }, []);
-
+  useEffect(()=>{
+    Service.getListSale().then((res)=>{
+      setArrImageSale(res.data)
+    })
+  },[])
   const OnAddProduct=(id)=>{
     window.localStorage.setItem("idProduct", JSON.stringify(id));
   }
@@ -24,9 +20,12 @@ function SaleOff() {
       <div className={styles.accessoryHomeContent}>
         {arrImageSale.map((el, index) => (
           <div key={index}>
-            <img src={el.description.image_1} width="238px" height="238px" alt="" />
-            <p>{el.nameProduct}</p>
-            <strong>{el.price}</strong>
+            <img src={el.image[0]} width="238px" height="238px" alt="" />
+            <p>{el.name}</p>
+          <div style={{display:"flex",justifyContent:"space-around",padding:"0 40px"}}>
+          <span style={{textDecorationLine:"line-through"}}>{FORMAT_PRICE(el.origin_price)}đ</span>
+            <strong>{FORMAT_PRICE(el.price)}đ</strong>
+          </div>
             <Nav.Link
               className={styles.button}
               as={Link}
@@ -36,7 +35,7 @@ function SaleOff() {
               THÊM VÀO GIỎ
             </Nav.Link>
             <div className={styles.sale}>
-              <p>70%</p>
+              <p>{100-Math.round((el.price/el.origin_price)*100)}%</p>
             </div>
           </div>
         ))}

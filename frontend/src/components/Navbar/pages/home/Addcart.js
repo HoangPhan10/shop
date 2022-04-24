@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import Slideshow from "./SlideShow";
 import SlideImage from "./Slide5Image";
 import TabsEvaluate from "./TabsEvaluate";
-import CallApi from "../../../api/callApi";
 import {
   delivery6,
   delivery5,
@@ -23,6 +22,8 @@ import {
   bank2,
   bank1,
 } from "../../../../assets/images/home/Bank/imageBank";
+import { FORMAT_PRICE } from "../../../../global/const";
+import Service from '../../../api/shopService';
 export const Images = createContext();
 function AddCart(props) {
   const [num, setNum] = useState(1);
@@ -30,7 +31,6 @@ function AddCart(props) {
   const [evaluate, setEvaluate] = useState({});
   const id = window.localStorage.getItem("id");
   const index = JSON.parse(window.localStorage.getItem("idProduct"));
-  console.log(index)
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [index,idProduct]);
@@ -48,30 +48,27 @@ function AddCart(props) {
   };
 
   const handleAddCart = (namePrd, price, img) => {
-    
-    if (parseInt(id) === 0) {
-      alert("Qúy khách vui lòng đăng nhập");
-    } else {
-      CallApi(`user/${id}`, "POST", {
-        namePrd: namePrd,
-        price: price,
-        quantity: num,
-        total: parseInt(price.split(",").join("")) * num,
-        url: index,
-        img: img,
-      });
-      setNum(1);
-      setInterval(() => {
-        window.location.href = "/viewcart";
-      }, 2000);
-    }
+    // if (parseInt(id) === 0) {
+    //   alert("Qúy khách vui lòng đăng nhập");
+    // } else {
+    //   CallApi(`user/${id}`, "POST", {
+    //     namePrd: namePrd,
+    //     price: price,
+    //     quantity: num,
+    //     total: parseInt(price.split(",").join("")) * num,
+    //     url: index,
+    //     img: img,
+    //   });
+    //   setNum(1);
+    //   setInterval(() => {
+    //     window.location.href = "/viewcart";
+    //   }, 2000);
+    // }
   };
   useEffect(() => {
-    CallApi(`evaluates/${index}`, "GET", null).then((res) => {
-      if (res) {
-        setEvaluate(res.data);
-      }
-    });
+   Service.getProduct(index).then((res)=>{
+     setEvaluate(res.data)
+   })
   }, [index]);
   const addCart =(id)=>{
     setIdProduct(id)
@@ -96,21 +93,14 @@ function AddCart(props) {
                 <Nav.Link
                   className={styles.nav}
                   as={Link}
-                  to={evaluate.linkCategory}
+                  to={`/${evaluate.gender}`}
                 >
-                  {evaluate.category}
+                  {evaluate.gender?evaluate.gender.toUpperCase():""}
                 </Nav.Link>
-                <span>{evaluate.slash}</span>
-                <Nav.Link
-                  className={styles.nav}
-                  as={Link}
-                  to={evaluate.linkType}
-                >
-                  {evaluate.type}
-                </Nav.Link>
+                
               </div>
               <h3>{evaluate.nameProduct}</h3>
-              <strong>{evaluate.price}đ</strong>
+              <strong>{FORMAT_PRICE(evaluate.price)}đ</strong>
               <div className={styles.addcartContentPrice}>
                 <div>
                   {" "}
@@ -121,9 +111,9 @@ function AddCart(props) {
                   className={styles.Button}
                   onClick={() =>
                     handleAddCart(
-                      evaluate.nameProduct,
+                      evaluate.name,
                       evaluate.price,
-                      evaluate.description.image_1
+                      evaluate.image[0]
                     )
                   }
                 >
@@ -165,7 +155,7 @@ function AddCart(props) {
           )}
           {!evaluate && <h4>Đang load</h4>}
         </div>
-        <TabsEvaluate />
+        <TabsEvaluate inforProduct={evaluate} />
         <div className={styles.slide5Image}>
           <h4>SẢN PHẨM TƯƠNG TỰ</h4>
           <SlideImage parentCallBack={addCart} />

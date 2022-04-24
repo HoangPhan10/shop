@@ -12,6 +12,7 @@ import { Spinner } from "react-bootstrap";
 import CallApi from "../../../api/callApi";
 import imageUser from "../../../../assets/images/home/user.png";
 import GetRating from "./GetRating";
+import Service from "../../../api/shopService";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -45,11 +46,13 @@ function a11yProps(index) {
   };
 }
 
-export default function TabsEvaluate() {
+export default function TabsEvaluate(props) {
+  const {inforProduct}=props
   const [value, setValue] = useState(0);
   const [valueRate, setValueRate] = useState(0);
   const [valueInput, setValueInput] = useState("");
   const id = window.location.href.split("Cart/")[1];
+  const [comments,setComment]=useState([])
   const [evaluate, setEvaluate] = useState({});
   const idUser = JSON.parse(window.localStorage.getItem("id"));
   const [user, setUser] = useState({});
@@ -81,16 +84,13 @@ if(idUser!==0){
     });
   }, [idUser]);
   useEffect(() => {
-    CallApi(`evaluates/${id}`, "GET", null).then((res) => {
-      if (res) {
-        setEvaluate(res.data);
-      }
-    });
+    Service.getComment(id).then((res)=>{
+      setComment(res.data)
+    })
   }, [id]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   return (
     <Box className={styles.box2} sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -113,20 +113,16 @@ if(idUser!==0){
       </Box>
       <TabPanel className={styles.tabPanel2} value={value} index={0}>
         <div>
-          <strong>SKU</strong>
-          <span style={{ paddingLeft: 550 }}>{evaluate.SKU}</span>
-        </div>
-        <div>
           <strong>CHẤT LIỆU</strong>
-          <span>{evaluate.material}</span>
+          <span>{inforProduct.material}</span>
         </div>
         <div>
           <strong>GIỚI TÍNH</strong>
-          <span style={{ paddingLeft: 520 }}>{evaluate.gender}</span>
+          <span style={{ paddingLeft: 520 }}>{inforProduct.gender}</span>
         </div>
         <div>
           <strong>MÀU SẮC</strong>
-          <span style={{ paddingLeft: 520 }}>{evaluate.color}</span>
+          <span style={{ paddingLeft: 520 }}>{inforProduct.color}</span>
         </div>
       </TabPanel>
       <TabPanel className={styles.tabPanel3} value={value} index={1}>
@@ -160,25 +156,25 @@ if(idUser!==0){
           </div>
         </div>
 
-        {!evaluate.comments && (
+        {!comments && (
           <div>
             <Spinner animation="border" />
           </div>
         )}
-        {evaluate.comments && (
+        {comments && (
           <div>
-            <strong>ĐÁNH GIÁ ({evaluate.comments.length})</strong>
-            {evaluate.comments.length === 0 && (
+            <strong>ĐÁNH GIÁ ({comments.length})</strong>
+            {comments.length === 0 && (
               <div> Chưa có đánh giá nào.</div>
             )}
-            {evaluate.comments.length !== 0 && (
+            {comments.length !== 0 && (
               <div className={styles.comments}>
-                {evaluate.comments.map((el, index) => (
+                {comments.map((el, index) => (
                   <div className={styles.evaluate} key={index}>
                     {" "}
                     <img src={imageUser} alt="" />
                     <div>
-                      <strong>{el.user}</strong>
+                      <strong>{el.username}</strong>
                       <GetRating value={el.rate} />
                       <p>{el.comment}</p>
                     </div>

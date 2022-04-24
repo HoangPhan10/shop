@@ -6,6 +6,9 @@ import { Form } from "react-bootstrap";
 import { AiOutlineLeft } from "react-icons/ai";
 import { AiOutlineRight } from "react-icons/ai";
 import CallApi from "../../../api/callApi";
+import Service from '../../../api/shopService';
+import { FORMAT_PRICE } from '../../../../global/const';
+
 function LayoutRight() {
   const [page,setPage] =useState(1)
   const [numPage,setNumPage]=useState(1)
@@ -14,19 +17,19 @@ function LayoutRight() {
   const pathname=window.location.pathname
   let arrPage=[]
   useEffect(()=>{
-    CallApi(`evaluates`, "GET", null).then((res) => {
+    Service.getListProduct().then((res) => {
       const arrSale = res.data.filter((el) => {
-        if(pathname.split("/")[2]&&el.type){
-          return el.type.toLowerCase() ===pathname.split("/")[2];
+        if(pathname.split("/")[2]){
+          return el.gender===pathname.split("/")[2];
         }
-        return el.gender.toLowerCase() ===pathname.split("/")[1];
+        return el.gender ===pathname.split("/")[1];
       });
       setArrImageList(arrSale)
       setArrImage(arrSale.slice((page-1)*12,page*12))
     }); 
   },[page,pathname])
+  console.log(arrImage)
   for(let i=1;i<=numPage;i++){
-
     arrPage.push({id:i})
   }
   const handleApart =()=>{
@@ -72,9 +75,9 @@ function LayoutRight() {
       <div className={styles.accessoryRightLayout}>
         {arrImage.map((el, index) => (
           <div key={index}>
-            <img src={el.description.image_1} alt="" />
-            <p>{el.nameProduct}</p>
-            <strong>{el.price}</strong>
+            <img src={el.image[0]} alt="" />
+            <p>{el.name}</p>
+            <strong>{FORMAT_PRICE(el.price)}đ</strong>
             <Nav.Link
               className={styles.Button}
               as={Link}

@@ -3,18 +3,16 @@ import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import CallApi from "../../../api/callApi";
+import Service from "../../../api/shopService";
+import { FORMAT_PRICE } from "../../../../global/const";
 function Order() {
   const id = JSON.parse(window.localStorage.getItem("id"));
   const index = JSON.parse(window.localStorage.getItem("index"));
   const [orderUser, setOrderUser] = useState([]);
   useEffect(() => {
-    CallApi(`users/${id}`, "GET", null).then((res) => {
-      if (res) {
-        setOrderUser(res.data.order);
-      } else {
-        setOrderUser([]);
-      }
-    });
+    Service.getOrder(id).then(res=>{
+      setOrderUser(res.data)
+    })
   }, [id]);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -25,11 +23,11 @@ function Order() {
   const handleDelete = (index) => {
     const result = window.confirm("Bạn có chắc muốn hủy đơn này?");
     if (result) {
-      CallApi(`user/order/${id}/${index}`, "GET", null).then((res) => {
-        if (res) {
-          setOrderUser(res.data.order);
-        }
-      });
+      // CallApi(`user/order/${id}/${index}`, "GET", null).then((res) => {
+      //   if (res) {
+      //     setOrderUser(res.data.order);
+      //   }
+      // });
     }
   };
   return (
@@ -50,10 +48,10 @@ function Order() {
               {orderUser.map((el, index) => (
                 <tr key={index} style={{ fontSize: "16px", color: "#444" }}>
                   <td>{el.code}</td>
-                  <td>{el.day}</td>
+                  <td>{el.ctime}</td>
                   <td>{el.status}</td>
                   <td>
-                    {el.totalPrd}đ cho {el.nameProduct.length} mục
+                    {FORMAT_PRICE(el.total)}đ cho {el.items.length} mục
                   </td>
                   <td>
                     <Button

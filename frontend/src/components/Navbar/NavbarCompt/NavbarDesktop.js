@@ -51,72 +51,22 @@ function NavbarDesktop() {
           as={Link}
           to="/women"
           className={clsx([styles.headerNavLink],index==="women"?[styles.headerNavLinkActive]:"",)}
-          style={{ marginTop: 5 }}
+          style={{ marginTop: 10 ,paddingBottom:10}}
         onClick={()=>setIndex("women")}
         >
-          NỮ <RiArrowDropDownLine style={{ fontSize: "30px" }} />{" "}
+          NỮ 
         </Nav.Link>{" "}
-        <div className={styles.hoverNavLink}>
-          <ul>
-            <Nav.Link
-              className={styles.hoverNavLink_Nav}
-              as={Link}
-              to="/women/unisex"
-            >
-              Unisex{" "}
-            </Nav.Link>{" "}
-            <Nav.Link
-              className={styles.hoverNavLink_Nav}
-              as={Link}
-              to="/women/vay"
-            >
-              Váy{" "}
-            </Nav.Link>{" "}
-            <Nav.Link
-              className={styles.hoverNavLink_Nav}
-              as={Link}
-              to="/women/croptop"
-            >
-              Áo Croptop{" "}
-            </Nav.Link>{" "}
-          </ul>{" "}
-        </div>{" "}
       </div>{" "}
       <div className={styles.hoverNav}>
         <Nav.Link
           as={Link}
           to="/men"
           className={clsx([styles.headerNavLink],index==="men"?[styles.headerNavLinkActive]:"",)}
-          style={{ marginTop: 5 }}
+          style={{ marginTop: 10,paddingBottom:10 }}
         onClick={()=>setIndex("men")}
         >
-          NAM <RiArrowDropDownLine style={{ fontSize: "30px" }} />{" "}
+          NAM{" "}
         </Nav.Link>{" "}
-        <div className={styles.hoverNavLink1}>
-          <ul>
-            <Nav.Link
-              className={styles.hoverNavLink_Nav}
-              as={Link}
-              to="/men/unisex"
-            >
-              Unisex
-            </Nav.Link>{" "}
-            <Nav.Link
-              className={styles.hoverNavLink_Nav}
-              as={Link}
-              to="/men/polo"
-            >
-              Polo{" "}
-            </Nav.Link>{" "}
-            <Nav.Link
-              className={styles.hoverNavLink_Nav}
-              as={Link}
-              to="/men/shirt"
-            >
-              Áo sơ mi{" "}
-            </Nav.Link>{" "}
-          </ul>{" "}
-        </div>{" "}
       </div>{" "}
       <Nav.Link as={Link} to="/children" className={clsx([styles.headerNavLink],index==="children"?[styles.headerNavLinkActive]:"",)}
         onClick={()=>setIndex("children")}

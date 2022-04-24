@@ -24,12 +24,10 @@ function NavbarCompt() {
             <NavbarDesktop />
           </div>
         </section>
-     
         <Routess />
         <div>
         <Footer />
         </div>
-        
       </Router>
     </>
   );

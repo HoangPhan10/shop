@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Slide4Image from "./Slide4Image";
 import CallApi from './../../../api/callApi';
-
+import Service from '../../../api/shopService'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -49,20 +49,26 @@ export default function BasicTabs() {
   const [arrProductNew,setArrProductNew]=useState([])
   const [arrProductPopular,setArrProductPopular]=useState([])
   useEffect(() => {
-    CallApi(`evaluates`, "GET", null).then((res) => {
-      const arrSell=res.data.filter((el)=>{
-        return el.status==="sellingProduct"
-      })
-      const arrNew=res.data.filter((el)=>{
-        return el.status==="newProduct"
-      })
-      const arrPopular=res.data.filter((el)=>{
-        return el.status==="popularProduct"
-      })
-      setArrProductNew(arrNew)
-      setArrProductPopular(arrPopular)
-      setArrProductSelling(arrSell)
-    });
+    Service.getListProduct().then((res)=>{
+     setArrProductNew(res.data.slice(res.data.length-8))
+     setArrProductSelling(res.data.slice(0,8))
+     setArrProductPopular(res.data.slice(8,16))
+    })
+   
+    // CallApi(`evaluates`, "GET", null).then((res) => {
+    //   const arrSell=res.data.filter((el)=>{
+    //     return el.status==="sellingProduct"
+    //   })
+    //   const arrNew=res.data.filter((el)=>{
+    //     return el.status==="newProduct"
+    //   })
+    //   const arrPopular=res.data.filter((el)=>{
+    //     return el.status==="popularProduct"
+    //   })
+    //   setArrProductNew(arrNew)
+    //   setArrProductPopular(arrPopular)
+    //   setArrProductSelling(arrSell)
+    // });
   }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);

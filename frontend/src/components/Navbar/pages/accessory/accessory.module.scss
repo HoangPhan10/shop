@@ -46,6 +46,12 @@
           margin: 0;
           margin-top: 5px;
           color: $colorgray-600;
+          height: 26px;
+          overflow: hidden;
+          display: block;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
         }
         span {
           font-weight: 600;

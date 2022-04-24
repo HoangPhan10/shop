@@ -3,13 +3,14 @@ import { Button } from "react-bootstrap";
 import { Slide } from "react-slideshow-image";
 import { Link } from "react-router-dom";
 import "react-slideshow-image/dist/styles.css";
+import { FORMAT_PRICE } from "../../../../global/const";
 function SlideImage(props) {
   const { slideImage } = props;
   const slideImageSelling = [
     {
       url1: slideImage
         ? slideImage.length > 0
-          ? slideImage[0].description.image_1
+          ? slideImage[0].image[0]
           : ""
         : "",
       price1: slideImage
@@ -19,13 +20,13 @@ function SlideImage(props) {
         : "",
       title1: slideImage
         ? slideImage.length > 0
-          ? slideImage[0].nameProduct
+          ? slideImage[0].name
           : ""
         : "",
       id1: slideImage ? (slideImage.length > 0 ? slideImage[0].id : "") : "",
       url2: slideImage
         ? slideImage.length > 0
-          ? slideImage[1].description.image_1
+          ? slideImage[1].image[0]
           : ""
         : "",
       price2: slideImage
@@ -35,13 +36,13 @@ function SlideImage(props) {
         : "",
       title2: slideImage
         ? slideImage.length > 0
-          ? slideImage[1].nameProduct
+          ? slideImage[1].name
           : ""
         : "",
       id2: slideImage ? (slideImage.length > 0 ? slideImage[1].id : "") : "",
       url3: slideImage
         ? slideImage.length > 0
-          ? slideImage[2].description.image_1
+          ? slideImage[2].image[0]
           : ""
         : "",
       price3: slideImage
@@ -51,13 +52,13 @@ function SlideImage(props) {
         : "",
       title3: slideImage
         ? slideImage.length > 0
-          ? slideImage[2].nameProduct
+          ? slideImage[2].name
           : ""
         : "",
       id3: slideImage ? (slideImage.length > 0 ? slideImage[2].id : "") : "",
       url4: slideImage
         ? slideImage.length > 0
-          ? slideImage[3].description.image_1
+          ? slideImage[3].image[0]
           : ""
         : "",
       price4: slideImage
@@ -67,7 +68,7 @@ function SlideImage(props) {
         : "",
       title4: slideImage
         ? slideImage.length > 0
-          ? slideImage[3].nameProduct
+          ? slideImage[3].name
           : ""
         : "",
       id4: slideImage ? (slideImage.length > 0 ? slideImage[3].id : "") : "",
@@ -75,7 +76,7 @@ function SlideImage(props) {
     {
       url1: slideImage
         ? slideImage.length > 0
-          ? slideImage[4].description.image_1
+          ? slideImage[4].image[0]
           : ""
         : "",
       price1: slideImage
@@ -85,13 +86,13 @@ function SlideImage(props) {
         : "",
       title1: slideImage
         ? slideImage.length > 0
-          ? slideImage[4].nameProduct
+          ? slideImage[4].name
           : ""
         : "",
       id1: slideImage ? (slideImage.length > 0 ? slideImage[4].id : "") : "",
       url2: slideImage
         ? slideImage.length > 0
-          ? slideImage[5].description.image_1
+          ? slideImage[5].image[0]
           : ""
         : "",
       price2: slideImage
@@ -101,13 +102,13 @@ function SlideImage(props) {
         : "",
       title2: slideImage
         ? slideImage.length > 0
-          ? slideImage[5].nameProduct
+          ? slideImage[5].name
           : ""
         : "",
       id2: slideImage ? (slideImage.length > 0 ? slideImage[5].id : "") : "",
       url3: slideImage
         ? slideImage.length > 0
-          ? slideImage[6].description.image_1
+          ? slideImage[6].image[0]
           : ""
         : "",
       price3: slideImage
@@ -117,13 +118,13 @@ function SlideImage(props) {
         : "",
       title3: slideImage
         ? slideImage.length > 0
-          ? slideImage[6].nameProduct
+          ? slideImage[6].name
           : ""
         : "",
       id3: slideImage ? (slideImage.length > 0 ? slideImage[6].id : "") : "",
       url4: slideImage
         ? slideImage.length > 0
-          ? slideImage[7].description.image_1
+          ? slideImage[7].image[0]
           : ""
         : "",
       price4: slideImage
@@ -133,7 +134,7 @@ function SlideImage(props) {
         : "",
       title4: slideImage
         ? slideImage.length > 0
-          ? slideImage[7].nameProduct
+          ? slideImage[7].name
           : ""
         : "",
       id4: slideImage ? (slideImage.length > 0 ? slideImage[7].id : "") : "",
@@ -155,7 +156,7 @@ function SlideImage(props) {
                 <div className={styles.slideimage}>
                   <img src={slideImage.url2} alt="slide1" />
                   <p>{slideImage.title2}</p>
-                  <span>{slideImage.price2}</span>
+                  <span>{FORMAT_PRICE(parseInt(slideImage.price2))}đ</span>
                   <div>
                     <Button
                       className={styles.slideimageHover}
@@ -170,7 +171,7 @@ function SlideImage(props) {
                 <div className={styles.slideimage}>
                   <img src={slideImage.url1} alt="slide1" />
                   <p>{slideImage.title1}</p>
-                  <span>{slideImage.price1}</span>
+                  <span>{FORMAT_PRICE(parseInt(slideImage.price1))}đ</span>
                   <div>
                     <Button
                       as={Link}
@@ -185,7 +186,7 @@ function SlideImage(props) {
                 <div className={styles.slideimage}>
                   <img src={slideImage.url3} alt="slide1" />
                   <p>{slideImage.title3}</p>
-                  <span>{slideImage.price3}</span>
+                  <span>{FORMAT_PRICE(parseInt(slideImage.price3))}đ</span>
                   <div>
                     <Button
                       className={styles.slideimageHover}
@@ -200,7 +201,7 @@ function SlideImage(props) {
                 <div className={styles.slideimage}>
                   <img src={slideImage.url4} alt="slide1" />
                   <p>{slideImage.title4}</p>
-                  <span>{slideImage.price4}</span>
+                  <span>{FORMAT_PRICE(parseInt(slideImage.price4))}đ</span>
                   <div>
                     <Button
                       className={styles.slideimageHover}

@@ -3,13 +3,14 @@ import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import CallApi from './../../../api/callApi';
+import Service from "../../../api/shopService";
+import { FORMAT_PRICE } from '../../../../global/const';
 function LayoutLeft() {
   const [arrImage,setArrImage]=useState([])
   useEffect(()=>{
-    CallApi("evaluates","GET",null).then((res)=>{
+    Service.getListProduct().then((res)=>{
       const arr =res.data.filter((el)=>{
-        return el.type==="Vay"
+        return el.gender==="women"
       })
       setArrImage(arr.slice(0,5))
     })
@@ -29,10 +30,10 @@ function LayoutLeft() {
             className={styles.accessoryLeftListItem}
             onClick={()=>OnAddProduct(el.id)}
           >
-            <img src={el.description.image_1} alt="" />
+            <img src={el.image[0]} alt="" />
             <div>
-              <p>{el.nameProduct}</p>
-              <span>{el.price}đ</span>
+              <p>{el.name}</p>
+              <span>{FORMAT_PRICE(el.price)}đ</span>
             </div>
           </Nav.Link>
         ))}

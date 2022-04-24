@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import styles from "./Account.module.scss";
 import Login from "./Login";
 import { FaUserAlt } from "react-icons/fa";
-// import useLocalStorage from "../../../hooks/useLocalStorage";
-import CallApi from "../../../api/callApi";
-
+import Service from "../../../api/shopService";
 function Singup() {
+  const role =JSON.parse(window.localStorage.getItem("role"))
   const [valueEmail, setValueEmail] = useState("");
   const [valuePassword, setValuePassword] = useState("");
   const [toggle, setToggle] = useState(false);
@@ -18,32 +17,34 @@ function Singup() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleToggel = () => {
-    CallApi("", "GET", null).then((res) => {
-      const result = res.data.find((el) => {
-        return el.email === valueEmail && el.password === valuePassword;
-      });
-      if (result) {
-        window.localStorage.setItem("id", JSON.stringify(result.id));
+    Service.getLogin({
+      username:valueEmail,
+      password:valuePassword
+    }).then((res)=>{
+      Service.getCustomer(res.data.customer_id).then((res)=>{
+        window.localStorage.setItem("role", JSON.stringify(res.data.role));
+      })
+        window.localStorage.setItem("id", JSON.stringify(res.data.customer_id));
         setToggle(false);
         handleClose();
         setShow2(false);
         window.location.href = "/home";
-      } else {
-        setToggle(true);
-      }
-    });
+    }).catch(()=>{
+      setToggle(true);
+    })
   };
   const handleLogout = () => {
     const choice = window.confirm("Bạn có chắc chắn muốn đăng xuất ?");
     if (choice) {
       window.localStorage.setItem("id", JSON.stringify(0));
+      window.localStorage.setItem("role", JSON.stringify("customer"));
       setIdUser(0);
       setShow2(true);
       window.location.href = "/home";
     }
   };
   useEffect(() => {
-    if (idUser > 0) {
+    if (idUser !== 0) {
       setShow2(false);
     } else {
       setShow2(true);
@@ -105,18 +106,18 @@ function Singup() {
             id="basic-nav-dropdown"
             className={styles.accountDropdown}
           >
-            <NavDropdown.Item as={Link} to="/account/dashboard">
+           {role!=="admin"&& <NavDropdown.Item as={Link} to="/account/dashboard">
               Bảng điều khiển
-            </NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/account/order">
+            </NavDropdown.Item>}
+          {role!=="admin"&&  <NavDropdown.Item as={Link} to="/account/order">
               Đơn hàng
-            </NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/account/dowload">
+            </NavDropdown.Item>}
+            {role!=="admin"&&<NavDropdown.Item as={Link} to="/account/dowload">
               Tải xuống
-            </NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/account/address">
+            </NavDropdown.Item>}
+            {role!=="admin"&&<NavDropdown.Item as={Link} to="/account/address">
               Địa chỉ
-            </NavDropdown.Item>
+            </NavDropdown.Item>}
             <NavDropdown.Item as={Link} to="/account/accountInfor">
               Thông tin tài khoản
             </NavDropdown.Item>

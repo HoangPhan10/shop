@@ -2,20 +2,20 @@ import React from "react";
 import { Zoom } from "react-slideshow-image";
 import styles from "./home.module.scss";
 function Slideshow(props) {
-  const arrImage =props.evaluate.description
+  const arrImage =props.evaluate.image
   let images = [];
   if(arrImage){
-    if(arrImage.image_1){
-      images.push(arrImage.image_1);
+    if(arrImage[0]){
+      images.push(arrImage[0]);
     }
-    if(arrImage.image_2){
-      images.push(arrImage.image_2);
+    if(arrImage[1]){
+      images.push(arrImage[1]);
     }
-    if(arrImage.image_3){
-      images.push(arrImage.image_3);
+    if(arrImage[2]){
+      images.push(arrImage[2]);
     }
-    if(arrImage.image_4){
-      images.push(arrImage.image_4);
+    if(arrImage[3]){
+      images.push(arrImage[3]);
     }
   }
   const zoomOutProperties = {
