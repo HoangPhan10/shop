@@ -47,24 +47,20 @@ export class OrderMongoDAL implements OrderNS.DAL {
   }
 
   async ListOrder(query:OrderNS.QueryOrderParams) {
-    if(Object.keys(query).length==1){
-        const {status}=query
-        const orders = await this.col_order
-        .find({status:status})
-        .toArray();
-      return FromMongoData.Many<OrderNS.Order>(orders);
+    const filter={} as any
+    if(query.status){
+      filter.status = query.status
     }
-    if(Object.keys(query).length==2){
-        const {status,customer_id}=query
-        const orders = await this.col_order
-        .find({status:status,customer_id:customer_id})
-        .toArray();
-      return FromMongoData.Many<OrderNS.Order>(orders);
+
+    if(query.customer_id){
+      filter.customer_id = query.customer_id
     }
+
     const orders = await this.col_order
-        .find()
+        .find(filter)
         .toArray();
       return FromMongoData.Many<OrderNS.Order>(orders);
+    
   }
 
   async GetOrder(id: string) {
