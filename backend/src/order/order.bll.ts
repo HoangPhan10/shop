@@ -11,7 +11,7 @@ export class NewOrderBLLBase implements OrderNS.BLL{
         if(!item || !FilterData.One(item)){
             throw OrderNS.Errors.ItemNotFound
         }
-        const product=await this.product_bll.GetProduct(item.product_id)
+        const product=await this.product_bll.GetProductByOrder(item.product_id)
         const doc:OrderNS.viewItem={
             ...item,
             product: product

@@ -72,6 +72,7 @@ export namespace ProductNS{
         ListProduct(gender?:Gender):Promise<viewProduct[]>
         ListProductSales():Promise<viewProduct[]>
         GetProduct(id:string):Promise<viewProduct>
+        GetProductByOrder(id:string):Promise<viewProduct>
         CreateProduct(params:CreateProductParams):Promise<Product>
         UpdateProduct(id:string,params:UpdateProductParams):Promise<viewProduct>
         DeleteProduct(id:string):Promise<viewProduct>

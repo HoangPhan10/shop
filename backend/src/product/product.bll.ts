@@ -45,6 +45,15 @@ export class NewProductBLLBase implements ProductNS.BLL {
             comments: comments
         }
     }
+
+    async GetProductByOrder(id:string){
+        const product=await this.dal.GetProduct(id)
+        const comments=await this.ListComment(product.id)
+        return {
+            ...product,
+            comments: comments
+        }
+    }
     async ListProduct(gender:ProductNS.Gender){
         if(gender){
             let viewProduct=[]
