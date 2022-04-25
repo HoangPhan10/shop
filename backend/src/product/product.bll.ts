@@ -109,7 +109,7 @@ export class NewProductBLLBase implements ProductNS.BLL {
             mtime:Date.now()
         }
         if(params.image){
-            doc.image=product.image.concat(params.image)
+            doc.image=params.image
         }
         if(params.price){
             const items=await this.orderDAL.ListItem(product.id)

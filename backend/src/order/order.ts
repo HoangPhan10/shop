@@ -8,15 +8,21 @@ export namespace OrderNS{
         status:OrderStatus,
         customer_id: string,
         total:number,
+        info?:{
         address:string,
+        name:string,
+        phone:string,
+        }
         ctime:number,
         mtime:number,
     }
 
     export enum OrderStatus{
         NEW="new",
+        DELETE="delete",
+        WAIT="await",
         DONE="done",
-        CANCLE="cancle"
+        CANCLE="cancel"
     }
 
     export interface Item{
@@ -47,13 +53,16 @@ export namespace OrderNS{
     }
     export interface CreateOrderParmas{
         customer_id:string,
-        address:string,
         itemParams:CreateItemParams
     }
 
     export interface UpdateOrderParams{
         status?:OrderStatus,
-        address?:string,
+        info?:{
+            address:string,
+            name:string,
+            phone:string,
+            }
         itemParams?:UpdateItemParams
     }
 
