@@ -35,7 +35,6 @@ export function NewOrderAPI(bll: OrderNS.BLL) {
   router.post("/order/create", async (req, res) => {
     const params: OrderNS.CreateOrderParmas = {
       customer_id: HttpParamValidators.MustBeString(req.body, "customer_id", 8),
-      address:HttpParamValidators.MustBeString(req.body, "address",2),
       itemParams: {
         product_id: HttpParamValidators.MustBeString(
           req.body.itemParams,
@@ -54,8 +53,12 @@ export function NewOrderAPI(bll: OrderNS.BLL) {
     const params: OrderNS.UpdateOrderParams = {
       status: HttpParamValidators.MustBeOneOf(req.body, "status", status_type),
     };
-    if(req.body.address){
-      params.address = HttpParamValidators.MustBeString(req.body, "address",2)
+    if(req.body.info){
+      params.info={
+        name:HttpParamValidators.MustBeString(req.body.info,"name",2),
+        phone: HttpParamValidators.CheckPhone(req.body.info,'phone',10),
+        address: HttpParamValidators.MustBeString(req.body.info, "address",2)
+      }
     }
     if (req.body.itemParams) {
       params.itemParams = {
