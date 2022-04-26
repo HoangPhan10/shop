@@ -19,6 +19,7 @@ export class NewOrderBLLBase implements OrderNS.BLL {
     return doc;
   }
 
+
   async GetViewOrder(id: string) {
     const order = await this.dal.GetOrder(id);
     if (!order || !FilterData.One(order)) {
@@ -41,6 +42,22 @@ export class NewOrderBLLBase implements OrderNS.BLL {
     return viewOrderArr;
   }
 
+  async FilterOrder(query:OrderNS.QueryFilterParams){
+    const orders= await this.dal.ListOrder({status:query.status});
+    let viewOrderArr: Array<OrderNS.viewOrder> = []
+    for(let o of FilterData.Many(orders)) {
+      const viewOrder=await this.GetViewOrder(o.id)
+      viewOrderArr.push(viewOrder)
+    }
+    if(query.gender){
+      const result=viewOrderArr.filter(v=>v.items[0].product.gender==query.gender)
+      return result
+    }else if(query.from && query.to){
+      const result=viewOrderArr.filter(v=>v.total>= query.from && v.total<= query.to)
+      return result
+    }
+    return viewOrderArr
+  }
   async CreateOrder(params: OrderNS.CreateOrderParmas) {
     const time = Date.now();
     const { product_id, amount } = params.itemParams;
