@@ -70,11 +70,19 @@ export namespace OrderNS{
         status?:OrderStatus,
         customer_id?:string
     }
+
+    export interface QueryFilterParams{
+        status:OrderStatus,
+        gender?:ProductNS.Gender,
+        from?:number,
+        to?:number,
+    }
     export interface BLL{
         ListOrder(query:QueryOrderParams):Promise<viewOrder[]>,
         GetViewOrder(id: string):Promise<viewOrder>,
         CreateOrder(params:CreateOrderParmas):Promise<viewOrder>,
         UpdateOrder(id:string,params:UpdateOrderParams):Promise<viewOrder>
+        FilterOrder(query:QueryFilterParams):Promise<viewOrder[]>
 
         GetItem(id: string):Promise<viewItem>
         UpdateItem(id: string,params:UpdateItemParams):Promise<viewItem>
