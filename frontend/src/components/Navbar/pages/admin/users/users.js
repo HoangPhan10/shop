@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import ModalUpdate from "./../../ModalUpdate/ModalUpdate";
 import Service from "../../../../api/shopService";
 import ModalNoti from "../../ModalNoti/ModalNoti";
+import { converseStr, reverseBirthday, ROLE } from "../../../../../global/const";
 const header = [
   "STT",
   "NGƯỜI DÙNG",
@@ -33,11 +34,11 @@ function Users() {
         return {
           id: el.id,
           stt: index + 1,
-          user: el.name,
+          user: converseStr(el.name),
           cccd: el.cccd,
           phone: el.phone,
-          birthday: el.birthday,
-          role: el.role,
+          birthday: reverseBirthday(el.birthday),
+          role: el.role===ROLE[0].value?"Người quản trị":"Người dùng",
           function: "",
         };
       });

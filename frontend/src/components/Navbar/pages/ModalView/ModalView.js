@@ -11,27 +11,15 @@ function ModalUpdate(props) {
     <div>
       <Modal isOpen={!!isOpen}>
         <ModalHeader>Thông tin đơn hàng</ModalHeader>
-        <ModalBody>
+        <ModalBody className="modalView">
           <div className="flex">
             <div className="view">
               <strong>Họ tên :</strong>
               <p>{customer.name ? customer.name : ""}</p>
             </div>
             <div className="view">
-              <strong>Ngày sinh :</strong>
-              <p>
-                {customer.birthday ? reverseBirthday(customer.birthday) : ""}
-              </p>
-            </div>
-          </div>
-          <div className="flex">
-            <div className="view">
               <strong>Số điện thoại :</strong>
               <p>{customer.phone ? customer.phone : ""}</p>
-            </div>
-            <div className="view">
-              <strong>Căn cước :</strong>
-              <p>{customer.cccd ? customer.cccd : ""}</p>
             </div>
           </div>
           <div className="flex">
@@ -56,7 +44,7 @@ function ModalUpdate(props) {
          </div>
           <div className="view">
             <strong>Địa chỉ :</strong>
-            <p>{data.address ? data.address : ""}</p>
+            <p>{data.info ? data.info.address : ""}</p>
           </div>
           {data.items && <img src={data.items[0].product.image[0]} alt="" />}
         </ModalBody>

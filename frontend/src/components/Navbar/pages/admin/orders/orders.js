@@ -4,10 +4,10 @@ import styles from "../products/products.module.scss";
 import { useState, useEffect } from "react";
 import Service from "../../../../api/shopService";
 import ModalView from "../../ModalView/ModalView";
-import { FORMAT_PRICE } from "./../../../../../global/const";
+import { converseStr, FORMAT_PRICE } from "./../../../../../global/const";
 const header = [
   "STT",
-  "ID",
+  "MÃ ĐƠN HÀNG",
   "SẢN PHẨM",
   "MÀU SẮC",
   "SỐ LƯỢNG",
@@ -32,11 +32,11 @@ function Orders() {
           return {
             id: el.id,
             stt: index + 1,
-            user: listCustomer.find((elm)=>elm.id===el.customer_id)?listCustomer.find((elm)=>elm.id===el.customer_id).name:el.customer_id,
-            name: el.items[0].product.name,
-            color: el.items[0].product.color,
+            code: el.code,
+            name: converseStr(el.items[0].product.name),
+            color: converseStr(el.items[0].product.color),
             amount: el.items[0].amount,
-            adress: el.address,
+            adress: converseStr(el.info?el.info.address:""),
             total: FORMAT_PRICE(el.total) + "đ",
             function: "",
           };
@@ -44,7 +44,7 @@ function Orders() {
         })
       );
     });
-  }, []);
+  }, [listCustomer]);
   const View = (id) => {
     setMessage("View");
     Service.getOrderView(id).then((res)=>{

@@ -164,7 +164,7 @@ function SlideImage(props) {
                       to={`/Cart/${slideImage.id2}`}
                       onClick={()=>OnAddProduct(slideImage.id2)}
                     >
-                      THÊM VÀO GIỎ
+                      XEM SẢN PHẨM
                     </Button>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ function SlideImage(props) {
                       className={styles.slideimageHover}
                       onClick={()=>OnAddProduct(slideImage.id1)}
                     >
-                      THÊM VÀO GIỎ
+                      XEM SẢN PHẨM
                     </Button>
                   </div>
                 </div>
@@ -194,7 +194,7 @@ function SlideImage(props) {
                       to={`/Cart/${slideImage.id3}`}
                       onClick={()=>OnAddProduct(slideImage.id3)}
                     >
-                      THÊM VÀO GIỎ
+                      XEM SẢN PHẨM
                     </Button>
                   </div>
                 </div>
@@ -209,7 +209,7 @@ function SlideImage(props) {
                       to={`/Cart/${slideImage.id4}`}
                       onClick={()=>OnAddProduct(slideImage.id4)}
                     >
-                      THÊM VÀO GIỎ
+                      XEM SẢN PHẨM
                     </Button>
                   </div>
                 </div>

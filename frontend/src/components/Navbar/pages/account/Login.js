@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import clsx from "clsx";
 import styles from "./Account.module.scss";
 import CallApi from "../../../api/callApi";
-import {re} from './checkEmail'
+// import {re} from './checkEmail'
 function Login() {
   const [show, setShow] = useState(false);
   const [dataUsers, setDataUsers] = useState([]);
@@ -39,8 +39,8 @@ function Login() {
   };
 
   const handleBlurEmail = () => {
-    const resultEmail = re.test(String(valueEmail).toLowerCase());
-    setToggleEmail(!resultEmail);
+    // const resultEmail = re.test(String(valueEmail).toLowerCase());
+    setToggleEmail(true);
     CallApi("", "GET", null).then((res) => {
       const userE = res.data.find((user) => user.email === valueEmail);
       setToggleEmail2(userE ? true : false);

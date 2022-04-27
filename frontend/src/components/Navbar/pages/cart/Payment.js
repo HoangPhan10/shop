@@ -1,68 +1,85 @@
 import styles from "./cart.module.scss";
 import { useEffect, useState } from "react";
-import CallApi from "../../../api/callApi";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import { Nav, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
-
+import Service from './../../../api/shopService';
+import { FORMAT_PRICE,strTrim,checkInterger } from './../../../../global/const';
+import ModalNoti from './../ModalNoti/ModalNoti';
 function Payment() {
-  const date = new Date();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const [cart, setCart] = useState([]);
-  const [address, setAddress] = useState([]);
-  const [total, setTotal] = useState("0");
+  const [cart, setCart] = useState({});
+  const [address, setAddress] = useState("");
+  const [message, setMessage] = useState("");
+  const [showAddress, setShowAddress] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [showPhone, setShowPhone] = useState(false);
+  const [name, setName] = useState("");
+  const [showName, setShowName] = useState(false);
   const [value, setValue] = useState("Trả tiền khi nhận hàng");
-
+  const id = JSON.parse(window.localStorage.getItem("idPayment"))
   const handleChange = (event) => {
     setValue(event.target.value);
   };
-  const id = window.localStorage.getItem("id");
-  const now = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   useEffect(() => {
-    if (parseInt(id) > 0) {
-      CallApi(`users/${id}`, "GET", null).then((res) => {
-        if (res) {
-          setCart(res.data.cart);
-          setAddress(res.data.addresses);
-        }
-      });
-    }
+   Service.getOrderView(id).then((res)=>{
+     setCart(res.data)
+   })
   }, [id]);
-  useEffect(() => {
-    if (cart.length > 0) {
-      const result = cart.reduce((result, prod) => {
-        return (
-          result +
-          parseInt(prod.price.split(",").join("")) * parseInt(prod.quantity)
-        );
-      }, 0);
-      setTotal(result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-    }
-    if (cart.length === 0) {
-      setTotal("0");
-    }
-  }, [cart]);
+ 
   const handleOrder = () => {
-    if (cart.length > 0 && parseInt(id) > 0) {
-      CallApi(`user/${id}`, "POST", {
-        order: cart,
-        totalPrd: total,
-        day: now,
-        code: `#${date.valueOf()}`,
-        addressDelivery: address[0],
-        payment: value,
-      });
-      CallApi(`users/cart/${id}`, "GET", null);
-      setInterval(() => {
-        window.location.href = "/account/order";
-      }, 2000);
+
+    if(strTrim(name)!==0&&strTrim(phone)!==0&&strTrim(address)!==0&&!showAddress&&!showPhone&&!showName){
+      if(value==="Trả tiền khi nhận hàng"){
+        Service.updateOrder(id,{
+          status:"await",
+          info:{
+            name:name,
+            phone:phone,
+            address:address
+          }
+        }).then(()=>{
+        setMessage("Mua sản phẩm thành công.")
+        })
+       }else{
+        Service.updateOrder(id,{
+          status:"done",
+          info:{
+            name:name,
+            phone:phone,
+            address:address
+          }
+        }).then(()=>{
+          setMessage("Mua sản phẩm thành công.")
+        })
+       }
+    }else{
+      setMessage("Vui lòng nhập đầy đủ thông tin.")
     }
+  
   };
+const OnChangeName=(value)=>{
+setName(value)
+setShowName(strTrim(value)<2)
+}
+const OnChangePhone=(value)=>{
+setPhone(value)
+setShowPhone(!checkInterger(value)||strTrim(value)!==10)
+}
+const OnChangeAddress=(value)=>{
+setAddress(value)
+setShowAddress(strTrim(value)<2)
+}
+const Done=()=>{
+if(message==="Mua sản phẩm thành công."){
+  window.location.replace("account/order")
+}else{
+  setMessage("")
+}
+}
   return (
     <div className={styles.payment}>
       <div className={styles.informationCart}>
@@ -71,29 +88,17 @@ function Payment() {
           <strong>SẢN PHẨM</strong>
           <strong>TỔNG</strong>
         </div>
-        {cart.length > 0 && (
-          <section>
-            {cart.map((el, index) => (
-              <div key={index}>
+             {cart.items&&  <div >
                 <p>
-                  {el.namePrd} x {el.quantity}
+                  {cart.items[0].product.name} x  {cart.items[0].amount}
                 </p>
                 <p>
-                  {el.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}đ
+                {FORMAT_PRICE(cart.total)+"đ"}
                 </p>
-              </div>
-            ))}
-          </section>
-        )}
-        {cart.length === 0 && (
-          <section>
-            <Spinner animation="border" />
-            <p>Đang cập nhật</p>
-          </section>
-        )}
+              </div>}
         <div>
           <strong>Tổng phụ</strong>
-          <strong>{total}đ</strong>
+          <strong>  {FORMAT_PRICE(cart.total)+"đ"}</strong>
         </div>
         <div>
           <strong>Giao hàng</strong>
@@ -101,7 +106,7 @@ function Payment() {
         </div>
         <div>
           <strong>Tổng</strong>
-          <strong>{total}đ</strong>
+          <strong>  {FORMAT_PRICE(cart.total)+"đ"}</strong>
         </div>
         <div style={{ border: "none" }}>
           <FormControl component="fieldset">
@@ -134,27 +139,17 @@ function Payment() {
       </div>
       <div className={styles.information}>
         <strong>THÔNG TIN TÀI KHOẢN</strong>
-        {address.length > 0 && (
-          <section>
-            <div>
-              <strong>Người nhận hàng:</strong>
-              <p>{address[0].name}</p>
-            </div>
-            <div>
-              <strong>Số điện thoại:</strong>
-              <p>{address[0].phone}</p>
-            </div>
-            <div>
-              <strong>Địa chỉ:</strong>
-              <p>{address[0].addressHome}</p>
-            </div>
-          </section>
-        )}
-        {address.length === 0 && <div>Chưa có địa chỉ</div>}
-        <Nav.Link className={styles.update} as={Link} to="/account/address">
-          {address.length > 0 ? "CHỈNH SỬA" : "THÊM ĐỊA CHỈ"}
-        </Nav.Link>
+        <strong>Nhập tên người nhận hàng</strong>
+       <input value={name} onChange={(e)=>OnChangeName(e.target.value)} placeholder="Nhập tên"></input>
+      <span> {showName?"Vui lòng nhập tên hợp lệ":""}</span>
+        <strong>Nhập số điện thoại</strong>
+       <input value={phone} onChange={(e)=>OnChangePhone(e.target.value)} placeholder="Nhập số điện thoại"></input>
+    <span>{showPhone?"Vui lòng nhập số điện thoại hợp lệ":""}</span>
+        <strong>Nhập địa chỉ nhận hàng</strong>
+       <input value={address} onChange={(e)=>OnChangeAddress(e.target.value)} placeholder="Nhập địa chỉ"></input>
+       <span>{showAddress?"Vui lòng nhập địa chỉ hợp lệ":""}</span>
       </div>
+      <ModalNoti message={message} done={()=>Done()}/>
     </div>
   );
 }

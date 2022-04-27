@@ -1,41 +1,41 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Select from "react-select";
 import clsx from "clsx";
-/* 
-data=[
-  {
-    placeholder:str,
-    value:str,
-    valid:str,
-    class:,
-    disabled
-  }
-]
-infor:str (tên người cần sửa)
-
-*/
+import Axios from 'axios';
 function ModalUpdate(props) {
-  const { isOpen, data, parentCallBack, cancelUpdate } = props;
+  const { isOpen, data, parentCallBack, cancelUpdate,files } = props;
   const [dataUpdate, setDataUpdate] = useState([]);
   const [file, setFile] = useState([]);
   const OnChange = (value, index) => {
     setDataUpdate([...data, (data[index].value = value)]);
   };
-  const OnChangeFile =(event,index)=>{
-    if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0];
-     setFile([...file,URL.createObjectURL(img)])
+  useEffect(()=>{
+    if(files){
+      setFile(files)
     }
+  },[files])
+  const OnChangeFile =(event,index)=>{
+    const formData = new FormData();
+    formData.append("file", event.target.files[0]);
+    formData.append("upload_preset", "ml_default");
+    Axios.post("https://api.cloudinary.com/v1_1/dcjhqx2lq/image/upload", formData)
+      .then((res) =>{
+        setFile([...file,res.data.url])
+        setDataUpdate([...data,data[index].value=[...file,res.data.url]])
+      })
+      .catch((err) => console.error(err));
   }
   const OnUpdateData = async () => {
     parentCallBack(dataUpdate);
     await setDataUpdate([]);
   };
-  file.map((el,index)=>{
-    console.log(el)
-  })
+    
+  const handleDeleteFile=(index)=>{
+  setFile(file.filter((el,index2)=>index2!==index))
+  setDataUpdate([...data,data[data.length-1].value=file.filter((el,index2)=>index2!==index)])
+  }
   return (
     <div>
       <Modal isOpen={!!isOpen}>
@@ -88,7 +88,8 @@ function ModalUpdate(props) {
                     {file.map((el,index)=>{
                     return(
                      <div key={index} className="file">
-                        <span >{el}</span>
+                        <span className="fileName" >{el.split("dcjhqx2lq/")[1]||el}</span>
+                        <span className="click" onClick={()=>handleDeleteFile(index)}>x</span>
                      </div>
                     )
                     })}
@@ -101,7 +102,7 @@ function ModalUpdate(props) {
           })}
         </ModalBody>
         <ModalFooter>
-          <Button onClick={() => OnUpdateData()}>Sửa</Button>
+          <Button onClick={() => OnUpdateData()}>{isOpen}</Button>
           <Button color="danger" onClick={() => cancelUpdate()}>
             Hủy
           </Button>

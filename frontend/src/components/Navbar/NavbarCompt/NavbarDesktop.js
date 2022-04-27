@@ -2,7 +2,6 @@ import { Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import styles from "../styles/Navbar.module.scss";
-import { RiArrowDropDownLine } from "react-icons/ri";
 import { BsChevronUp } from "react-icons/bs";
 import { useEffect, useState } from "react";
 

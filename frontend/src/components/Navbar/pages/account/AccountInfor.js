@@ -1,175 +1,188 @@
 import styles from "./Account.module.scss";
 import { Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import CallApi from "../../../api/callApi";
-import {re} from "./checkEmail"
+import Service from "./../../../api/shopService";
+import {
+  CheckDate,
+  checkInterger,
+  reverseBirthday,
+  strTrim,
+} from "./../../../../global/const";
+import ModalNoti from "./../ModalNoti/ModalNoti";
 function AccountInfor() {
   const id = JSON.parse(window.localStorage.getItem("id"));
-  const [passUser, setPassUser] = useState("");
-  const [emailUser, setEmailUser] = useState("");
-
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    CallApi("", "GET", null).then((res) => {
-      if (res) {
-        setUsers(res.data);
-      }
-    });
-    CallApi(`users/${id}`, "GET", null).then((res) => {
-      if (res) {
-        setFirstName(res.data.fullName.firstName);
-        setLastName(res.data.fullName.lastName);
-        setDisplayName(res.data.fullName.displayName);
-        setPassUser(res.data.password);
-        setEmail(res.data.email);
-        setEmailUser(res.data.email);
-      }
-    });
-  }, [id]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [password3, setPassword3] = useState("");
-
-  const [success, setSuccess] = useState(false);
-  const [err, setErr] = useState(false);
-
+  const [userName, setUserName] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [showValidBirthday, setShowValidBirthday] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [showValidPhone, setShowValidPhone] = useState(false);
+  const [cccd, setCccd] = useState("");
+  const [showValidCccd, setShowValidCccd] = useState(false);
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
   const [toggle1, setToggle1] = useState(false);
   const [toggle2, setToggle2] = useState(false);
   const [toggle3, setToggle3] = useState(false);
-  const [toggle4, setToggle4] = useState(false);
-  const [toggle5, setToggle5] = useState(false);
-
-  const handle1 = () => {
-    setToggle1(password1 !== passUser);
-  };
-  const handle2 = () => {
-    setToggle2(password2.trim().length <= 5);
-  };
-  const handle3 = () => {
-    setToggle3(password3 !== password2);
-  };
-  const handle4 = () => {
-    
-    const resultEmail = re.test(String(email).toLowerCase());
-    const set = users.find((el) => {
-      if (el.email === email && el.email !== emailUser) {
-        return true;
-      }
-      return false;
+  const [message, setMessage] = useState("");
+  useEffect(() => {
+    Service.getCustomer(id).then((res) => {
+      setUserName(res.data.username);
+      setBirthday(reverseBirthday(res.data.birthday));
+      setPhone(res.data.phone);
+      setCccd(res.data.cccd);
     });
-    setToggle5(set);
-    setToggle4(!resultEmail);
+  }, [id]);
+
+  const OnChangeBirthday = (e) => {
+    setBirthday(e);
+    const comp = e.split("-");
+    setShowValidBirthday(!CheckDate(comp));
+  };
+  const OnChangeCccd = (e) => {
+    setCccd(e);
+    setShowValidCccd(
+      !checkInterger(e) || (strTrim(e) !== 9 && strTrim(e) !== 12)
+    );
+  };
+  const OnChangePhone = (e) => {
+    setPhone(e);
+    setShowValidPhone(!checkInterger(e) || strTrim(e) !== 10);
+  };
+  const OnChangeNewPassword = (e) => {
+    setNewPassword(e);
+    setToggle2(strTrim(e) < 6);
+  };
+  const OnChangeRetypePassword = (e) => {
+    setRetypePassword(e);
+    setToggle3(e !== newPassword);
   };
   const handleSubmit = () => {
-    if (
-      !toggle1 &&
-      !toggle2 &&
-      !toggle3 &&
-      !toggle4 &&
-      !toggle5 &&
-      firstName.trim().length !== 0 &&
-      lastName.trim().length !== 0 &&
-      displayName.trim().length !== 0 &&
-      email.trim().length !== 0 &&
-      password1.trim().length !== 0 &&
-      password2.trim().length !== 0 &&
-      password3.trim().length !== 0
-    ) {
-      CallApi(`user/${id}`, "POST", {
-        email: email,
-        password: password3,
-        firstName: firstName,
-        lastName: lastName,
-        displayName: displayName,
-      }).then((res) => {});
-      setSuccess(true);
-      setErr(false);
+    if (strTrim(password) === 0) {
+      if (!showValidBirthday && !showValidCccd && !showValidPhone) {
+        Service.updateCustomer(id, {
+          cccd: cccd,
+          phone: phone,
+          birthday: reverseBirthday(birthday),
+        }).then((res) => {
+          setMessage("Sửa thông tin thành công");
+        });
+      } else {
+        setMessage("Vui lòng nhập đầy đủ thông tin");
+      }
     } else {
-      setSuccess(false);
-      setErr(true);
+      Service.getLogin({
+        username: userName,
+        password: password,
+      })
+        .then(() => {
+          if (
+            !toggle2 &&
+            !toggle3 &&
+            strTrim(newPassword) !== 0 &&
+            strTrim(retypePassword) !== 0 &&
+            !showValidBirthday &&
+            !showValidCccd &&
+            !showValidPhone
+          ) {
+            Service.setPassword({
+              customer_id:id,
+              password:newPassword
+            }).then(()=>{
+              Service.updateCustomer(id, {
+                cccd: cccd,
+                phone: phone,
+                birthday: reverseBirthday(birthday),
+              }).then(() => {
+                setMessage("Sửa thông tin thành công");
+                setNewPassword("")
+                setPassword("")
+                setRetypePassword("")
+              });
+            })
+          } else {
+            setMessage("Vui lòng nhập đầy đủ thông tin")
+          }
+        })
+        .catch(() => {
+          setToggle1(true);
+        });
     }
   };
+
   return (
     <>
       <div className={styles.accountInfor}>
-        {success && <p className={styles.success}>Cập nhật thành công</p>}
-        {err && <p className={styles.err}>Vui lòng nhập đầy đủ thông tin</p>}
+        <h5>THÔNG TIN CÁ NHÂN</h5>
+        {/* {success && <p className={styles.success}>Cập nhật thành công</p>}
+        {err && <p className={styles.err}>Vui lòng nhập đầy đủ thông tin</p>} */}
         <div className={styles.accountInforName}>
           <div>
-            <p>Họ *</p>
+            <p>Tên đăng nhập *</p>
             <input
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={userName}
               className={styles.Input}
-              placeholder="Họ"
+              placeholder="Tên đăng nhập"
               type="text"
+              disabled
             />
           </div>
           <div>
-            <p>Tên *</p>
+            <p>Ngày sinh *</p>
             <input
               className={styles.Input}
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={birthday}
+              onChange={(e) => OnChangeBirthday(e.target.value)}
               type="text"
-              placeholder="Tên"
+              placeholder="Ngày sinh"
             />
+            {showValidBirthday && (
+              <span>Vui lòng nhập đúng định dạng dd-mm-yyyy</span>
+            )}
+          </div>
+          <div>
+            <p>Căn cước công dân *</p>
+            <input
+              value={cccd}
+              onChange={(e) => OnChangeCccd(e.target.value)}
+              className={styles.Input}
+              placeholder="cccd"
+              type="text"
+            />
+            {showValidCccd && (
+              <span>Vui lòng căn cước công dân 9 hoặc 12 chữ số</span>
+            )}
+          </div>
+          <div>
+            <p>Số điện thoại *</p>
+            <input
+              className={styles.Input}
+              value={phone}
+              onChange={(e) => OnChangePhone(e.target.value)}
+              type="text"
+              placeholder="Số điện thoại"
+            />
+            {showValidPhone && <span>Vui lòng nhập đúng số điện thoại</span>}
           </div>
         </div>
 
-        <div>
-          <p>Tên hiện thị *</p>
-          <input
-            style={{ width: "100%" }}
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-            type="text"
-            placeholder="Tên hiện thị"
-          />
-          <span style={{ color: "#334852" }}>
-            Đây sẽ là cách mà tên của bạn sẽ được hiển thị trong phần tài khoản
-            và trong phần đánh giá
-          </span>
-        </div>
-        <div>
-          <p>Địa chỉ email *</p>
-          {toggle5 && <span>Địa chỉ email đã được đăng ký</span>}
-          <input
-            style={{ width: "100%" }}
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onBlur={handle4}
-            placeholder="Địa chỉ email"
-          />
-          {toggle4 && <span>Địa chỉ email không chính xác</span>}
-        </div>
         <h5>THAY ĐỔI MẬT KHẨU</h5>
         <div>
           <p>Mật khẩu hiện tại (bỏ trống nếu không đổi)</p>
           <input
             style={{ width: "100%" }}
-            value={password1}
-            onChange={(e) => setPassword1(e.target.value)}
-            onBlur={handle1}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
           />
           {toggle1 && <span>Mật khẩu không đúng</span>}
         </div>
         <div>
-          <p>Mật khẩu mới (bỏ trống nếu không đổi)</p>
+          <p>Mật khẩu mới</p>
           <input
             style={{ width: "100%" }}
-            value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
-            onBlur={handle2}
+            value={newPassword}
+            onChange={(e) => OnChangeNewPassword(e.target.value)}
             type="password"
           />
           {toggle2 && <span>Mật khẩu ít nhất có 6 ký tự</span>}
@@ -178,9 +191,8 @@ function AccountInfor() {
           <p>Xác nhận mật khẩu mới</p>
           <input
             style={{ width: "100%" }}
-            value={password3}
-            onChange={(e) => setPassword3(e.target.value)}
-            onBlur={handle3}
+            value={retypePassword}
+            onChange={(e) => OnChangeRetypePassword(e.target.value)}
             type="password"
           />
           {toggle3 && <span>Mật khẩu không trùng khớp</span>}
@@ -193,6 +205,7 @@ function AccountInfor() {
           LƯU THAY ĐỔI
         </Button>
       </div>
+      <ModalNoti message={message} done={() => setMessage("")} />
     </>
   );
 }

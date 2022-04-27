@@ -6,144 +6,105 @@
   margin: 30px 75px 30px 80px;
   display: flex;
   &Table {
-    width: 735px;
+    width: 100%;
     padding: 20px;
-    border-right: 1px solid $colorgray-400;
     .title {
       display: flex;
       justify-content: space-between;
       padding-bottom: 10px;
       border-bottom: 2px solid $colorgray-700;
       &Name {
-        padding-right: 300px;
+        padding-right: 100px;
+      }
+      &Button{
+        padding-right: 40px;
       }
       strong {
         font-size: 14px;
       }
     }
-    .content {
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid $colorgray-500;
-      padding-bottom: 10px;
-      p {
-        margin-top: 20px;
-        color: $colorgray-900;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 23px;
-        overflow: hidden;
-        display: block;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1;
-      }
-      &Product {
-        display: flex;
-        width: 370px;
-        margin-top: -10px;
-        img {
-          width: 75px;
-          height: 57px;
-          margin: 0 10px;
-        }
-        p {
-          color: $colorgray-700;
-        }
-        .delete {
-          padding: 1px 6px;
-          border: 1px solid $colorgray-400;
-          border-radius: 50%;
-          color: $colorgray-500;
-          &:hover {
-            color: $colorgray-700;
-            border-color: $colorgray-800;
-          }
-        }
-      }
-      &Num {
-        display: flex;
-      }
-    }
-    .total {
-      display: flex;
-      margin-left: 550px;
-      strong {
-        font-size: 16px;
-        color: $colorgray-700;
-        padding-right: 10px;
-      }
-      p {
-        font-weight: 700;
-        font-size: 15px;
-      }
-    }
-    .Button {
-      border: 2px solid $colorbutton;
-      width: 240px;
-      color: $colorbutton;
-      font-size: 14px;
-      font-weight: 700;
-      &:hover {
-        color: white;
-        background-color: $colorbutton;
-      }
+}
+.content{
+  margin-top: 20px;
+  display: flex;
+  border: 1px solid #888;
+ &Image{
+   margin: 3px;
+   display: flex;
+   width: 280px;
+  img{
+    width:100px;
+    height:100px;
+  }
+  &Info{
+    margin: 15px 10px;
+    p{
+      margin:0
     }
   }
-  &Total {
-    margin: 20px;
-    width: 500px;
-    .Strong {
-      font-size: 13px;
-      padding-bottom: 10px;
-      padding-right: 74%;
-      border-bottom: 2px solid $colorgray-700;
-    }
-    div {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-      border-bottom: 1px solid $colorgray-500;
-      strong {
-        font-size: 14px;
-        color: $colorgray-600;
-      }
-      p {
-        color: $colorgray-700;
-        font-weight: 600;
-      }
-    }
-    input {
-      margin: 20px 0;
-      width: 100%;
-      outline: none;
-      padding: 5px 10px;
-      border: 1px solid $colorgray-400;
-    }
-    button {
-      width: 100%;
-      border: none;
-      padding: 5px 0;
-      color: $colorgray-200;
-      background-color: $colorgray-600;
-      &:hover {
-        background-color: $colorbutton;
-      }
-    }
-  }
-  &Payment {
-    margin: 20px 0;
-    text-align: center;
-    background-color: $colorbutton;
-    color: $colorgray-500 !important;
-    font-weight: 700;
+ }
+ &Price{
+   width:180px;
+   margin-right: 50px;
+   justify-content: space-around;
+   margin-top:40px;
+   display: flex;
+   .price1{
+     text-decoration:line-through;
+     color: #888;
+   }
+   
+ }
+ &Amount{
+   display: flex;
+   margin: 35px 0 0 40px;
+   width:220px;
+   p {
+    border: 1px solid #ccc;
+    padding: 5px 8px;
+    height: 40px;
+    background-color: $colorgray-300;
+    cursor: pointer;
     &:hover {
-      color: white !important;
+      background-color: $colorgray-600;
     }
+  }
+  p:nth-child(2) {
+    padding: 5px 12px;
+    border: 1px solid #ccc;
+    background-color: $colorgray-100;
+    cursor: default;
+  }
+ }
+ .price{
+   color: red;
+   margin-top: 40px
+ }
+&Button{
+  margin: 35px 0 0 80px;
+  display: flex;
+  button{
+    height: 40px;
+    margin-right: 10px;
+    border: none;
+    background-color: #C30005;
+    color:white;
+    &:hover{
+      color: #ccc;
+    }
+
+  }
+  .button102{
+    background-color: rgb(0, 30, 60);
+    text-decoration: none;
+    height:40px;
+    padding: 0 5px;
+    color:white;
+    padding-top: 7px;
   }
 }
-
+}
+}
 .payment {
   @include Relative;
   margin: 30px 75px;
@@ -193,30 +154,22 @@
   .information {
     width: 400px;
     padding: 0 20px;
-    height: 250px;
+    height: 300px;
     border: 2px solid $colorbutton;
-    div {
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      strong {
-        color: $colorgray-700;
-      }
-      p {
-        font-weight: 600;
-        color: $colorgray;
-      }
+    input{
+      width:100%;
     }
-    .update {
-      background-color: $colorbutton;
-      width: 150px;
-      font-weight: 700;
-      text-align: center;
-      color: $colorgray-500;
-      margin: 10px 200px;
-      &:hover {
-        color: white;
-      }
-    }
+   strong{
+     display: block;
+     font-size: 16px;
+     margin-bottom: 0;
+     margin-top: 10px;
+   }
+   span{
+     display: block;
+     font-size: 13px;
+     color:red;
+   }
+  
   }
 }

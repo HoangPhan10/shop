@@ -3,20 +3,28 @@ import { useEffect, useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import { CgFormatSlash } from "react-icons/cg";
 import { BsCartPlus } from "react-icons/bs";
-import CallApi from "../../../api/callApi";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Service from "../../../api/shopService";
 function Cart() {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState("0");
-  const id = window.localStorage.getItem("id");
+  const id = JSON.parse(window.localStorage.getItem("id"));
   useEffect(() => {
-    if (parseInt(id) > 0) {
-      CallApi(`users/${id}`, "GET", null).then((res) => {
-        if (res) {
-          setCart(res.data.cart);
-        }
-      });
+    if (parseInt(id) !== 0) {
+      Service.getListOrderCustomer(id).then((res)=>{
+       const a= res.data.map((el)=> {
+          return {
+            index:el.id,
+            amount:el.items[0].amount,
+            image:el.items[0].product.image[0],
+            id:el.items[0].product.id,
+            name:el.items[0].product.name,
+            price:el.items[0].product.price,
+          }
+        });
+        setCart(a)
+      })
     } else {
       setCart([]);
     }
@@ -27,7 +35,7 @@ function Cart() {
       const result = cart.reduce((result, prod) => {
         return (
           result +
-          parseInt(prod.price.split(",").join("")) * parseInt(prod.quantity)
+        prod.amount * prod.price
         );
       }, 0);
       setTotal(result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -36,13 +44,6 @@ function Cart() {
       setTotal("0");
     }
   }, [cart]);
-  const onDelete = (index) => {
-    CallApi(`user/cart/${id}/${index}`, "GET", null).then((res) => {
-      if (res) {
-        setCart(res.data);
-      }
-    });
-  };
   return (
     <div className={styles.cart}>
       <div className={styles.Search}>
@@ -68,35 +69,26 @@ function Cart() {
                     <Nav.Link
                       key={index}
                       className={styles.hoverCartProduct}
-                      as={Link}
-                      to={`/Cart/${el.url}`}
+                    href={`/Cart/${el.id}`}
+                      onClick={()=>window.localStorage.setItem("idProduct", JSON.stringify(el.id))}
                     >
-                      <img src={el.img} alt="" />
+                      <img src={el.image} alt="" />
                       <div className={styles.hoverCartProductDiv}>
-                        <p>{el.namePrd}</p>
+                        <p>{el.name}</p>
                         <span>
-                          {el.quantity} x {el.price}đ
+                          {el.amount} x {el.price}đ
                         </span>
-                      </div>
-                      <div
-                        className={styles.hoverCartProductDiv2}
-                        onClick={() => onDelete(index)}
-                      >
-                        x
                       </div>
                     </Nav.Link>
                   );
                 })}
               </div>
-              <Nav.Link
+                 <Nav.Link
                 className={styles.hoverCartButton}
                 as={Link}
                 to="/viewcart"
               >
                 XEM GIỎ HÀNG
-              </Nav.Link>
-              <Nav.Link className={styles.hoverCartButton} as={Link} to ='/payment'>
-                THANH TOÁN TIỀN
               </Nav.Link>
             </div>
           )}

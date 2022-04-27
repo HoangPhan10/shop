@@ -8,7 +8,7 @@ function SaleOff() {
   const [arrImageSale, setArrImageSale] = useState([]);
   useEffect(()=>{
     Service.getListSale().then((res)=>{
-      setArrImageSale(res.data)
+      setArrImageSale(res.data.slice(0,8))
     })
   },[])
   const OnAddProduct=(id)=>{
@@ -32,7 +32,7 @@ function SaleOff() {
               to={`/Cart/${el.id}`}
               onClick={()=>OnAddProduct(el.id)}
             >
-              THÊM VÀO GIỎ
+              XEM SẢN PHẨM
             </Nav.Link>
             <div className={styles.sale}>
               <p>{100-Math.round((el.price/el.origin_price)*100)}%</p>

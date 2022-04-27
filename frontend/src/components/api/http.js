@@ -6,7 +6,7 @@ const LOCALSTORAGE = {
 }
 export class Http {
 
-  constructor() { }
+  // constructor() { }
 
   static _getHeader() {
     return {

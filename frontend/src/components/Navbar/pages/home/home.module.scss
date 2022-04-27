@@ -195,7 +195,7 @@
 
 .container {
   @include desktop {
-    margin: 60px 0 100px 70px !important;
+    margin: 60px 0 100px 115px !important;
   }
 
   @include mobile {
@@ -203,8 +203,7 @@
   }
 
   .row {
-    margin-right: -76px !important;
-
+    margin-right: -66px !important;
     .col {
       position: relative;
       padding: 0;
@@ -222,15 +221,13 @@
           display: block;
         }
       }
-
       .img1 {
         width: 260px;
         padding: 40px 0 80px 115px;
       }
-
       .img2 {
         width: 300px;
-        margin: 0 0 20px 40px;
+        margin: 0 0 20px 30px;
       }
 
       .overlay {
@@ -254,9 +251,9 @@
   }
 
   .box {
+    padding-left: 16%;
     @include desktop {
       margin: 0 76px !important;
-      padding-left: 16%;
     }
 
     @include tablet {
@@ -271,9 +268,8 @@
 
     .tab {
       font-weight: 700;
-
       @include desktop {
-        padding: 7px 50px !important;
+        padding: 7px 50px;
         font-size: 15px;
       }
 

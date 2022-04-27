@@ -63,13 +63,10 @@ function Footer() {
               <Nav.Link as={Link} to="/store">
                 Cửa hàng
               </Nav.Link>
-              <Nav.Link as={Link} to="/news">
-                Tin tức
-              </Nav.Link>
-            </div>
             <Nav.Link as={Link} to="/contact">
               Liên hệ
             </Nav.Link>
+            </div>
           </div>
           <div>
             <h5>MẠNG XÃ HỘI</h5>

@@ -8,6 +8,90 @@ export const checkInterger = (str) => {
   return check;
 };
 
-export const reverseBirthday=(str)=>{
-  return str.split("-").reverse().join("-")
+export const reverseBirthday = (str) => {
+  return str.split("-").reverse().join("-");
+};
+export const strTrim = (str) => {
+  return str.trim().length;
+};
+export const CheckDate = (comp) => {
+  let d = parseInt(comp[0], 10);
+  let m = parseInt(comp[1], 10);
+  let y = parseInt(comp[2], 10);
+  let date = new Date(y, m - 1, d);
+  if (
+    date.getFullYear() === y &&
+    date.getMonth() + 1 === m &&
+    date.getDate() === d &&
+    comp[0].trim().length === 2 &&
+    comp[1].trim().length === 2 &&
+    comp[2].trim().length === 4
+  ) {
+    return true;
+  }
+  return false;
+};
+
+export const convertDate = (num) => {
+  return new Date(num).toLocaleDateString("en-GB");
+};
+export const SORT = [
+  {
+    label: "mặc định",
+    value: 0,
+  },
+  {
+    label: "mới nhất",
+    value: 1,
+  },
+  {
+    label: "từ thấp đến cao",
+    value: 2,
+  },
+  {
+    label: "từ cao đến thấp",
+    value: 3,
+  },
+];
+
+export const STATUS=[
+  {
+    label: "hoàn thành",
+    value: "done",
+  },
+  {
+    label: "đang chờ xử lý",
+    value: "await",
+  },
+  {
+    label: "đã hủy",
+    value: "cancel",
+  }
+]
+
+export const GENDER=[
+  {
+    label: "nam",
+    value: "men",
+  },
+  {
+    label: "đang chờ xử lý",
+    value: "women",
+  }
+]
+export const ROLE=[
+  {
+    label: "Người quản trị",
+    value: "admin",
+  },
+  {
+    label: "người dùng",
+    value: "customer",
+  }
+]
+export const converseStr=(str)=>{
+  const arrString = str.split(" ").map((el)=>{
+    return el.charAt(0).toUpperCase()+el.slice(1)
+  })
+  return arrString.join(" ")
 }

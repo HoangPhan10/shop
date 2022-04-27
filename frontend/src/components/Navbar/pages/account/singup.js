@@ -5,6 +5,7 @@ import styles from "./Account.module.scss";
 import Login from "./Login";
 import { FaUserAlt } from "react-icons/fa";
 import Service from "../../../api/shopService";
+import ModalConfirm from "../ModalConfirm/ModalConfirm";
 function Singup() {
   const role =JSON.parse(window.localStorage.getItem("role"))
   const [valueEmail, setValueEmail] = useState("");
@@ -14,6 +15,7 @@ function Singup() {
   const [idUser, setIdUser] = useState(id);
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(true);
+  const [message, setMessage] = useState("");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleToggel = () => {
@@ -33,16 +35,18 @@ function Singup() {
       setToggle(true);
     })
   };
-  const handleLogout = () => {
-    const choice = window.confirm("Bạn có chắc chắn muốn đăng xuất ?");
-    if (choice) {
+  const answer =(choice)=>{
+     if (choice) {
       window.localStorage.setItem("id", JSON.stringify(0));
       window.localStorage.setItem("role", JSON.stringify("customer"));
       setIdUser(0);
       setShow2(true);
       window.location.href = "/home";
+    }else{
+      setMessage("")
     }
-  };
+  }
+ 
   useEffect(() => {
     if (idUser !== 0) {
       setShow2(false);
@@ -106,28 +110,23 @@ function Singup() {
             id="basic-nav-dropdown"
             className={styles.accountDropdown}
           >
-           {role!=="admin"&& <NavDropdown.Item as={Link} to="/account/dashboard">
-              Bảng điều khiển
-            </NavDropdown.Item>}
           {role!=="admin"&&  <NavDropdown.Item as={Link} to="/account/order">
               Đơn hàng
             </NavDropdown.Item>}
-            {role!=="admin"&&<NavDropdown.Item as={Link} to="/account/dowload">
-              Tải xuống
-            </NavDropdown.Item>}
-            {role!=="admin"&&<NavDropdown.Item as={Link} to="/account/address">
+            {/* {role!=="admin"&&<NavDropdown.Item as={Link} to="/account/address">
               Địa chỉ
-            </NavDropdown.Item>}
+            </NavDropdown.Item>} */}
             <NavDropdown.Item as={Link} to="/account/accountInfor">
               Thông tin tài khoản
             </NavDropdown.Item>
-            <NavDropdown.Item onClick={handleLogout}>
+            <NavDropdown.Item onClick={ ()=>setMessage("Bạn có chắc chắn muốn đăng xuất?")}>
               Đăng xuất
             </NavDropdown.Item>
           </NavDropdown>
           <FaUserAlt className={styles.accountFaUserAlt} />
         </div>
       )}
+      <ModalConfirm message={message} answer={answer}/>
     </>
   );
 }

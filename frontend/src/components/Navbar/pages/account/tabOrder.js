@@ -1,4 +1,4 @@
-import styles from "./home.module.scss";
+import styles from "../home/home.module.scss";
 import "react-slideshow-image/dist/styles.css";
 import * as React from "react";
 import { useEffect,useState } from "react";
@@ -7,8 +7,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Slide4Image from "./Slide4Image";
-import Service from '../../../api/shopService'
+import Order from "./Order";
+import Service from "../../../api/shopService";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -42,26 +42,30 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function TabOrder() {
   const [value, setValue] = React.useState(0);
-  const [arrProductSelling,setArrProductSelling]=useState([])
-  const [arrProductNew,setArrProductNew]=useState([])
-  const [arrProductPopular,setArrProductPopular]=useState([])
-  useEffect(() => {
-    Service.getListProduct().then((res)=>{
-     setArrProductNew(res.data.slice(res.data.length-8))
-     setArrProductSelling(res.data.slice(0,8))
-     setArrProductPopular(res.data.slice(8,16))
-    })
-  }, []);
+ const [listOrderDone,setListOrderDone]=useState([])
+ const [listOrderCancel,setListOrderCancel]=useState([])
+ const [listOrderAwait,setListOrderAwait]=useState([])
+ const id = JSON.parse(window.localStorage.getItem("id"));
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  useEffect(() => {
+    Service.getOrderDone2(id).then(res=>{
+      setListOrderDone(res.data)
+    })
+    Service.getOrderCancel(id).then(res=>{
+      setListOrderCancel(res.data)
+    })
+    Service.getOrderAwait(id).then(res=>{
+      setListOrderAwait(res.data)
+    })
+  }, [id]);
   return (
-    <Box className={styles.BasicTabs} sx={{ width: "100%" }}>
+    <Box style={{marginTop:150}} className={styles.BasicTabs} sx={{ width: "100%" }}>
       <Box
-        className={styles.box}
+        className={styles.box} style={{paddingLeft:0}}
         sx={{ borderBottom: 1, borderColor: "divider" }}
       >
         <Tabs
@@ -69,27 +73,29 @@ export default function BasicTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab className={styles.tab} label="SẢN PHẨM MỚI" {...a11yProps(0)} />
+          <Tab className={styles.tab} style={{padding:0}}label="SẢN PHẨM ĐÃ MUA" {...a11yProps(0)} />
           <Tab
             className={styles.tab}
-            label="SẢN PHẨM BÁN CHẠY"
+            label="SẢN PHẨM ĐANG CHỜ XỬ LÝ"
             {...a11yProps(1)}
+            style={{padding:0,margin:"0 50px"}}
           />
           <Tab
-            label="SẢN PHẨM PHỔ BIẾN"
-            className={styles.tab2}
+            label="SẢN PHẨM ĐÃ HỦY"
+            className={styles.tab}
             {...a11yProps(2)}
+            style={{padding:0}}
           />
         </Tabs>
       </Box>
       <TabPanel className={styles.tabPanel} value={value} index={0}>
-        <Slide4Image  slideImage={arrProductNew} />
+      <Order arrOrder={listOrderDone}/>
       </TabPanel>
       <TabPanel className={styles.tabPanel} value={value} index={1}>
-        <Slide4Image slideImage={arrProductSelling} />
+      <Order arrOrder={listOrderAwait}  button={"hủy"} />
       </TabPanel>
       <TabPanel className={styles.tabPanel} value={value} index={2}>
-        <Slide4Image slideImage={arrProductPopular} />
+      <Order arrOrder={listOrderCancel}/>
       </TabPanel>
     </Box>
   );

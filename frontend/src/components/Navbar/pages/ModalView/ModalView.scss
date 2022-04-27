@@ -1,17 +1,19 @@
-.view{
-    display: flex;
-    margin-bottom: 5px;
-    p{
-        margin: 0;
-        padding-left: 10px;
+.modalView{
+    .view{
+        display: flex;
+        margin-bottom: 5px;
+        p{
+            margin: 0;
+            padding-left: 10px;
+        }
     }
-}
-img{
-    width: 270px;
-    height: 270px;
-    display:flex;
-    margin:0 auto;
-}
-.flex{
-    justify-content: space-between;
+    img{
+        width: 270px;
+        height: 270px;
+        display:flex;
+        margin:0 auto;
+    }
+    .flex{
+        justify-content: space-between;
+    }
 }

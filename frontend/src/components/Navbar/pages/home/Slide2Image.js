@@ -16,7 +16,7 @@ function SlideImage(props) {
                   <span>{slideImage.price1}</span>
                   <div>
                     <Button className={styles.slideimageHover}>
-                      THÊM VÀO GIỎ
+                      XEM SẢN PHẨM
                     </Button>
                   </div>
                 </div>
@@ -26,7 +26,7 @@ function SlideImage(props) {
                   <span>{slideImage.price2}</span>
                   <div>
                     <Button className={styles.slideimageHover}>
-                      THÊM VÀO GIỎ
+                      XEM SẢN PHẨM
                     </Button>
                   </div>
                 </div>

@@ -30,7 +30,7 @@ function AccessoryHome() {
             <p>{el.name}</p>
             <strong>{FORMAT_PRICE(el.price)}đ</strong>
             <Nav.Link className={styles.button} as={Link} to={`Cart/${el.id}`} onClick={()=>OnAddProduct(el.id)}>
-              THÊM VÀO GIỎ
+              XEM SẢN PHẨM
             </Nav.Link>
           </div>
         ))}
@@ -42,9 +42,9 @@ function AccessoryHome() {
         <img src={banner} alt="banner" />
         <div>
           <h1>
-            KHUYẾN MÃI <span>GIẢM GIÁ 50%</span>
+           SHOP QUẦN ÁO HÀ TRUNG
           </h1>
-          <Nav.Link className={styles.bannerAll} as={Link} to="/women">
+          <Nav.Link className={styles.bannerAll} as={Link} to="/store">
             XEM TẤT CẢ
           </Nav.Link>
         </div>

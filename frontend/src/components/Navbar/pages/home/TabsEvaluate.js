@@ -9,10 +9,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Spinner } from "react-bootstrap";
-import CallApi from "../../../api/callApi";
 import imageUser from "../../../../assets/images/home/user.png";
 import GetRating from "./GetRating";
 import Service from "../../../api/shopService";
+import ModalNoti from './../ModalNoti/ModalNoti';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -53,36 +53,33 @@ export default function TabsEvaluate(props) {
   const [valueInput, setValueInput] = useState("");
   const id = window.location.href.split("Cart/")[1];
   const [comments,setComment]=useState([])
-  const [evaluate, setEvaluate] = useState({});
   const idUser = JSON.parse(window.localStorage.getItem("id"));
-  const [user, setUser] = useState({});
+  const [message,setMessage]=useState("")
   const inputRef = useRef();
   const handleSend = () => {
 if(idUser!==0){
   if (valueInput.trim().length !== 0) {
-    CallApi(`evaluates/${id}`, "POST", {
-      user: user.fullName.displayName || user.email.split("@")[0],
-      comment: valueInput,
-      rate: valueRate,
-    }).then((res) => {
-      if (res) {
-        setEvaluate(res.data);
-      }
-    });
+    Service.getCustomer(idUser).then((res)=>{
+      Service.createComment({
+        product_id:inforProduct.id,
+        customer_id:idUser,
+        comment:valueInput,
+        rate:valueRate,
+        username:res.data.username
+      }).then(()=>{
+        Service.getComment(inforProduct.id).then((res)=>{
+          setComment(res.data)
+        })
+      })
+      
+    })
     inputRef.current.focus();
     setValueInput("");
     setValueRate(0);
   }
 }else{
-  alert("xin vui lòng đăng nhập")
+  setMessage("Xin vui lòng đăng nhập")
 }  };
-  useEffect(() => {
-    CallApi(`users/${idUser}`, "GET", null).then((res) => {
-      if (res) {
-        setUser(res.data);
-      }
-    });
-  }, [idUser]);
   useEffect(() => {
     Service.getComment(id).then((res)=>{
       setComment(res.data)
@@ -92,6 +89,7 @@ if(idUser!==0){
     setValue(newValue);
   };
   return (
+    <>
     <Box className={styles.box2} sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
@@ -186,5 +184,7 @@ if(idUser!==0){
         )}
       </TabPanel>
     </Box>
+    <ModalNoti message={message} done={()=>setMessage("")}/>
+    </>
   );
 }

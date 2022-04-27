@@ -2,7 +2,6 @@ import styles from "./home.module.scss";
 import { useState, useEffect, createContext } from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
 import Slideshow from "./SlideShow";
 import SlideImage from "./Slide5Image";
 import TabsEvaluate from "./TabsEvaluate";
@@ -23,17 +22,19 @@ import {
   bank1,
 } from "../../../../assets/images/home/Bank/imageBank";
 import { FORMAT_PRICE } from "../../../../global/const";
-import Service from '../../../api/shopService';
+import Service from "../../../api/shopService";
+import ModalNoti from "../ModalNoti/ModalNoti";
 export const Images = createContext();
 function AddCart(props) {
   const [num, setNum] = useState(1);
+  const [message, setMessage] = useState("");
   const [idProduct, setIdProduct] = useState("");
   const [evaluate, setEvaluate] = useState({});
-  const id = window.localStorage.getItem("id");
+  const id = JSON.parse(window.localStorage.getItem("id"));
   const index = JSON.parse(window.localStorage.getItem("idProduct"));
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [index,idProduct]);
+  }, [index, idProduct]);
   const handleApart = () => {
     setNum((prev) => {
       if (prev === 1) {
@@ -47,36 +48,93 @@ function AddCart(props) {
     setNum(num + 1);
   };
 
-  const handleAddCart = (namePrd, price, img) => {
-    // if (parseInt(id) === 0) {
-    //   alert("Qúy khách vui lòng đăng nhập");
-    // } else {
-    //   CallApi(`user/${id}`, "POST", {
-    //     namePrd: namePrd,
-    //     price: price,
-    //     quantity: num,
-    //     total: parseInt(price.split(",").join("")) * num,
-    //     url: index,
-    //     img: img,
-    //   });
-    //   setNum(1);
-    //   setInterval(() => {
-    //     window.location.href = "/viewcart";
-    //   }, 2000);
-    // }
+  const handleAddCart = (idOrderProduct) => {
+    if (parseInt(id) === 0) {
+      setMessage("Qúy khách vui lòng đăng nhập");
+    } else {
+      Service.getOrder(id).then((res) => {
+        const arrOrder = res.data.map((el) => {
+          return {
+            idOrder: el.id,
+            checkOrder: el.items[0].product.id === idOrderProduct,
+          };
+        });
+        const check = arrOrder.filter((el) => el.checkOrder === true);
+        if (check.length === 0) {
+          Service.createOrder({
+            customer_id: id,
+            itemParams: {
+              product_id: idOrderProduct,
+              amount: num,
+            },
+          }).then(() => {
+            setMessage("Thêm vào giỏ hàng thành công");
+          });
+        } else {
+          Service.updateOrder(check[0].idOrder, {
+            status: "new",
+            itemParams: {
+              amount: num,
+            },
+          }).then(() => {
+            setMessage("Thêm vào giỏ hàng thành công");
+          });
+        }
+      });
+    }
+  };
+  const Done = () => {
+    window.location.replace("/viewcart");
   };
   useEffect(() => {
-   Service.getProduct(index).then((res)=>{
-     setEvaluate(res.data)
-   })
+    Service.getProduct(index).then((res) => {
+      setEvaluate(res.data);
+    });
   }, [index]);
-  const addCart =(id)=>{
-    setIdProduct(id)
-  }
+  const addCart = (id) => {
+    setIdProduct(id);
+  };
+  const handlePayment = (idOrderProduct) => {
+    if (parseInt(id) === 0) {
+      setMessage("Qúy khách vui lòng đăng nhập");
+    } else {
+      Service.getOrder(id).then((res) => {
+      const arrOrder = res.data.map((el) => {
+        return {
+          idOrder: el.id,
+          checkOrder: el.items[0].product.id === idOrderProduct,
+        };
+      });
+      const check = arrOrder.filter((el) => el.checkOrder === true);
+      if (check.length === 0) {
+        Service.createOrder({
+          customer_id: id,
+          itemParams: {
+            product_id: idOrderProduct,
+            amount: num,
+          },
+        }).then((res) => {
+          window.localStorage.setItem("idPayment", JSON.stringify(res.data.id));
+          window.location.replace("/payment");
+        });
+      } else {
+        Service.updateOrder(check[0].idOrder, {
+          status: "new",
+          itemParams: {
+            amount: num,
+          },
+        }).then((res) => {
+          window.localStorage.setItem("idPayment", JSON.stringify(res.data.id));
+          window.location.replace("/payment");
+        });
+      }
+    })
+    }
+  };
   return (
     <Images.Provider value={props}>
       <div className={styles.addcart}>
-        <div style={{ display: "flex",justifyContent:"space-between" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           {/* slideshow */}
           <div>
             {" "}
@@ -95,11 +153,10 @@ function AddCart(props) {
                   as={Link}
                   to={`/${evaluate.gender}`}
                 >
-                  {evaluate.gender?evaluate.gender.toUpperCase():""}
+                  {evaluate.gender ? evaluate.gender.toUpperCase() : ""}
                 </Nav.Link>
-                
               </div>
-              <h3>{evaluate.nameProduct}</h3>
+              <h3>{evaluate.name}</h3>
               <strong>{FORMAT_PRICE(evaluate.price)}đ</strong>
               <div className={styles.addcartContentPrice}>
                 <div>
@@ -109,15 +166,15 @@ function AddCart(props) {
                 </div>
                 <button
                   className={styles.Button}
-                  onClick={() =>
-                    handleAddCart(
-                      evaluate.name,
-                      evaluate.price,
-                      evaluate.image[0]
-                    )
-                  }
+                  onClick={() => handleAddCart(evaluate.id)}
                 >
                   THÊM VÀO GIỎ
+                </button>
+                <button
+                  className={styles.Button}
+                  onClick={() => handlePayment(evaluate.id)}
+                >
+                  MUA SẢN PHẨM
                 </button>
               </div>
               <div style={{ marginLeft: 17, display: "flex" }}>
@@ -144,13 +201,6 @@ function AddCart(props) {
                 "Hãy trở thành Affilicate của chúng tôi để tìm thêm thu nhập thụ
                 động, kiếm tiền online"
               </p>
-              <Button
-                variant="contained"
-                color="error"
-                className={styles.Button}
-              >
-                Đăng ký Affilicate
-              </Button>
             </div>
           )}
           {!evaluate && <h4>Đang load</h4>}
@@ -161,6 +211,7 @@ function AddCart(props) {
           <SlideImage parentCallBack={addCart} />
         </div>
       </div>
+      <ModalNoti message={message} done={Done} />
     </Images.Provider>
   );
 }

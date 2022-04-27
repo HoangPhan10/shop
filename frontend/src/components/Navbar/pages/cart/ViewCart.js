@@ -1,131 +1,122 @@
 import styles from "./cart.module.scss";
-import CallApi from "../../../api/callApi";
 import { useEffect, useState } from "react";
-import { Nav, Spinner } from "react-bootstrap";
-import { BsBoxArrowLeft } from "react-icons/bs";
-import { AiFillTags } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import Service from "../../../api/shopService";
+import { FORMAT_PRICE } from "./../../../../global/const";
+import ModalNoti from "../ModalNoti/ModalNoti";
+import ModalConfirm from './../ModalConfirm/ModalConfirm';
 
 function ViewCart() {
   const [cart, setCart] = useState([]);
-  const id = window.localStorage.getItem("id");
-  const [total, setTotal] = useState("0");
+  const [message,setMessage]=useState("")
+  const [messageConfirm,setMessageConfirm]=useState("")
+  const [idOrder,setIdOrder]=useState("")
+  const id = JSON.parse(window.localStorage.getItem("id"));
+  const [value,setValue]=useState([])
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    if (parseInt(id) > 0) {
-      CallApi(`users/${id}`, "GET", null).then((res) => {
-        if (res) {
-          setCart(res.data.cart);
-        } else {
-          setCart([]);
-        }
-      });
-    } else {
-      setCart([]);
-    }
-  }, [id]);
-  const OnDelete = (index) => {
-    CallApi(`user/cart/${id}/${index}`, "GET", null).then((res) => {
-      if (res) {
-        setCart(res.data);
-      }
+    Service.getListOrderCustomer(id).then((res) => {
+      setCart(res.data);
+     const arrAmount= res.data.map((el)=>el.items[0].amount)
+     setValue(arrAmount)
     });
-  };
-  useEffect(() => {
-    if (cart.length > 0) {
-      const result = cart.reduce((result, prod) => {
-        return (
-          result +
-          parseInt(prod.price.split(",").join("")) * parseInt(prod.quantity)
-        );
-      }, 0);
-      setTotal(result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  }, [id,message]);
+  const handleAdd=(index)=>{
+    value[index]=value[index]+1
+    setValue([...value])
+  }
+  const handleApart=(id,index)=>{
+    if(value[index]===1){
+      setIdOrder(id)
+      setMessageConfirm("Bạn có muốn xóa sản phẩm này khỏi giỏ hàng?")
+    }else{
+     value[index]=value[index]-1
+     setValue([...value])
     }
-    if (cart.length === 0) {
-      setTotal("0");
+  }
+  const Answer=(choice)=>{
+    if(choice){
+      Service.updateOrder(idOrder,{
+        status:"delete"
+      }).then(()=>{
+        setMessage("Xóa sản phẩm thành công")
+        setMessageConfirm("")
+      })
+    }else{
+      setMessageConfirm("")
     }
-  }, [cart]);
+  }
+  const HandleSuccess=()=>{
+    window.location.reload()
+  }
+  const OnUpdate =(id,index)=>{
+     Service.updateOrder(id,{
+      status:"new",
+      itemParams:{
+        amount:value[index]
+      }
+    }).then(()=>{
+      setMessage("Thêm số lượng sản phẩm thành công")
+    })
+  }
+  const OnDelete =(id)=>{
+    setIdOrder(id)
+    setMessageConfirm("Bạn có muốn xóa sản phẩm này khỏi giỏ hàng?")
+  }
+
   return (
     <div className={styles.viewcart}>
       <div className={styles.viewcartTable}>
         <div className={styles.title}>
           <strong className={styles.titleName}>SẢN PHẨM</strong>
-          <strong>GIÁ</strong>
+          <strong>ĐƠN GIÁ</strong>
           <strong>SỐ LƯỢNG</strong>
-          <strong>TỔNG</strong>
+          <strong style={{paddingRight:60}}>SỐ TIỀN</strong>
+          <strong className={styles.titleButton}>THAO TÁC</strong>
         </div>
-        {cart.length > 0 && (
-          <div>
-            {cart.map((el, index) => {
-              return (
-                <div key={index} className={styles.content}>
-                  <Nav.Link
-                    className={styles.contentProduct}
-                    as={Link}
-                    to={`/Cart/${el.url}`}
-                  >
-                    <p
-                      className={styles.delete}
-                      onClick={() => OnDelete(index)}
-                    >
-                      x
-                    </p>
-                    <img src={el.img} alt="" />
-                    <p>{el.namePrd}</p>
-                  </Nav.Link>
-                  <p>{el.price}</p>
-                  <div className={styles.contentNum}>
-                    <p>{el.quantity}</p>
-                  </div>
-                  <p>
-                    {el.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </p>
-                </div>
-              );
-            })}
-            <div className={styles.total}>
-              <strong>TỔNG:</strong>
-              <p>{total}đ</p>
+        {cart.length>0&&cart.map((el,index)=>{
+          return <div key={index} className={styles.content}>
+          <div className={styles.contentImage}>
+            <img
+              src={ el.items[0].product.image[0] }
+              alt=""
+            />
+            <div className={styles.contentImageInfo}>
+              <p>{ el.items[0].product.name }</p>
+              <p>{ el.items[0].product.material}</p>
+              <p>{ el.items[0].product.color }</p>
             </div>
-            <Nav.Link className={styles.Button} as={Link} to="/store">
-              {" "}
-              <BsBoxArrowLeft style={{ marginRight: 10 }} />
-              TIẾP TỤC XEM SẢN PHẨM
-            </Nav.Link>
           </div>
-        )}
-        {cart.length === 0 && (
-          <div>
-            <Spinner animation="border" />
-            <p>Đang cập nhật</p>
+          <div className={styles.contentPrice}>
+            <p className={styles.price1}>
+              {FORMAT_PRICE(el.items[0].product.origin_price) + "đ"
+                }
+            </p>
+            <p className={styles.price2}>
+              {FORMAT_PRICE(el.items[0].product.price) + "đ"
+                }
+            </p>
           </div>
-        )}
-      </div>
-      <div className={styles.viewcartTotal}>
-        <strong className={styles.Strong}>TỔNG SỐ LƯỢNG</strong>
-        <div>
-          <strong>Tổng phụ</strong>
-          <p>{total}đ</p>
+          <div className={styles.contentAmount}>
+            <p onClick={()=>handleApart(el.id,index)}>-</p> <p>{value[index]}</p>{" "}
+            <p onClick={()=>handleAdd(index)}>+</p>
+          </div>
+          <p className={styles.price}>
+            {FORMAT_PRICE(el.items[0].product.price * value[index]) + "đ"
+             }
+          </p>
+         <div className={styles.contentButton}>
+         <button onClick={()=>OnDelete(el.id)} >Xóa</button>
+         <button onClick={()=>OnUpdate(el.id,index)} >Cập nhật</button>
+          <Link to="/payment" onClick={()=> window.localStorage.setItem("idPayment", JSON.stringify(el.id))} className={styles.button102}>Thanh toán</Link>
+          <ModalNoti message={message} done={HandleSuccess}/>
+          <ModalConfirm message={messageConfirm} answer={Answer}/>
+         </div>
         </div>
-        <div>
-          <strong>Giao hàng</strong>
-          <p>Miễn phí</p>
-        </div>
-        <div>
-          <strong>Tổng tiền phải trả khi nhận hàng</strong>
-          <p>{total}đ</p>
-        </div>
-        <Nav.Link className={styles.viewcartPayment} as={Link} to="/payment">
-          TIẾN HÀNH THANH TOÁN
-        </Nav.Link>
-        <strong className={styles.Strong} style={{ fontSize: 14 }}>
-          <AiFillTags /> Phiếu ưu đãi
-        </strong>
-        <input placeHolder="Mã ưu đãi" />
-        <button>Áp dụng</button>
+        })}
       </div>
     </div>
   );
