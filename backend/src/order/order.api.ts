@@ -1,9 +1,10 @@
 import * as express from "express";
 import { HttpParamValidators } from "../lib/http";
 import { OrderNS } from "./order";
-
+import { ProductNS } from "../product/product";
 export function NewOrderAPI(bll: OrderNS.BLL) {
   const status_type = Object.values(OrderNS.OrderStatus);
+  const gender=Object.values(ProductNS.Gender)
   const router = express.Router();
 
   router.get("/order/list", async (req, res) => {
@@ -31,6 +32,24 @@ export function NewOrderAPI(bll: OrderNS.BLL) {
     const order = await bll.GetViewOrder(id);
     res.json(order);
   });
+
+  router.get("/order/filter", async (req, res) => {
+     const query: OrderNS.QueryFilterParams={
+       status:HttpParamValidators.MustBeOneOf(req.query, "status",status_type)
+     }
+     if(req.query.gender){
+       query.gender = HttpParamValidators.MustBeOneOf(req.query, "gender",gender)
+     }
+     if(req.query.from){
+       query.from = +HttpParamValidators.MustBeString(req.query,"from")
+     }
+     if(req.query.to){
+      query.to = +HttpParamValidators.MustBeString(req.query,"to")
+    }
+    const orders=await bll.FilterOrder(query);
+    res.json(orders);
+  })
+
 
   router.post("/order/create", async (req, res) => {
     const params: OrderNS.CreateOrderParmas = {
