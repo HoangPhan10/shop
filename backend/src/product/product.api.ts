@@ -46,7 +46,7 @@ export function NewProductAPI(bll: ProductNS.BLL) {
     if(req.body.name){
         params.name= HttpParamValidators.MustBeString(req.body, "name", 2)
     }
-    if(req.body.mateterial){
+    if(req.body.material){
         params.material=HttpParamValidators.MustBeString(req.body, "material")
     }
     if(req.body.color){
