@@ -59,5 +59,19 @@
   .btn-sm{
     font-size: 60%;
   }
-  
+  .btn-mui {
+    background-color: rgb(0, 30, 60);
+    &:hover,
+    &:focus {
+      &:not([disabled]){
+        background-color: #0072E5;
+        transition: $transition-btn-hover;
+        box-shadow: $box-shadow;
+        color:white;
+      } 
+    }
+    &:disabled{
+      background-color: #b2bec3;
+    }
+  }
   

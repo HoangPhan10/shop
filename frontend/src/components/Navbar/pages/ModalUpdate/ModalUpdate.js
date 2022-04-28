@@ -102,7 +102,7 @@ function ModalUpdate(props) {
           })}
         </ModalBody>
         <ModalFooter>
-          <Button onClick={() => OnUpdateData()}>{isOpen}</Button>
+          <Button style={{backgroundColor:"rgb(0, 30, 60)"}} onClick={() => OnUpdateData()}>{isOpen}</Button>
           <Button color="danger" onClick={() => cancelUpdate()}>
             Hủy
           </Button>

@@ -37,11 +37,11 @@ export const DataTable = (props) => {
                                         i === array.length - 1 ?
                                             <td className="text-center">
                                                {!noButton2&& <Button
-                                                    color="primary"
+                                                    style={{backgroundColor:"rgb(0, 30, 60)"}}
                                                     onClick={() =>OnClickUpdate(data.id)}
                                                 >Sửa</Button>} &nbsp;
                                                {noButton3&& <Button
-                                                    color="primary"
+                                                   style={{backgroundColor:"rgb(0, 30, 60)"}}
                                                     onClick={() =>OnClickUpdate(data.id)}
                                                 >Xem</Button>} &nbsp;
                                                {!noButton&& <Button

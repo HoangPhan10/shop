@@ -8,7 +8,7 @@ import Service from "../../../api/shopService";
 import ModalConfirm from "../ModalConfirm/ModalConfirm";
 function Singup() {
   const role =JSON.parse(window.localStorage.getItem("role"))
-  const [valueEmail, setValueEmail] = useState("");
+  const [valueNameUser, setValueNameUser] = useState("");
   const [valuePassword, setValuePassword] = useState("");
   const [toggle, setToggle] = useState(false);
   const id = JSON.parse(window.localStorage.getItem("id"));
@@ -20,7 +20,7 @@ function Singup() {
   const handleShow = () => setShow(true);
   const handleToggel = () => {
     Service.getLogin({
-      username:valueEmail,
+      username:valueNameUser,
       password:valuePassword
     }).then((res)=>{
       Service.getCustomer(res.data.customer_id).then((res)=>{
@@ -72,12 +72,12 @@ function Singup() {
             </Modal.Header>
             <Modal.Body className={styles.modalBody}>
               <div className={styles.modalContent}>
-                <p>Địa chỉ email *</p>
+                <p>Tên đăng nhập *</p>
                 <input
-                  type="email"
-                  value={valueEmail}
-                  onChange={(e) => setValueEmail(e.target.value)}
-                  placeholder="Nhập email"
+                  type="text"
+                  value={valueNameUser}
+                  onChange={(e) => setValueNameUser(e.target.value)}
+                  placeholder="Nhập tên đăng nhập"
                 />
                 <p>Mật khẩu *</p>
                 <input
@@ -93,9 +93,6 @@ function Singup() {
             </Modal.Body>
             <Modal.Footer>
               <Login />
-              <Nav.Link as={Link} onClick={handleClose} to="/home">
-                Quên mật khẩu
-              </Nav.Link>
               <Button variant="danger" onClick={handleToggel}>
                 ĐĂNG NHẬP
               </Button>

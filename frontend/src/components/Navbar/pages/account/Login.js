@@ -8,11 +8,11 @@ function Login() {
   const [show, setShow] = useState(false);
   const [dataUsers, setDataUsers] = useState([]);
   useEffect(() => {
-    CallApi("", "GET", null).then((res) => {
-      if (res) {
-        setDataUsers(res.data);
-      }
-    });
+    // CallApi("", "GET", null).then((res) => {
+    //   if (res) {
+    //     setDataUsers(res.data);
+    //   }
+    // });
   }, []);
   const [valueEmail, setValueEmail] = useState("");
   const [valuePassword, setValuePassword] = useState("");
@@ -41,10 +41,10 @@ function Login() {
   const handleBlurEmail = () => {
     // const resultEmail = re.test(String(valueEmail).toLowerCase());
     setToggleEmail(true);
-    CallApi("", "GET", null).then((res) => {
-      const userE = res.data.find((user) => user.email === valueEmail);
-      setToggleEmail2(userE ? true : false);
-    });
+    // CallApi("", "GET", null).then((res) => {
+    //   const userE = res.data.find((user) => user.email === valueEmail);
+    //   setToggleEmail2(userE ? true : false);
+    // });
   };
   const updateUsers = () => {
     if (
@@ -54,15 +54,15 @@ function Login() {
       !toggleEmail2 &&
       valueEmail.length !== 0
     ) {
-      CallApi("create/user", "POST", {
-        id: dataUsers.length + 1,
-        email: valueEmail,
-        password: valuePassword,
-        addresses: [],
-        fullName: {},
-        order: [],
-        cart: [],
-      });
+      // CallApi("create/user", "POST", {
+      //   id: dataUsers.length + 1,
+      //   email: valueEmail,
+      //   password: valuePassword,
+      //   addresses: [],
+      //   fullName: {},
+      //   order: [],
+      //   cart: [],
+      // });
       setValueEmail("");
       setValuePassword("");
       setValuePassword2("");

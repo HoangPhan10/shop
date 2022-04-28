@@ -58,15 +58,18 @@ function LayoutRight() {
 
   const onChangeValue = (e) => {
     if(parseInt(e)===SORT[1].value){
-      setArrImage(arrImage.sort((a,b)=>a.ctime-b.ctime))
+      const a=arrImage.sort((a,b)=>a.ctime-b.ctime)
+      setArrImage(a)
     }else if(parseInt(e)===SORT[2].value){
       setArrImage(arrImage.sort((a,b)=>a.price-b.price))
     }else if(parseInt(e)===SORT[3].value){
-      setArrImage(arrImage.sort((a,b)=>b.price-a.price))
+      const b =arrImage.sort((a,b)=>b.price-a.price)
+      setArrImage(b)
     }else{
       setArrImage(arrImage)
     }
   };
+  console.log(arrImage)
   return (
     <div className={styles.accessoryRight}>
       <div className={styles.accessoryRightSelect}>

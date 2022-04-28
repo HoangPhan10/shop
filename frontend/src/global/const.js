@@ -75,8 +75,11 @@ export const GENDER=[
     value: "men",
   },
   {
-    label: "đang chờ xử lý",
+    label: "nữ",
     value: "women",
+  },{
+    label: "trẻ em",
+    value: "children",
   }
 ]
 export const ROLE=[

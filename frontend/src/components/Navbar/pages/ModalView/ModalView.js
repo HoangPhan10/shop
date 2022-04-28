@@ -1,7 +1,7 @@
 import React from "react";
 import "./ModalView.scss";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { FORMAT_PRICE, reverseBirthday } from "../../../../global/const";
+import { FORMAT_PRICE} from "../../../../global/const";
 function ModalUpdate(props) {
   const { isOpen, data, parentCallBack, customer } = props;
   const cancelView = () => {

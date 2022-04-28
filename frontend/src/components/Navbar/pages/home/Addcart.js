@@ -84,7 +84,11 @@ function AddCart(props) {
     }
   };
   const Done = () => {
-    window.location.replace("/viewcart");
+    if(message==="Qúy khách vui lòng đăng nhập"){
+      window.location.replace("/home");
+    }else{
+      window.location.replace("/viewcart");
+    }
   };
   useEffect(() => {
     Service.getProduct(index).then((res) => {
