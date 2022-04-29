@@ -57,19 +57,20 @@ function LayoutRight() {
   };
 
   const onChangeValue = (e) => {
-    if(parseInt(e)===SORT[1].value){
-      const a=arrImage.sort((a,b)=>a.ctime-b.ctime)
+    if(parseInt(e)===SORT[0].value){
+      const a=[...arrImage].sort((a,b)=>a.ctime-b.ctime)
       setArrImage(a)
-    }else if(parseInt(e)===SORT[2].value){
-      setArrImage(arrImage.sort((a,b)=>a.price-b.price))
-    }else if(parseInt(e)===SORT[3].value){
-      const b =arrImage.sort((a,b)=>b.price-a.price)
+    }else if(parseInt(e)===SORT[1].value){
+      const b=[...arrImage].sort((a,b)=>a.price-b.price)
       setArrImage(b)
+    }else if(parseInt(e)===SORT[2].value){
+      const c =[...arrImage].sort((a,b)=>b.price-a.price)
+      setArrImage(c)
     }else{
-      setArrImage(arrImage)
+      setArrImage([...arrImage])
     }
   };
-  console.log(arrImage)
+
   return (
     <div className={styles.accessoryRight}>
       <div className={styles.accessoryRightSelect}>
@@ -80,10 +81,9 @@ function LayoutRight() {
           aria-label="Default select example"
           onChange={(e) => onChangeValue(e.target.value)}
         >
-          <option value="0">Thứ tự mặc định</option>
-          <option value="1">Mới nhất</option>
-          <option value="2">Thứ tự theo giá:thấp đến cao</option>
-          <option value="3">Thứ tự theo giá:cao xuống thấp</option>
+          <option value="0">Mới nhất</option>
+          <option value="1">Thứ tự theo giá:thấp đến cao</option>
+          <option value="2">Thứ tự theo giá:cao xuống thấp</option>
         </Form.Select>
       </div>
       <div className={styles.accessoryRightLayout}>
