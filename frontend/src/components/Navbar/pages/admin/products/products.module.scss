@@ -4,6 +4,14 @@
     .orderList{
       display: flex;
       justify-content: space-between;
+      button{
+        background-color: rgb(0, 30, 60);
+        height:40px;
+        color:white;
+        &:hover{
+          background-color: #0072E5;
+        }
+      }
     }
     .searchPrice{
       display: flex;

@@ -106,7 +106,7 @@ function Products() {
   const [idProduct, setIdProduct] = useState(0);
   const [file, setFile] = useState([]);
   const [selectedOption, setSelectedOption] = useState({
-    value:""
+    value:"",label:"Tất cả"
   });
   const [idDelete, setIdDelete] = useState(0);
   const [dataUpdate, setDataUpdate] = useState([]);
@@ -165,18 +165,6 @@ function Products() {
       pattern.trim().length === 0 ? " " : pattern,
       list
     );
-    console.log(newList)
-    // const arr = newList.filter((el) => {
-    //   if (selectedOption.value.trim().length > 0) {
-    //     return el.gender === selectedOption.value&&el.price >= value[0] * 20000 && el.price <= value[1] * 20000
-    //   }
-    //     return el.price >= value[0] * 20000 && el.price <= value[1] * 20000;
-    // });
-    // setBody(
-    //   arr.map((el, index) => {
-    //     return dataProduct(el, index)
-    //   })
-    // );
     const newBody = newList.map((el, index) => {
       return dataProduct(el.item, index);
     });

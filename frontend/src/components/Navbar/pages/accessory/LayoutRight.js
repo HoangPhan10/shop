@@ -69,7 +69,6 @@ function LayoutRight() {
       setArrImage(arrImage)
     }
   };
-  console.log(arrImage)
   return (
     <div className={styles.accessoryRight}>
       <div className={styles.accessoryRightSelect}>

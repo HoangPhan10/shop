@@ -9,6 +9,7 @@ import ModalView from "../../ModalView/ModalView";
 import { converseStr, FORMAT_PRICE } from "./../../../../../global/const";
 import Select from "react-select";
 import { Label } from "reactstrap";
+import ModalStatis from "../../ModalStatis/ModalStatis";
 const minDistance = 10;
 const options = [
   { value: "", label: "Tất cả" },
@@ -46,10 +47,12 @@ function Orders() {
   const [listOrder, setListOrder] = useState([]);
   const [customer, setCustomer] = useState({});
   const [message, setMessage] = useState("");
+  const [messageStatis, setMessageStatis] = useState("");
   const [dataUpdate, setDataUpdate] = useState({});
   const [value, setValue] = useState([0, 80]);
   const [selectedOption, setSelectedOption] = useState({
-    value:""
+    value:"",
+    label:"Tất cả"
   });
   const handleChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
@@ -145,7 +148,7 @@ function Orders() {
             options={options}
           />
         </div>
-        <button style={{height:40}} className="btn btn-success">THỐNG KÊ</button>
+        <button onClick={()=>setMessageStatis("Thống kê")} className="btn">THỐNG KÊ</button>
         </div>
       </div>
       <DataTable
@@ -159,9 +162,12 @@ function Orders() {
       <ModalView
         isOpen={message}
         data={dataUpdate}
-        customer={customer}
         parentCallBack={() => setMessage("")}
+        customer={customer}
       />
+      <ModalStatis  isOpen={messageStatis}
+        data={listOrder}
+        parentCallBack={() => setMessageStatis("")}/>
     </div>
   );
 }

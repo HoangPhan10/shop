@@ -98,3 +98,20 @@ export const converseStr=(str)=>{
   })
   return arrString.join(" ")
 }
+
+export const reduceTotal=(arr)=>{
+ return  arr.reduce((result, prod) => {
+    return (
+      result +
+      prod.total
+    );
+}, 0);
+}
+export const reduceAmount=(arr)=>{
+ return  arr.reduce((result, prod) => {
+    return (
+      result +
+      prod.items[0].amount
+    );
+}, 0);
+}
