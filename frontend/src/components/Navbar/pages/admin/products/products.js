@@ -274,9 +274,9 @@ function Products() {
         name,
         origin_price,
         price,
-        material,
-        color,
         amount,
+        color,
+        material,
         gender,
         image,
       ] = data.map((d) => d.value);
@@ -303,7 +303,7 @@ function Products() {
           price: parseInt(price),
           gender: gender.value,
         };
-        Service.createProduct(product).then((res) => {
+        Service.createProduct(product).then(() => {
           setMessageNoti("Thêm sản phẩm thành công");
         });
       } else {
