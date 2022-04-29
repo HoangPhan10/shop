@@ -37,20 +37,16 @@ export const convertDate = (num) => {
 };
 export const SORT = [
   {
-    label: "mặc định",
+    label: "mới nhất",
     value: 0,
   },
   {
-    label: "mới nhất",
+    label: "từ thấp đến cao",
     value: 1,
   },
   {
-    label: "từ thấp đến cao",
-    value: 2,
-  },
-  {
     label: "từ cao đến thấp",
-    value: 3,
+    value: 2,
   },
 ];
 
