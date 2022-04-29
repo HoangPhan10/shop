@@ -70,7 +70,7 @@ function Singup() {
             <Modal.Header closeButton>
               <Modal.Title>ĐĂNG NHẬP </Modal.Title>
             </Modal.Header>
-            <Modal.Body className={styles.modalBody}>
+            <Modal.Body >
               <div className={styles.modalContent}>
                 <p>Tên đăng nhập *</p>
                 <input

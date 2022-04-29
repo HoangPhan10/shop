@@ -29,7 +29,7 @@ setTotalAmountWomen(reduceAmount(arrOrderWomen))
   return (
     <div>
       <Modal isOpen={!!isOpen}>
-        <ModalHeader>Số liệu thống kê trong vòng 1 tháng</ModalHeader>
+        <ModalHeader>Số liệu thống kê</ModalHeader>
         <ModalBody className={styles.modalStatis}>
           <Row className={styles.modalStatisTitle}>
             <Col>

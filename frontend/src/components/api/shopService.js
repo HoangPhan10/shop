@@ -2,27 +2,31 @@ import { Http } from "./http.js";
 
 const API_ENDPOINT = {
   LIST_PRODUCT: "/product/product/list",
-  LIST_SALE: "/product/product/sale",
-  LIST_CUSTOMER: "/customer/customer/list",
-  GET_CUSTOMER: "/customer/customer/get",
-  GET_ORDER: "/order/order/list?status=new",
-  GET_ORDER_VIEW: "/order/order/get",
   GET_PRODUCT: "/product/product/get",
-  GET_COMMENT: "/product/comment/list",
-  GET_LOGIN: "/auth/login",
-  GET_ORDER_DONE:"/order/order/list?status=done",
-  GET_ORDER_CANCEL:"/order/order/list?status=cancel",
-  GET_ORDER_AWAIT:"/order/order/list?status=await",
   UPDATE_PRODUCT: "/product/product/update",
-  UPDATE_CUSTOMER: "/customer/customer/update",
   DELETE_PRODUCT: "/product/product/delete",
   CREATE_PRODUCT:"/product/product/create",
-  CREATE_COMMENT:"/product/comment/create",
-  CREATE_ORDER:"/order/order/create",
-  SET_PASSWORD:"/auth/customer/set_password",
-  UPDATE_ORDER:"/order/order/update",
-  GET_LIST_ORDER_CUSTOMER:"/order/order/list"
 
+  LIST_CUSTOMER: "/customer/customer/list",
+  UPDATE_CUSTOMER: "/customer/customer/update",
+  GET_CUSTOMER: "/customer/customer/get",
+  
+  GET_ORDER: "/order/order/list?status=new",
+  CREATE_ORDER:"/order/order/create",
+  GET_ORDER_AWAIT:"/order/order/list?status=await",
+  GET_ORDER_VIEW: "/order/order/get",
+  GET_ORDER_CANCEL:"/order/order/list?status=cancel",
+  GET_ORDER_DONE:"/order/order/list?status=done",
+  UPDATE_ORDER:"/order/order/update",
+  GET_LIST_ORDER_CUSTOMER:"/order/order/list",
+  
+  LIST_SALE: "/product/product/sale",
+  GET_COMMENT: "/product/comment/list",
+  CREATE_COMMENT:"/product/comment/create",
+  
+  SET_PASSWORD:"/auth/customer/set_password",
+  GET_LOGIN: "/auth/login",
+  CREATE_CUSTOMER:"/customer/customer/create",
 };
 class TransactionService {
   constructor() {
@@ -99,7 +103,9 @@ class TransactionService {
   setPassword(payload){
     return Http.post(API_ENDPOINT.SET_PASSWORD,payload);
   }
-
+createCustomer(payload){
+  return Http.post(API_ENDPOINT.CREATE_CUSTOMER,payload);
+}
 }
 
 const Service = new TransactionService();

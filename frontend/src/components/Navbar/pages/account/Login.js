@@ -2,72 +2,95 @@ import { Button, Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import clsx from "clsx";
 import styles from "./Account.module.scss";
-import CallApi from "../../../api/callApi";
+import { strTrim, checkInterger, CheckDate } from "../../../../global/const";
 // import {re} from './checkEmail'
+import { Row, Col, Label } from "reactstrap";
+import Service from "../../../api/shopService";
+import ModalNoti from "../ModalNoti/ModalNoti";
 function Login() {
   const [show, setShow] = useState(false);
-  const [dataUsers, setDataUsers] = useState([]);
-  useEffect(() => {
-    // CallApi("", "GET", null).then((res) => {
-    //   if (res) {
-    //     setDataUsers(res.data);
-    //   }
-    // });
-  }, []);
-  const [valueEmail, setValueEmail] = useState("");
-  const [valuePassword, setValuePassword] = useState("");
-  const [valuePassword2, setValuePassword2] = useState("");
-  const [toggleEmail, setToggleEmail] = useState(false);
-  const [toggleEmail2, setToggleEmail2] = useState(false);
-  const [togglePassword, setTogglePassword] = useState(false);
-  const [togglePassword2, setTogglePassword2] = useState(false);
+  const [showName, setShowName] = useState(false);
+  const [showUserName, setShowUserName] = useState(false);
+  const [showCccd, setShowCccd] = useState(false);
+  const [showBirthday, setShowBirthday] = useState(false);
+  const [showPhone, setShowPhone] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordRepeat, setShowPasswordRepeat] = useState(false);
+  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [cccd, setCccd] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordRepeat, setPasswordRepeat] = useState("");
+  const [success,setSuccess]=useState(null)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleBlurPass = () => {
-    if (valuePassword.trim().length < 6) {
-      setTogglePassword(true);
-    } else {
-      setTogglePassword(false);
-    }
+
+  const OnchangeName = (value) => {
+    setName(value);
+    setShowName(strTrim(value) < 3);
   };
-  const handleBlurPass2 = () => {
-    if (valuePassword === valuePassword2) {
-      setTogglePassword2(false);
-    } else {
-      setTogglePassword2(true);
-    }
+  const OnchangeUserName = (value) => {
+    setUserName(value);
+    setShowUserName(strTrim(value) < 3);
+  };
+  const OnchangeCccd = (value) => {
+    setCccd(value);
+    setShowCccd(
+      (strTrim(value) !== 9 && strTrim(value) !== 12) || !checkInterger(value)
+    );
+  };
+  const OnchangeBirthday = (value) => {
+    setBirthday(value);
+    setShowBirthday(!CheckDate(value.split("-")));
+  };
+  const OnchangePhone = (value) => {
+    setPhone(value);
+    setShowPhone(strTrim(value) !== 10 || !checkInterger(value));
+  };
+  const OnchangePassword = (value) => {
+    setPassword(value);
+    setShowPassword(strTrim(value) < 6);
+  };
+  const OnchangePasswordRepeat = (value) => {
+    setPasswordRepeat(value);
+    setShowPasswordRepeat(value !== password);
   };
 
-  const handleBlurEmail = () => {
-    // const resultEmail = re.test(String(valueEmail).toLowerCase());
-    setToggleEmail(true);
-    // CallApi("", "GET", null).then((res) => {
-    //   const userE = res.data.find((user) => user.email === valueEmail);
-    //   setToggleEmail2(userE ? true : false);
-    // });
-  };
   const updateUsers = () => {
-    if (
-      !toggleEmail &&
-      !togglePassword &&
-      !togglePassword2 &&
-      !toggleEmail2 &&
-      valueEmail.length !== 0
-    ) {
-      // CallApi("create/user", "POST", {
-      //   id: dataUsers.length + 1,
-      //   email: valueEmail,
-      //   password: valuePassword,
-      //   addresses: [],
-      //   fullName: {},
-      //   order: [],
-      //   cart: [],
-      // });
-      setValueEmail("");
-      setValuePassword("");
-      setValuePassword2("");
-      handleClose();
-    }
+    const check =
+      strTrim(name) > 0 &&
+      strTrim(cccd) > 0 &&
+      strTrim(phone) > 0 &&
+      strTrim(birthday) > 0 &&
+      strTrim(userName) > 0 &&
+      strTrim(password) > 0 &&
+      strTrim(passwordRepeat) > 0 &&
+      !showBirthday &&
+      !showCccd &&
+      !showName &&
+      !showPassword &&
+      !showPasswordRepeat &&
+      !showPhone &&
+      !showUserName;
+      if(check){
+        Service.createCustomer({
+          name,username:userName,birthday,cccd,phone,role:"customer"
+        }).then((res)=>{
+          Service.setPassword({
+            customer_id:res.data.id,
+            password,
+          }).then(()=>{
+            setSuccess(true)
+            setInterval(() => {
+              setShow(false)
+            }, 2000);
+          })
+        })
+      }else{
+        setSuccess(false)
+      }
   };
   return (
     <>
@@ -78,41 +101,88 @@ function Login() {
       >
         ĐĂNG KÝ
       </span>
-      <Modal className={styles.modal} show={show} onHide={handleClose}>
+      <Modal className={styles.modal2} show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>ĐĂNG KÝ</Modal.Title>
         </Modal.Header>
-        <Modal.Body className={styles.modalBody}>
-          <div className={styles.modalContent}>
-            {toggleEmail2 && <span>Email đã được đăng ký</span>}
-            <p>Địa chỉ email *</p>
-            <input
-              type="email"
-              value={valueEmail}
-              onChange={(e) => setValueEmail(e.target.value)}
-              onBlur={handleBlurEmail}
-              placeholder="Nhập email"
-            />
-            {toggleEmail && <span>Email không đúng</span>}
-            <p>Mật khẩu *</p>
-            <input
-              type="password"
-              value={valuePassword}
-              onChange={(e) => setValuePassword(e.target.value)}
-              onBlur={handleBlurPass}
-              placeholder="Nhập mật khẩu"
-            />
-            {togglePassword && <span>Mật khẩu tối thiểu có 6 kí tự</span>}
-            <p>Nhập lại mật khẩu *</p>
-            <input
-              type="password"
-              value={valuePassword2}
-              onChange={(e) => setValuePassword2(e.target.value)}
-              onBlur={handleBlurPass2}
-              placeholder="Nhập lại mật khẩu"
-            />
-            {togglePassword2 && <span>Mật khẩu không trùng khớp</span>}
-          </div>
+        <Modal.Body className={styles.login}>
+          {success===true&&<p className={styles.success}>Đăng ký tài khoản thành công.Quay lại để đăng nhập.</p>}
+          {success===false&&<p className={styles.danger}>Vui lòng nhập đầy đủ thông tin</p>}
+          <Row>
+            <Col>
+              <Label>Nhập họ tên</Label>
+              <input
+                value={name}
+                onChange={(e) => OnchangeName(e.target.value)}
+                placeholder="Nhập họ tên"
+              />
+              {showName && <span>Vui lòng nhập họ tên</span>}
+            </Col>
+            <Col>
+              <Label>Nhập tên đăng nhập</Label>
+              <input
+                value={userName}
+                onChange={(e) => OnchangeUserName(e.target.value)}
+                placeholder="Nhập tên đăng nhập"
+              />
+              {showUserName && <span>Vui lòng nhập tên đăng nhập</span>}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Label>Nhập số điện thoại</Label>
+              <input
+                value={phone}
+                onChange={(e) => OnchangePhone(e.target.value)}
+                placeholder="Nhập số điện thoại"
+              />
+              {showPhone && <span>Vui lòng nhập số điện thoại</span>}
+            </Col>
+            <Col>
+              <Label>Nhập căn cước công dân</Label>
+              <input
+                value={cccd}
+                onChange={(e) => OnchangeCccd(e.target.value)}
+                placeholder="Nhập cccd"
+              />
+              {showCccd && <span>Vui lòng nhập căn cước công dân</span>}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Label>Nhập ngày sinh</Label>
+              <input
+                value={birthday}
+                onChange={(e) => OnchangeBirthday(e.target.value)}
+                placeholder="Nhập ngày sinh định dạng dd-mm-yyyy"
+              />
+              {showBirthday && (
+                <span>Vui lòng nhập đúng định dạng dd-mm-yyyy</span>
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Label>Nhập mật khẩu</Label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => OnchangePassword(e.target.value)}
+                placeholder="Nhập mật khẩu"
+              />
+              {showPassword && <span>Vui lòng nhập ít nhất 6 kí tự</span>}
+            </Col>
+            <Col>
+              <Label>Nhập lại mật khẩu</Label>
+              <input
+                type="password"
+                value={passwordRepeat}
+                onChange={(e) => OnchangePasswordRepeat(e.target.value)}
+                placeholder="Nhập lại mật khẩu"
+              />
+              {showPasswordRepeat && <span>Vui lòng nhập khớp mật khẩu</span>}
+            </Col>
+          </Row>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={updateUsers}>

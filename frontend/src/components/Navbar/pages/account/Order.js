@@ -90,7 +90,7 @@ function Order(props) {
         )}
         {props.arrOrder.length === 0 && (
           <div className={styles.orderButton}>
-            <Button variant="danger">TỚI CỦA HÀNG </Button>
+            <Link className={styles.buttonStore} to="/store" variant="danger">TỚI CỦA HÀNG </Link>
             <p>Chưa có đơn hàng được tạo ra</p>
           </div>
         )}

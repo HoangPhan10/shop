@@ -13,11 +13,31 @@
     color: #fff;
   }
 }
-
+.modal2{
+  margin-top: 50px;
+  width: 100%;
+  .login{
+    .success{
+      color:blue;
+    }
+    .danger{
+      color:red;
+    }
+    span{
+      color:red;
+      font-size: 13px;
+      display: block;
+    }
+    input{
+      @include Input;
+      width: 100%;
+      display: block;
+    }
+  }
+}
 .modal {
   margin-top: 150px;
   width: 100%;
-
   &Content {
     p {
       color: $colordark;
@@ -42,6 +62,8 @@
       font-size: 14px !important;
     }
   }
+  
+ 
 }
 
 .loginBtn {
@@ -295,9 +317,14 @@
   &Button {
     margin-left: 76px;
     display: flex;
-    Button {
+    .buttonStore {
       background-color: #c30005 !important;
       font-weight: 700;
+      text-decoration: none;
+      color:white;
+      height: 40px;
+      margin-top: 5px;
+      padding: 10px;
       border: none !important;
     }
     p {

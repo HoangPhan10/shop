@@ -6,7 +6,7 @@ class ModalNoti extends React.Component {
     let { message, done } = this.props;
     return (
       <div className="modalNotiContainer">
-        <Modal  scrollable isOpen={!!message}>
+        <Modal scrollable isOpen={!!message}>
           <ModalHeader>Thông Báo !</ModalHeader>
           <ModalBody>{message}</ModalBody>
           <ModalFooter>
