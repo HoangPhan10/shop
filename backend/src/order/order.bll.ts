@@ -58,6 +58,8 @@ export class NewOrderBLLBase implements OrderNS.BLL {
     }
     return viewOrderArr
   }
+
+  
   async CreateOrder(params: OrderNS.CreateOrderParmas) {
     const time = Date.now();
     const { product_id, amount } = params.itemParams;
@@ -257,5 +259,46 @@ export class NewOrderBLLBase implements OrderNS.BLL {
         };
       }
     }
+  }
+
+  async OrderByReport(query:OrderNS.QueryReport){
+    const orders= await this.dal.ListOrderByReport(query)
+    let viewOrderArr=[]
+    for(const o of orders){
+      const viewOrder=await this.GetViewOrder(o.id)
+      viewOrderArr.push(viewOrder)
+    }
+    if(query===OrderNS.QueryReport.WEEK){
+      const menOrders=viewOrderArr.filter(el=>el.items[0].product.gender===ProductNS.Gender.MEN)
+      const womenOrders=viewOrderArr.filter(el=>el.items[0].product.gender===ProductNS.Gender.WOMEN)
+      const childOrders=viewOrderArr.filter(el=>el.items[0].product.gender===ProductNS.Gender.CHILD)
+      const mapMenOrders=OrderNS.Utils.FilterOrder(menOrders)
+      const mapWomenOrders=OrderNS.Utils.FilterOrder(womenOrders)
+      const mapChildOrders=OrderNS.Utils.FilterOrder(childOrders)
+      return {
+        men:OrderNS.Utils.FilterReport(mapMenOrders),
+        women:OrderNS.Utils.FilterReport(mapWomenOrders),
+        child:OrderNS.Utils.FilterReport(mapChildOrders)
+      }
+    }else{
+      const menOrders=viewOrderArr.filter(o=>o.items[0].product.gender==ProductNS.Gender.MEN)
+      const womenOrders=viewOrderArr.filter(o=>o.items[0].product.gender==ProductNS.Gender.WOMEN)
+      const childOrders=viewOrderArr.filter(o=>o.items[0].product.gender==ProductNS.Gender.CHILD)
+      return {
+        men:{
+          amount:menOrders.length,
+          total:OrderNS.Utils.TotalMoneyByDay(menOrders)
+        },
+        women:{
+          amount:womenOrders.length,
+          total:OrderNS.Utils.TotalMoneyByDay(womenOrders)
+        },
+        child:{
+          amount:childOrders.length,
+          total:OrderNS.Utils.TotalMoneyByDay(childOrders)
+        }
+      }
+    }
+    
   }
 }

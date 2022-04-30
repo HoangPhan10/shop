@@ -46,4 +46,8 @@ export class CustomerAuthBLLBase implements CustomerAuthNS.BLL {
     async GetCustomerSession(id: string) {
         return this.dal.GetCustomerSession(id);
     }
+
+    async RemovePassword(customer_id:string){
+        await this.dal.RemovePassword(customer_id);
+    }
 }

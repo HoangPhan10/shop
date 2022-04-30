@@ -37,6 +37,7 @@ export namespace CustomerNS{
         GetCustomerByUsername(username:string):Promise<Customer>
         CreateCustomer(params:CreateCustomerParams):Promise<Customer>;
         UpdateCustomer(id:string, params:UpdateCustomerParams):Promise<Customer>
+        DeleteCustomer(id:string):Promise<void>
     }
 
     export interface DAL{
