@@ -20,7 +20,7 @@ export namespace ProductNS{
 
     export enum Gender{
         MEN="men",
-        WOMENT="women",
+        WOMEN="women",
         CHILD="children"
     }
     

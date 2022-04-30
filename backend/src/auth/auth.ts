@@ -24,6 +24,7 @@ export namespace CustomerAuthNS {
         SetPassword(customer_id: string, password: string): Promise<void>;
         Login(customername: string, password: string): Promise<CustomerSession>;
         GetCustomerSession(id: string): Promise<CustomerSession>;
+        RemovePassword(customer_id: string): Promise<void>
     }
     
     
@@ -34,6 +35,7 @@ export namespace CustomerAuthNS {
         CreateCustomerSession(session: CustomerSession): Promise<void>;
         GetCustomerSession(id: string): Promise<CustomerSession>;
         GetSessionByCustomer(customer_id : string) : Promise<CustomerSession[]>;
+        RemovePassword(customer_id: string): Promise<void>
     }
     
     export const Errors = {

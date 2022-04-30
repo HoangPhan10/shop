@@ -7,6 +7,8 @@ import {
   ToMongoData,
 } from "../lib/mongodb";
 import { FilterData } from "../common/filter_data_handlers";
+import {startOfWeek,endOfWeek,startOfDay,endOfDay} from "date-fns"
+
 export class OrderMongoDAL implements OrderNS.DAL {
   constructor(private db: Db) {}
   private col_order = this.db.collection<MongoModel<OrderNS.Order>>("order");
@@ -90,4 +92,20 @@ export class OrderMongoDAL implements OrderNS.DAL {
       throw error;
     }
   }
+
+  async ListOrderByReport(query:OrderNS.QueryReport){
+    if(query===OrderNS.QueryReport.WEEK){
+        const start=startOfWeek(Date.now()).getTime()
+        const end=endOfWeek(Date.now()).getTime()
+        const orders=await this.col_order.find({status:OrderNS.OrderStatus.DONE,mtime:{$gte:start,$lte:end}}).toArray()
+        return FromMongoData.Many<OrderNS.Order>(orders)
+    }
+    if(query===OrderNS.QueryReport.DAY){
+        const start=startOfDay(Date.now()).getTime()
+        const end=endOfDay(Date.now()).getTime()
+        const orders=await this.col_order.find({status:OrderNS.OrderStatus.DONE,mtime:{$gte:start,$lte:end}}).toArray()
+        return FromMongoData.Many<OrderNS.Order>(orders)
+    }
+}
+
 }

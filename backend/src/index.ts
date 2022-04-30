@@ -61,7 +61,7 @@ async function main() {
   app.disable("x-powered-by");
   app.use(cors());
   /*******************************************************/
-  app.use("/api/customer", NewCustomerAPI(customerBLL));
+  app.use("/api/customer", NewCustomerAPI(customerBLL,authBLL));
   app.use("/api/product", NewProductAPI(productBLL));
   app.use("/api/order", NewOrderAPI(orderBLL));
   app.use("/api/auth",NewAuthAPI(authBLL));

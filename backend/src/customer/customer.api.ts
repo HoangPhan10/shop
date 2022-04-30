@@ -1,9 +1,11 @@
 import { HttpParamValidators } from "../lib/http";
 import * as express from "express";
 import {CustomerNS} from "./customer"
+import { CustomerAuthNS } from "../auth/auth";
 
 export function NewCustomerAPI(
-    bll: CustomerNS.BLL
+    bll: CustomerNS.BLL,
+    auth_bll: CustomerAuthNS.BLL
 ){
     const router=express.Router();
     const role_type=Object.values(CustomerNS.Role)
@@ -55,6 +57,13 @@ export function NewCustomerAPI(
 
         const customer=await bll.UpdateCustomer(id,params)
         res.json(customer)
+    })
+
+    router.post('/customer/delete',async(req, res)=>{
+        const id = HttpParamValidators.MustBeString(req.query, "id",8)
+        await bll.DeleteCustomer(id)
+        await auth_bll.RemovePassword(id)
+        res.json(1) 
     })
     return router
 }
