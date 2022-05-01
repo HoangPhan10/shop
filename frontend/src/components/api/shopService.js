@@ -64,6 +64,9 @@ class TransactionService {
   getOrderAwait(id){
     return Http.get(API_ENDPOINT.GET_ORDER_AWAIT+`&customer_id=${id}`);
   }
+  getListOrderAwait(){
+    return Http.get(API_ENDPOINT.GET_ORDER_AWAIT);
+  }
   getCustomer(id) {
     return Http.get(API_ENDPOINT.GET_CUSTOMER + `?id=${id}`);
   }

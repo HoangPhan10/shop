@@ -360,6 +360,8 @@ function Products() {
       <DataTable
         headers={header}
         body={body}
+        buttonDelete={"Xóa"}
+        buttonUpdate={"Sửa"}
         parentCallBackUpdate={Update}
         parentCallBack={Delete}
       />

@@ -12,7 +12,6 @@ const header = [
   "CCCD",
   "SĐT",
   "NGÀY SINH",
-  "CHỨC VỤ",
   "CHỨC NĂNG",
 ];
 const options = [
@@ -39,10 +38,9 @@ function Users() {
           phone: el.phone,
           birthday: reverseBirthday(el.birthday),
           role: el.role===ROLE[0].value?"Người quản trị":"Người dùng",
-          function: "",
         };
       });
-      setBody(arrBody);
+      setBody(arrBody.filter((el)=>el.role==="Người dùng"));
     });
   }, [messageNoti]);
   const Update = (id) => {
@@ -76,7 +74,7 @@ function Users() {
       <div className={styles.title}>
         <h4>DANH SÁCH NGƯỜI DÙNG</h4>
       </div>
-      <DataTable noButton={2} headers={header} body={body} parentCallBackUpdate={Update} />
+      <DataTable buttonView={"view"} headers={header} body={body} parentCallBackUpdate={Update} />
       <ModalUpdate
         isOpen={message}
         data={dataUpdate}

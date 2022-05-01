@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import "react-slideshow-image/dist/styles.css";
 import { useEffect, useState } from "react";
 import Service from '../../../api/shopService'
-import { FORMAT_PRICE } from '../../../../global/const';
+import { Spinner } from "reactstrap";
+
+import { converseStr, FORMAT_PRICE } from '../../../../global/const';
 // 4 image
 function SlideImage(props) {
   const [arrSlideImage, setArrSlideImage] = useState([]);
@@ -232,10 +234,10 @@ function SlideImage(props) {
         <Slide>
           {slideImage.map((slideImage, index) => (
             <div className="each-slide" style={{ width: 1200 }} key={index}>
-              <div style={{ marginLeft: 72, display: "flex" }}>
+              {slideImage.url1&&<div style={{ marginLeft: 72, display: "flex" }}>
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url1} alt="slide1" />
-                  <p>{slideImage.title1}</p>
+                  <p>{converseStr(slideImage.title1)}</p>
                   <span>{FORMAT_PRICE(parseInt(slideImage.price1))}đ</span>
                   <div>
                     {slideImage.id1 && (
@@ -252,7 +254,7 @@ function SlideImage(props) {
                 </div>
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url2} alt="slide1" />
-                  <p>{slideImage.title2}</p>
+                  <p>{converseStr(slideImage.title2)}</p>
                   <span>{FORMAT_PRICE(parseInt(slideImage.price2))}đ</span>
                   <div>
                     {slideImage.id2 && (
@@ -269,7 +271,7 @@ function SlideImage(props) {
                 </div>
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url3} alt="slide1" />
-                  <p>{slideImage.title3}</p>
+                  <p>{converseStr(slideImage.title3)}</p>
                   <span>{FORMAT_PRICE(parseInt(slideImage.price3))}đ</span>
                   <div>
                     {slideImage.id3 && (
@@ -286,7 +288,7 @@ function SlideImage(props) {
                 </div>
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url4} alt="slide1" />
-                  <p>{slideImage.title4}</p>
+                  <p>{converseStr(slideImage.title4)}</p>
                   <span>{FORMAT_PRICE(parseInt(slideImage.price4))}đ</span>
                   <div>
                     {slideImage.id4 && (
@@ -303,7 +305,7 @@ function SlideImage(props) {
                 </div>
                 <div className={styles.slideimage1}>
                   <img src={slideImage.url5} alt="slide1" />
-                  <p>{slideImage.title5}</p>
+                  <p>{converseStr(slideImage.title5)}</p>
                   <span>{FORMAT_PRICE(parseInt(slideImage.price5))}đ</span>
                   <div>
                     {slideImage.id5 && (
@@ -318,7 +320,8 @@ function SlideImage(props) {
                     )}
                   </div>
                 </div>
-              </div>
+              </div>}
+              {!slideImage.url1&&<Spinner>Đang load ...</Spinner>}
             </div>
           ))}
         </Slide>

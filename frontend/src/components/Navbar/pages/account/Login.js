@@ -2,7 +2,7 @@ import { Button, Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import clsx from "clsx";
 import styles from "./Account.module.scss";
-import { strTrim, checkInterger, CheckDate } from "../../../../global/const";
+import { strTrim, checkInterger, CheckDate, reverseBirthday } from "../../../../global/const";
 // import {re} from './checkEmail'
 import { Row, Col, Label } from "reactstrap";
 import Service from "../../../api/shopService";
@@ -76,7 +76,7 @@ function Login() {
       !showUserName;
       if(check){
         Service.createCustomer({
-          name,username:userName,birthday,cccd,phone,role:"customer"
+          name,username:userName,birthday:reverseBirthday(birthday),cccd,phone,role:"customer"
         }).then((res)=>{
           Service.setPassword({
             customer_id:res.data.id,

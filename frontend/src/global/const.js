@@ -1,3 +1,7 @@
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
+
 export const FORMAT_PRICE = (number) => {
   return new Intl.NumberFormat("de-DE").format(number);
 };
@@ -129,3 +133,43 @@ export const SIZE = [
     value:"3XL"
   }
 ]
+
+export function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+export function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+export const minDistance = 10;
+export const options = [
+  { value: "", label: "Tất cả" },
+  { value: "women", label: "Nữ" },
+  { value: "men", label: "Nam" },
+  { value: "children", label: "Trẻ em" },
+];

@@ -3,7 +3,7 @@ import "./ModalView.scss";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { FORMAT_PRICE} from "../../../../global/const";
 function ModalUpdate(props) {
-  const { isOpen, data, parentCallBack, customer } = props;
+  const { isOpen, data, parentCallBack } = props;
   const cancelView = () => {
     parentCallBack();
   };
@@ -15,11 +15,11 @@ function ModalUpdate(props) {
           <div className="flex">
             <div className="view">
               <strong>Họ tên :</strong>
-              <p>{customer.name ? customer.name : ""}</p>
+              <p>{data.info ? data.info.name : ""}</p>
             </div>
             <div className="view">
               <strong>Số điện thoại :</strong>
-              <p>{customer.phone ? customer.phone : ""}</p>
+              <p>{data.info? data.info.phone: ""}</p>
             </div>
           </div>
           <div className="flex">

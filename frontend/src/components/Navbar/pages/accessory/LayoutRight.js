@@ -6,7 +6,7 @@ import { Form } from "react-bootstrap";
 import { AiOutlineLeft } from "react-icons/ai";
 import { AiOutlineRight } from "react-icons/ai";
 import Service from "../../../api/shopService";
-import { FORMAT_PRICE,SORT } from "../../../../global/const";
+import { converseStr, FORMAT_PRICE,SORT } from "../../../../global/const";
 
 function LayoutRight() {
   const [page, setPage] = useState(1);
@@ -89,7 +89,7 @@ function LayoutRight() {
         {arrImage.map((el, index) => (
           <div key={index}>
             <img src={el.image[0]} alt="" />
-            <p>{el.name}</p>
+            <p>{converseStr(el.name)}</p>
             <strong>{FORMAT_PRICE(el.price)}đ</strong>
             <Nav.Link
               className={styles.Button}

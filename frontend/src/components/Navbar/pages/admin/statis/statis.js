@@ -2,7 +2,7 @@ import React from 'react'
 
 function Statis() {
   return (
-    <div>Statis</div>
+    <div style={{marginTop:150}}>Statis</div>
   )
 }
 
