@@ -18,6 +18,19 @@ export namespace ProductNS{
         dtime?:number
     }
 
+    // export enum SizeType{
+    //     S="S",
+    //     M="M",
+    //     L="L",
+    // }
+    // export interface Size{
+    //     id:string;
+    //     product_id:string;
+    //     size:SizeType;
+    //     amount:number;
+    //     ctime:number;
+    //     mtime:number;
+    // }
     export enum Gender{
         MEN="men",
         WOMEN="women",

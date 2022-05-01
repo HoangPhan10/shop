@@ -21,11 +21,9 @@ import {
   bank2,
   bank1,
 } from "../../../../assets/images/home/Bank/imageBank";
-import { converseStr, FORMAT_PRICE, SIZE } from "../../../../global/const";
+import { converseStr, FORMAT_PRICE } from "../../../../global/const";
 import Service from "../../../api/shopService";
 import ModalNoti from "../ModalNoti/ModalNoti";
-import Select from "react-select";
-import { Label } from "reactstrap";
 export const Images = createContext();
 function AddCart(props) {
   const [num, setNum] = useState(1);
@@ -34,7 +32,6 @@ function AddCart(props) {
   const [evaluate, setEvaluate] = useState({});
   const id = JSON.parse(window.localStorage.getItem("id"));
   const index = JSON.parse(window.localStorage.getItem("idProduct"));
-  const [size, setSize] = useState(SIZE[0]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [index, idProduct]);

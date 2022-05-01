@@ -1,101 +1,21 @@
 import React from "react";
-import { DataTable } from "../../table/Table";
+import Box from "@mui/material/Box";
+import Fuse from "fuse.js";
+import Select from "react-select";
 import styles from "./products.module.scss";
+import { Label } from "reactstrap";
+import Slider from "@mui/material/Slider";
 import { useState, useEffect } from "react";
+import { DataTable } from "../../table/Table";
+import {
+  checkInterger,
+  FORMAT_PRICE,
+  strTrim,minDistance ,headerProduct,options,updateProduct,dataProduct
+} from "../../../../../global/const";
+import ModalConfirm from "./../../ModalConfirm/ModalConfirm";
+import ModalNoti from "./../../ModalNoti/ModalNoti";
 import ModalUpdate from "./../../ModalUpdate/ModalUpdate";
 import Service from "../../../../api/shopService";
-import {
-  converseStr,
-  FORMAT_PRICE,
-  strTrim,
-} from "../../../../../global/const";
-import ModalNoti from "./../../ModalNoti/ModalNoti";
-import { checkInterger, GENDER } from "../../../../../global/const";
-import ModalConfirm from "./../../ModalConfirm/ModalConfirm";
-import Select from "react-select";
-import { Label } from "reactstrap";
-import Fuse from "fuse.js";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
-const minDistance = 10;
-
-const header = [
-  "STT",
-  "SẢN PHẨM",
-  "CHẤT LIỆU",
-  "GIỚI TÍNH",
-  "MÀU SẮC",
-  "GIÁ",
-  "SỐ LƯỢNG",
-  "CHỨC NĂNG",
-];
-const options = [
-  { value: "", label: "Tất cả" },
-  { value: "women", label: "Nữ" },
-  { value: "men", label: "Nam" },
-  { value: "children", label: "Trẻ em" },
-];
-
-const dataProduct = (el, index) => {
-  return {
-    id: el.id,
-    stt: index + 1,
-    name: converseStr(el.name),
-    material: converseStr(el.material),
-    gender:
-      el.gender === GENDER[0].value
-        ? "Nam"
-        : el.gender === GENDER[1].value
-        ? "Nữ"
-        : "Trẻ em",
-    color: converseStr(el.color),
-    price: FORMAT_PRICE(el.price) + `đ`,
-    quantity: el.amount,
-    function: "",
-  };
-};
-
-const updateProduct = (data) => {
-  return [
-    {
-      placeHolder: "Tên sản phẩm",
-      value: data.name ? data.name : "",
-    },
-    {
-      placeHolder: "Giá",
-      value: data.origin_price ? data.origin_price : "",
-    },
-    {
-      placeHolder: "Giá giảm",
-      value: data.price ? data.price : "",
-    },
-    {
-      placeHolder: "Số lượng",
-      value: data.amount ? data.amount : "",
-    },
-    {
-      placeHolder: "Chất liệu",
-      value: data.material ? data.material : "",
-    },
-    {
-      placeHolder: "Màu sắc",
-      value: data.color ? data.color : "",
-    },
-    {
-      placeHolder: "Giới tính",
-      value: data.gender ? options.find((el) => el.value === data.gender) : "",
-      option: options,
-      class: "inputLink2",
-    },
-    {
-      placeHolder: "Hình ảnh",
-      value: data.image ? data.image : "",
-      file: "file",
-      class: "inputLink2",
-    },
-  ];
-};
-
 function Products() {
   const [body, setBody] = useState([]);
   const [list, setList] = useState([]);
@@ -105,32 +25,40 @@ function Products() {
   const [messageConfirm, setMessageConfirm] = useState("");
   const [idProduct, setIdProduct] = useState(0);
   const [file, setFile] = useState([]);
-  const [selectedOption, setSelectedOption] = useState({
-    value:"",label:"Tất cả"
-  });
+  const [selectedOption, setSelectedOption] = useState(options[0]);
   const [idDelete, setIdDelete] = useState(0);
   const [dataUpdate, setDataUpdate] = useState([]);
   const [pattern, setPattern] = useState("");
-
   const [value, setValue] = useState([0, 50]);
+  
   const handleChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
       return;
     }
-    if(selectedOption.value.length===0){
+    if (selectedOption.value.length === 0) {
       const arrList = list.filter((el) => {
-        return el.price >= newValue[0] * 20000 && el.price <= newValue[1] * 20000;
+        return (
+          el.price >= newValue[0] * 20000 && el.price <= newValue[1] * 20000
+        );
       });
-      setBody( arrList.map((el, index) => {
-        return dataProduct(el, index);
-      }));
-    }else{
+      setBody(
+        arrList.map((el, index) => {
+          return dataProduct(el, index);
+        })
+      );
+    } else {
       const arrList = list.filter((el) => {
-        return el.gender === selectedOption.value&&el.price >= newValue[0] * 20000 && el.price <= newValue[1] * 20000;
+        return (
+          el.gender === selectedOption.value &&
+          el.price >= newValue[0] * 20000 &&
+          el.price <= newValue[1] * 20000
+        );
       });
-      setBody( arrList.map((el, index) => {
-        return dataProduct(el, index);
-      }));
+      setBody(
+        arrList.map((el, index) => {
+          return dataProduct(el, index);
+        })
+      );
     }
     if (newValue[1] - newValue[0] < minDistance) {
       if (activeThumb === 0) {
@@ -174,16 +102,19 @@ function Products() {
   useEffect(() => {
     const arr = list.filter((el) => {
       if (selectedOption.value.trim().length > 0) {
-        return el.gender === selectedOption.value&&el.price >= value[0] * 20000 && el.price <= value[1] * 20000
+        return (
+          el.gender === selectedOption.value &&
+          el.price >= value[0] * 20000 &&
+          el.price <= value[1] * 20000
+        );
       }
-        return el.price >= value[0] * 20000 && el.price <= value[1] * 20000;
+      return el.price >= value[0] * 20000 && el.price <= value[1] * 20000;
     });
     setBody(
       arr.map((el, index) => {
-        return dataProduct(el, index)
+        return dataProduct(el, index);
       })
     );
-
   }, [selectedOption]);
 
   const Update = (id) => {
@@ -232,13 +163,13 @@ function Products() {
             checkInterger(`${amount}`)
       ) {
         Service.updateProduct(idProduct, {
-          name: name,
+          name,
           origin_price: parseInt(origin_price),
           gender: gender.value,
-          image: image,
+          image,
           price: parseInt(price),
-          material: material,
-          color: color,
+          material,
+          color,
           amount: parseInt(amount),
         }).then(() => {
           setMessageNoti("Sửa thông tin thành công");
@@ -358,7 +289,7 @@ function Products() {
         </button>
       </div>
       <DataTable
-        headers={header}
+        headers={headerProduct}
         body={body}
         buttonDelete={"Xóa"}
         buttonUpdate={"Sửa"}

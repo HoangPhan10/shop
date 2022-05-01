@@ -15,6 +15,7 @@ export const DataTable = (props) => {
     buttonView,
     buttonDelete,
     buttonUpdate,
+    noFunctionTable
   } = props;
 
   const handleDeleteEvent = (id) => {
@@ -47,54 +48,62 @@ export const DataTable = (props) => {
           {body.map((data, index) => {
             return (
               <tr key={data.id}>
-                {Object.keys(data, index)
+                {noFunctionTable&& Object.keys(data, index)
                   .filter((d) => d !== "id" && d !== "ctime")
                   .map((str) => data[str])
                   .map((dt, i, array) => {
-                    return i === +0 ? (
-                      <th scope="row">{dt}</th>
-                    ) : i === array.length - 1 ? (
-                      <td className="text-center">
-                        {buttonUpdate && (
-                          <Button
-                            style={{ backgroundColor: "rgb(0, 30, 60)" }}
-                            onClick={() => OnClickUpdate(data.id)}
-                          >
-                            Sửa
-                          </Button>
-                        )}{" "}
-                        &nbsp;
-                        {buttonView && (
-                          <Button
-                            style={{ backgroundColor: "rgb(0, 30, 60)" }}
-                            onClick={() => OnClickUpdate(data.id)}
-                          >
-                            Xem
-                          </Button>
-                        )}{" "}
-                        &nbsp;
-                        {buttonDelete && (
-                          <Button
-                            color="danger"
-                            onClick={() => handleDeleteEvent(data.id)}
-                          >
-                            Xóa
-                          </Button>
-                        )}{" "}
-                        &nbsp;
-                        {buttons && buttons.options ? (
-                          <Button
-                            color="primary"
-                            onClick={() => handleEvent(data.id)}
-                          >
-                            {buttons.name}
-                          </Button>
-                        ) : null}
-                      </td>
-                    ) : (
-                      <td>{dt}</td>
-                    );
+                    return <th style={{fontWeight:400}} scope="row">{dt}</th>
                   })}
+                  {
+                    !noFunctionTable&&Object.keys(data, index)
+                    .filter((d) => d !== "id" && d !== "ctime")
+                    .map((str) => data[str])
+                    .map((dt, i, array) => {
+                      return i === +0 ? (
+                        <th scope="row">{dt}</th>
+                      ) : i === array.length - 1 ? (
+                        <td className="text-center">
+                          {buttonUpdate && (
+                            <Button
+                              style={{ backgroundColor: "rgb(0, 30, 60)" }}
+                              onClick={() => OnClickUpdate(data.id)}
+                            >
+                              Sửa
+                            </Button>
+                          )}{" "}
+                          &nbsp;
+                          {buttonView && (
+                            <Button
+                              style={{ backgroundColor: "rgb(0, 30, 60)" }}
+                              onClick={() => OnClickUpdate(data.id)}
+                            >
+                              Xem
+                            </Button>
+                          )}{" "}
+                          &nbsp;
+                          {buttonDelete && (
+                            <Button
+                              color="danger"
+                              onClick={() => handleDeleteEvent(data.id)}
+                            >
+                             {buttonDelete}
+                            </Button>
+                          )}{" "}
+                          &nbsp;
+                          {buttons && buttons.options ? (
+                            <Button
+                              color="primary"
+                              onClick={() => handleEvent(data.id)}
+                            >
+                              {buttons.name}
+                            </Button>
+                          ) : null}
+                        </td>
+                      ) : (
+                        <td>{dt}</td>
+                      );
+                    })
+                  }
               </tr>
             );
           })}

@@ -71,16 +71,16 @@ export const STATUS = [
 
 export const GENDER = [
   {
-    label: "nam",
+    label: "Nam",
     value: "men",
   },
   {
-    label: "nữ",
+    label: "Nữ",
     value: "women",
   },
   {
-    label: "trẻ em",
-    value: "children",
+    label: "Trẻ em",
+    value: "child",
   },
 ];
 export const ROLE = [
@@ -111,28 +111,7 @@ export const reduceAmount = (arr) => {
   }, 0);
 };
 
-export const SIZE = [
-  {
-    label:"Size M",
-    value:"M"
-  },
-  {
-    label:"Size S",
-    value:"S"
-  },
-  {
-    label:"Size L",
-    value:"L"
-  },
-  {
-    label:"Size XXL",
-    value:"XXL"
-  },
-  {
-    label:"Size 3XL",
-    value:"3XL"
-  }
-]
+
 
 export function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -173,3 +152,105 @@ export const options = [
   { value: "men", label: "Nam" },
   { value: "children", label: "Trẻ em" },
 ];
+
+export const headerUser = [
+  "STT",
+  "NGƯỜI DÙNG",
+  "CCCD",
+  "SĐT",
+  "NGÀY SINH",
+];
+
+export const headerProduct = [
+  "STT",
+  "SẢN PHẨM",
+  "CHẤT LIỆU",
+  "GIỚI TÍNH",
+  "MÀU SẮC",
+  "GIÁ",
+  "SỐ LƯỢNG",
+  "CHỨC NĂNG",
+];
+export const headerOrder = [
+  "STT",
+  "MÃ ĐƠN HÀNG",
+  "SẢN PHẨM",
+  "MÀU SẮC",
+  "SỐ LƯỢNG",
+  "ĐỊA CHỈ",
+  "TỔNG",
+  "CHỨC NĂNG",
+];
+export const dataProduct = (el, index) => {
+  return {
+    id: el.id,
+    stt: index + 1,
+    name: converseStr(el.name),
+    material: converseStr(el.material),
+    gender:
+      el.gender === GENDER[0].value
+        ? "Nam"
+        : el.gender === GENDER[1].value
+        ? "Nữ"
+        : "Trẻ em",
+    color: converseStr(el.color),
+    price: FORMAT_PRICE(el.price) + `đ`,
+    quantity: el.amount,
+    function: "",
+  };
+};
+export const updateProduct = (data) => {
+  return [
+    {
+      placeHolder: "Tên sản phẩm",
+      value: data.name ? data.name : "",
+    },
+    {
+      placeHolder: "Giá",
+      value: data.origin_price ? data.origin_price : "",
+    },
+    {
+      placeHolder: "Giá giảm",
+      value: data.price ? data.price : "",
+    },
+    {
+      placeHolder: "Số lượng",
+      value: data.amount ? data.amount : "",
+    },
+    {
+      placeHolder: "Chất liệu",
+      value: data.material ? data.material : "",
+    },
+    {
+      placeHolder: "Màu sắc",
+      value: data.color ? data.color : "",
+    },
+    {
+      placeHolder: "Giới tính",
+      value: data.gender ? options.find((el) => el.value === data.gender) : "",
+      option: options,
+      class: "inputLink2",
+    },
+    {
+      placeHolder: "Hình ảnh",
+      value: data.image ? data.image : "",
+      file: "file",
+      class: "inputLink2",
+    },
+  ];
+};
+
+export const dataBodyOrder = (el, index) => {
+  return {
+    id: el.id,
+    stt: index + 1,
+    code: el.code,
+    name: converseStr(el.items[0].product.name),
+    color: converseStr(el.items[0].product.color),
+    amount: el.items[0].amount,
+    adress: converseStr(el.info ? el.info.address : ""),
+    total: FORMAT_PRICE(el.total) + "đ",
+    function: "",
+  };
+};
+

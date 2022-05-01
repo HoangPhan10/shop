@@ -46,15 +46,6 @@ function Cart() {
   }, [cart]);
   return (
     <div className={styles.cart}>
-      <div className={styles.Search}>
-        <IoSearchSharp className={styles.cartSearch} />
-        <div className={styles.hoverSearch}>
-          <input placeholder="Tìm kiếm" />
-          <button>
-            <IoSearchSharp />
-          </button>
-        </div>
-      </div>
       <div className={styles.cartPrice}>
         <p>GIỎ HÀNG</p> <CgFormatSlash className={styles.cgFormatSlash} />
         <span>{total}đ</span>

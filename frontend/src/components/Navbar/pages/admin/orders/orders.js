@@ -1,49 +1,25 @@
 import React from "react";
+import Select from "react-select";
 import { DataTable } from "../../table/Table";
 import styles from "../products/products.module.scss";
-import { useState, useEffect } from "react";
 import Slider from "@mui/material/Slider";
+import { Label } from "reactstrap";
+import "react-slideshow-image/dist/styles.css";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import { useState, useEffect } from "react";
 import Service from "../../../../api/shopService";
-import ModalView from "../../ModalView/ModalView";
 import {
   converseStr,
   FORMAT_PRICE,
   TabPanel,
   a11yProps,
   minDistance,
-  options,
+  options,headerOrder,dataBodyOrder
 } from "./../../../../../global/const";
-import Select from "react-select";
-import { Label } from "reactstrap";
-import "react-slideshow-image/dist/styles.css";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
+import ModalView from "../../ModalView/ModalView";
 import ModalConfirm from "./../../ModalConfirm/ModalConfirm";
-const header = [
-  "STT",
-  "MÃ ĐƠN HÀNG",
-  "SẢN PHẨM",
-  "MÀU SẮC",
-  "SỐ LƯỢNG",
-  "ĐỊA CHỈ",
-  "TỔNG",
-  "CHỨC NĂNG",
-];
-const dataBody = (el, index) => {
-  return {
-    id: el.id,
-    stt: index + 1,
-    code: el.code,
-    name: converseStr(el.items[0].product.name),
-    color: converseStr(el.items[0].product.color),
-    amount: el.items[0].amount,
-    adress: converseStr(el.info ? el.info.address : ""),
-    total: FORMAT_PRICE(el.total) + "đ",
-    function: "",
-  };
-};
-
 function Orders() {
   const [body, setBody] = useState([]);
   const [listOrder, setListOrder] = useState([]);
@@ -53,10 +29,7 @@ function Orders() {
   const [messageConfirm, setMessageConfirm] = useState("");
   const [dataUpdate, setDataUpdate] = useState({});
   const [value, setValue] = useState([0, 80]);
-  const [selectedOption, setSelectedOption] = useState({
-    value: "",
-    label: "Tất cả",
-  });
+  const [selectedOption, setSelectedOption] = useState(options[0]);
   const [id, setId] = useState(0);
   const [valueTab, setValueTab] = useState(0);
   const handleChangeTab = (event, newValue) => {
@@ -74,7 +47,7 @@ function Orders() {
       });
       setBody(
         arrList.map((el, index) => {
-          return dataBody(el, index);
+          return dataBodyOrder(el, index);
         })
       );
       const arrListAwait = listOrderAwait.filter((el) => {
@@ -84,7 +57,7 @@ function Orders() {
       });
       setBodyAwait(
         arrListAwait.map((el, index) => {
-          return dataBody(el, index);
+          return dataBodyOrder(el, index);
         })
       );
     } else {
@@ -97,7 +70,7 @@ function Orders() {
       });
       setBody(
         arrList.map((el, index) => {
-          return dataBody(el, index);
+          return dataBodyOrder(el, index);
         })
       );
       const arrListAwait = listOrderAwait.filter((el) => {
@@ -109,7 +82,7 @@ function Orders() {
       });
       setBody(
         arrListAwait.map((el, index) => {
-          return dataBody(el, index);
+          return dataBodyOrder(el, index);
         })
       );
     }
@@ -139,7 +112,7 @@ function Orders() {
     });
     setBody(
       arr.map((el, index) => {
-        return dataBody(el, index);
+        return dataBodyOrder(el, index);
       })
     );
     const arrAwait = listOrderAwait.filter((el) => {
@@ -154,7 +127,7 @@ function Orders() {
     });
     setBodyAwait(
       arrAwait.map((el, index) => {
-        return dataBody(el, index);
+        return dataBodyOrder(el, index);
       })
     );
   }, [selectedOption]);
@@ -164,7 +137,7 @@ function Orders() {
       setListOrder(res.data);
       setBody(
         res.data.map((el, index) => {
-          return dataBody(el, index);
+          return dataBodyOrder(el, index);
         })
       );
     });
@@ -172,7 +145,7 @@ function Orders() {
       setListOrderAwait(res.data);
       setBodyAwait(
         res.data.map((el, index) => {
-          return dataBody(el, index);
+          return dataBodyOrder(el, index);
         })
       );
     });
@@ -184,7 +157,7 @@ function Orders() {
     });
   };
   const Complete = (id) => {
-    setMessageConfirm("Sản phẩm này đã giao hàng thành công?");
+    setMessageConfirm("Đơn hàng này đã thanh toán thành công?");
     setId(id);
   };
   const Answer = (choice) => {
@@ -252,7 +225,7 @@ function Orders() {
         <TabPanel style={{ paddingLeft: 0 }} value={valueTab} index={0}>
           <DataTable
             buttonView={"Xem"}
-            headers={header}
+            headers={headerOrder}
             body={body}
             parentCallBackUpdate={View}
           />
@@ -261,7 +234,7 @@ function Orders() {
           <DataTable
             buttonView={"Xem"}
             buttonDelete={"Hoàn thành"}
-            headers={header}
+            headers={headerOrder}
             body={bodyAwait}
             parentCallBackUpdate={View}
             parentCallBack={Complete}
