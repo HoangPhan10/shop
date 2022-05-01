@@ -67,16 +67,16 @@ export const STATUS = [
 
 export const GENDER = [
   {
-    label: "nam",
+    label: "Nam",
     value: "men",
   },
   {
-    label: "nữ",
+    label: "Nữ",
     value: "women",
   },
   {
-    label: "trẻ em",
-    value: "children",
+    label: "Trẻ em",
+    value: "child",
   },
 ];
 export const ROLE = [
