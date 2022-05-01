@@ -12,7 +12,8 @@ export namespace CustomerNS{
     }
     export enum Role{
         ADMIN="admin",
-        CUSTOMER="customer"
+        CUSTOMER="customer",
+        STAFF="staff"
     }
     export interface CreateCustomerParams{
         name: string;
