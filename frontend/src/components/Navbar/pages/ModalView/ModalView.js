@@ -9,7 +9,7 @@ function ModalUpdate(props) {
   };
   return (
     <div>
-      <Modal isOpen={!!isOpen}>
+      <Modal size='lg' style={{width:600,marginTop:50}}  isOpen={!!isOpen}>
         <ModalHeader>Thông tin đơn hàng</ModalHeader>
         <ModalBody className="modalView">
           <div className="flex">

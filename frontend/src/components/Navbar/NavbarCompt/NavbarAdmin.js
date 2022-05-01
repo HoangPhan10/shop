@@ -49,6 +49,11 @@ function NavbarAdmin() {
       >
         ĐƠN HÀNG{" "}
       </Nav.Link>{" "}
+      <Nav.Link as={Link} to="/statis" className={clsx([styles.headerNavLink],index==="statis"?[styles.headerNavLinkActive]:"",)}
+        onClick={()=>setIndex("statis")}
+      >
+        THỐNG KÊ{" "}
+      </Nav.Link>{" "}
       {top && (
         <div className={styles.Fixed} onClick={handleClickTop}>
           <BsChevronUp />

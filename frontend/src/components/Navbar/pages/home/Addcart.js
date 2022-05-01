@@ -21,9 +21,11 @@ import {
   bank2,
   bank1,
 } from "../../../../assets/images/home/Bank/imageBank";
-import { FORMAT_PRICE } from "../../../../global/const";
+import { FORMAT_PRICE,SIZE } from "../../../../global/const";
 import Service from "../../../api/shopService";
 import ModalNoti from "../ModalNoti/ModalNoti";
+import Select from "react-select";
+import { Label } from "reactstrap";
 export const Images = createContext();
 function AddCart(props) {
   const [num, setNum] = useState(1);
@@ -32,6 +34,7 @@ function AddCart(props) {
   const [evaluate, setEvaluate] = useState({});
   const id = JSON.parse(window.localStorage.getItem("id"));
   const index = JSON.parse(window.localStorage.getItem("idProduct"));
+  const [size,setSize]=useState(SIZE[0])
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [index, idProduct]);
@@ -85,7 +88,7 @@ function AddCart(props) {
   };
   const Done = () => {
     if(message==="Qúy khách vui lòng đăng nhập"){
-      window.location.replace("/home");
+      setMessage("")
     }else{
       window.location.replace("/viewcart");
     }
@@ -163,12 +166,24 @@ function AddCart(props) {
               <h3>{evaluate.name}</h3>
               <strong>{FORMAT_PRICE(evaluate.price)}đ</strong>
               <div className={styles.addcartContentPrice}>
-                <div>
+                <div style={{display:"flex"}}>
                   {" "}
                   <p onClick={handleApart}>-</p> <p>{num}</p>{" "}
                   <p onClick={handleAdd}>+</p>
                 </div>
-                <button
+              <div className={styles.sizeSelect}>
+                {/* <Label>Chọn size</Label> */}
+                <Select
+                className={styles.select}
+                value={size}
+                options={SIZE}
+                onChange={setSize}
+                />
+              </div>
+              </div>
+              <div style={{marginBottom:20}}>
+              <button
+              style={{marginLeft:17}}
                   className={styles.Button}
                   onClick={() => handleAddCart(evaluate.id)}
                 >
@@ -180,6 +195,7 @@ function AddCart(props) {
                 >
                   MUA SẢN PHẨM
                 </button>
+
               </div>
               <div style={{ marginLeft: 17, display: "flex" }}>
                 <div className={styles.delivery}>

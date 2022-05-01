@@ -401,8 +401,15 @@
     &Price {
       margin: 20px 17px;
       display: flex;
+      .sizeSelect{
+        display:flex;
+        margin-left: 10px;
+        .select{
+          width:200px;
+          height: 30px;
+        }
+      }
       div {
-        display: flex;
         p {
           border: 1px solid #ccc;
           padding: 5px 8px;

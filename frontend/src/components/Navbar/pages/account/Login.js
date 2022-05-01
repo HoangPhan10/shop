@@ -101,7 +101,7 @@ function Login() {
       >
         ĐĂNG KÝ
       </span>
-      <Modal className={styles.modal2} show={show} onHide={handleClose}>
+      <Modal size='lg' className={styles.modal2} show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>ĐĂNG KÝ</Modal.Title>
         </Modal.Header>

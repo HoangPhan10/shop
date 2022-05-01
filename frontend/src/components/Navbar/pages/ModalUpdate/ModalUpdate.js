@@ -37,8 +37,8 @@ function ModalUpdate(props) {
   setDataUpdate([...data,data[data.length-1].value=file.filter((el,index2)=>index2!==index)])
   }
   return (
-    <div>
-      <Modal isOpen={!!isOpen}>
+    <div >
+      <Modal size='lg' isOpen={!!isOpen} style={{marginTop:80}}>
         <ModalHeader>Chỉnh sửa thông tin</ModalHeader>
         <ModalBody className="modalBody display-flex">
           <span className="noti display mb-10 fontsz-14">

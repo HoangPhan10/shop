@@ -275,8 +275,8 @@ function Products() {
         origin_price,
         price,
         amount,
-        color,
         material,
+        color,
         gender,
         image,
       ] = data.map((d) => d.value);

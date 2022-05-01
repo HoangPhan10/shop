@@ -50,7 +50,7 @@ export const SORT = [
   },
 ];
 
-export const STATUS=[
+export const STATUS = [
   {
     label: "hoàn thành",
     value: "done",
@@ -62,10 +62,10 @@ export const STATUS=[
   {
     label: "đã hủy",
     value: "cancel",
-  }
-]
+  },
+];
 
-export const GENDER=[
+export const GENDER = [
   {
     label: "nam",
     value: "men",
@@ -73,12 +73,13 @@ export const GENDER=[
   {
     label: "nữ",
     value: "women",
-  },{
+  },
+  {
     label: "trẻ em",
     value: "children",
-  }
-]
-export const ROLE=[
+  },
+];
+export const ROLE = [
   {
     label: "Người quản trị",
     value: "admin",
@@ -86,28 +87,45 @@ export const ROLE=[
   {
     label: "người dùng",
     value: "customer",
+  },
+];
+export const converseStr = (str) => {
+  const arrString = str.split(" ").map((el) => {
+    return el.charAt(0).toUpperCase() + el.slice(1);
+  });
+  return arrString.join(" ");
+};
+
+export const reduceTotal = (arr) => {
+  return arr.reduce((result, prod) => {
+    return result + prod.total;
+  }, 0);
+};
+export const reduceAmount = (arr) => {
+  return arr.reduce((result, prod) => {
+    return result + prod.items[0].amount;
+  }, 0);
+};
+
+export const SIZE = [
+  {
+    label:"Size M",
+    value:"M"
+  },
+  {
+    label:"Size S",
+    value:"S"
+  },
+  {
+    label:"Size L",
+    value:"L"
+  },
+  {
+    label:"Size XXL",
+    value:"XXL"
+  },
+  {
+    label:"Size 3XL",
+    value:"3XL"
   }
 ]
-export const converseStr=(str)=>{
-  const arrString = str.split(" ").map((el)=>{
-    return el.charAt(0).toUpperCase()+el.slice(1)
-  })
-  return arrString.join(" ")
-}
-
-export const reduceTotal=(arr)=>{
- return  arr.reduce((result, prod) => {
-    return (
-      result +
-      prod.total
-    );
-}, 0);
-}
-export const reduceAmount=(arr)=>{
- return  arr.reduce((result, prod) => {
-    return (
-      result +
-      prod.items[0].amount
-    );
-}, 0);
-}
