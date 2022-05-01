@@ -7,6 +7,7 @@ export function NewOrderAPI(bll: OrderNS.BLL) {
   const gender=Object.values(ProductNS.Gender)
   const router = express.Router();
 
+  const REPORT_QUERY =Object.values(OrderNS.QueryReport)
   router.get("/order/list", async (req, res) => {
       const query: OrderNS.QueryOrderParams = {}
     if (req.query.status) {
@@ -87,5 +88,11 @@ export function NewOrderAPI(bll: OrderNS.BLL) {
     const order = await bll.UpdateOrder(id, params);
     res.json(order);
   });
+
+  router.get('/order/report',async(req, res) => {
+    const query=HttpParamValidators.MustBeOneOf(req.query,"interval",REPORT_QUERY)
+    const orders=await bll.OrderByReport(query);
+    res.json(orders);
+  })
   return router;
 }

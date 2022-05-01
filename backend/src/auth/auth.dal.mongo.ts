@@ -48,4 +48,9 @@ export class CustomerAuthDALMongo implements CustomerAuthNS.DAL {
         const doc = ToMongoData.One(session);
         await this.col_customer_session.updateOne({_id : session.id} , {$set : doc});
     }
+
+    async RemovePassword(customer_id: string){
+        const secret= await this.col_customer_secret.findOne({customer_id: customer_id});
+        await this.col_customer_secret.deleteOne({_id:secret._id})
+    }
 }

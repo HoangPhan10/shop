@@ -49,4 +49,13 @@ export class NewCustomerBLLBase implements CustomerNS.BLL {
         await this.dal.UpdateCustomer(doc)
         return doc
     }
+    
+    async DeleteCustomer(id: string) {
+        const customer = await this.GetCustomer(id)
+        const doc={
+            ...customer,
+            dtime:Date.now()
+        }
+        await this.dal.UpdateCustomer(doc)
+    }
 }
