@@ -10,7 +10,13 @@ import { DataTable } from "../../table/Table";
 import {
   checkInterger,
   FORMAT_PRICE,
-  strTrim,minDistance ,headerProduct,options,updateProduct,dataProduct
+  strTrim,
+  minDistance,
+  headerProduct,
+  options,
+  updateProduct,
+  dataProduct,
+  removeVietnameseTones,
 } from "../../../../../global/const";
 import ModalConfirm from "./../../ModalConfirm/ModalConfirm";
 import ModalNoti from "./../../ModalNoti/ModalNoti";
@@ -30,36 +36,41 @@ function Products() {
   const [dataUpdate, setDataUpdate] = useState([]);
   const [pattern, setPattern] = useState("");
   const [value, setValue] = useState([0, 50]);
-  
+  const [listSearch, setListSearch] = useState([]);
   const handleChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
       return;
     }
     if (selectedOption.value.length === 0) {
-      const arrList = list.filter((el) => {
-        return (
-          el.price >= newValue[0] * 20000 && el.price <= newValue[1] * 20000
-        );
-      });
+      const arrList = (listSearch.length === 0 ? list : listSearch).filter(
+        (el) => {
+          return (
+            el.price >= newValue[0] * 20000 && el.price <= newValue[1] * 20000
+          );
+        }
+      );
       setBody(
         arrList.map((el, index) => {
           return dataProduct(el, index);
         })
       );
     } else {
-      const arrList = list.filter((el) => {
-        return (
-          el.gender === selectedOption.value &&
-          el.price >= newValue[0] * 20000 &&
-          el.price <= newValue[1] * 20000
-        );
-      });
+      const arrList = (listSearch.length === 0 ? list : listSearch).filter(
+        (el) => {
+          return (
+            el.gender === selectedOption.value &&
+            el.price >= newValue[0] * 20000 &&
+            el.price <= newValue[1] * 20000
+          );
+        }
+      );
       setBody(
         arrList.map((el, index) => {
           return dataProduct(el, index);
         })
       );
     }
+
     if (newValue[1] - newValue[0] < minDistance) {
       if (activeThumb === 0) {
         const clamped = Math.min(newValue[0], 100 - minDistance);
@@ -84,24 +95,47 @@ function Products() {
     });
   }, [messageNoti]);
 
-  useEffect(() => {
-    const options = {
-      keys: ["name"],
-    };
-    const fuse = new Fuse(list, options);
-    const newList = fuse.search(
-      pattern.trim().length === 0 ? " " : pattern,
-      list
-    );
-    const newBody = newList.map((el, index) => {
-      return dataProduct(el.item, index);
-    });
-    setBody(newBody);
-  }, [pattern]);
+  const OnChangeValue = (e) => {
+    setPattern(e);
+    if (strTrim(selectedOption.value) === 0) {
+      const result = list.filter((item) => {
+        return (
+          removeVietnameseTones(item.name)
+            .toUpperCase()
+            .includes(removeVietnameseTones(e).toUpperCase()) &&
+          item.price >= value[0] * 20000 &&
+          item.price <= value[1] * 20000
+        );
+      });
+      setListSearch(result);
+      setBody(
+        result.map((el, index) => {
+          return dataProduct(el, index);
+        })
+      );
+    } else {
+      const result = list.filter((item) => {
+        return (
+          removeVietnameseTones(item.name)
+            .toUpperCase()
+            .includes(removeVietnameseTones(e).toUpperCase()) &&
+          item.price >= value[0] * 20000 &&
+          item.price <= value[1] * 20000 &&
+          item.gender === selectedOption.value
+        );
+      });
+      setListSearch(result);
+      setBody(
+        result.map((el, index) => {
+          return dataProduct(el, index);
+        })
+      );
+    }
+  };
 
   useEffect(() => {
-    const arr = list.filter((el) => {
-      if (selectedOption.value.trim().length > 0) {
+    const arr = (listSearch.length === 0 ? list : listSearch).filter((el) => {
+      if (strTrim(selectedOption.value) > 0) {
         return (
           el.gender === selectedOption.value &&
           el.price >= value[0] * 20000 &&
@@ -254,7 +288,7 @@ function Products() {
           <input
             className="mb-20 mr-30"
             value={pattern}
-            onChange={(e) => setPattern(e.target.value)}
+            onChange={(e) => OnChangeValue(e.target.value)}
             type="text"
             placeholder="Nhập tên sản phẩm"
           />
