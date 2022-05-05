@@ -27,9 +27,7 @@ function Footer() {
             <h5>GIỚI THIỆU</h5>
             <div className={styles.inline}></div>
             <p>
-              Chào mừng bạn đến với ngôi nhà Converse! Tại đây, mỗi một dòng
-              chữ, mỗi chi tiết và hình ảnh đều là những bằng chứng mang dấu ấn
-              lịch sử Converse 100 năm, và đang không ngừng phát triển lớn mạnh
+              Chào mừng bạn đến với Shop Hà Trung !
             </p>
           </div>
           <div>

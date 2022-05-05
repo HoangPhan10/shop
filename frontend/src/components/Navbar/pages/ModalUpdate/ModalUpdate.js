@@ -65,6 +65,7 @@ function ModalUpdate(props) {
                     value={el.value}
                     name="skill"
                     options={el.option}
+                    placeholder="Chọn giới tính"
                     onChange={(e) => OnChange(e, index)}
                     className={clsx(
                       "basic-multi-select select-multi",

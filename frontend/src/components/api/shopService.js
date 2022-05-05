@@ -27,6 +27,7 @@ const API_ENDPOINT = {
   SET_PASSWORD:"/auth/customer/set_password",
   GET_LOGIN: "/auth/login",
   CREATE_CUSTOMER:"/customer/customer/create",
+  SEND_EMAIL:"/mail/mail/send"
 };
 class TransactionService {
   constructor() {
@@ -84,6 +85,9 @@ class TransactionService {
   }
   updateProduct(id, payload) {
     return Http.post(API_ENDPOINT.UPDATE_PRODUCT + `?id=${id}`, payload);
+  }
+  sendEmail(payload) {
+    return Http.post(API_ENDPOINT.SEND_EMAIL, payload);
   }
   updateCustomer(id, payload) {
     return Http.post(API_ENDPOINT.UPDATE_CUSTOMER + `?id=${id}`, payload);

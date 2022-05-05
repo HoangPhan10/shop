@@ -1,5 +1,5 @@
 import styles from "./contact.module.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import banner from "../../../../assets/images/home/banner-11.jpg";
@@ -11,11 +11,54 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaPinterest } from "react-icons/fa";
+import Select from "react-select";
 import clsx from "clsx";
+import { strTrim,checkInterger } from "../../../../global/const";
+import Service from "../../../api/shopService";
+import ModalNoti from "../ModalNoti/ModalNoti";
+const options = [
+  { label: "Góp ý", value: "Góp ý" },
+  { label: "Quảng cáo", value: "Quảng cáo" },
+];
 function Contact() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageNoti, setMessageNoti] = useState("");
+  const OnSubmit = () => {
+    if (
+      strTrim(name) > 0 &&
+      strTrim(message) > 0 &&
+      strTrim(email) > 0 &&
+      strTrim(phone) > 0 &&
+      email.endsWith("@gmail.com")&&checkInterger(phone)&&strTrim(phone)===10
+    ) {
+      Service.sendEmail({
+        name,
+        to: email,
+        title: selectedOption.value,
+        content: message,
+      }).then(() => {
+        setMessageNoti(
+          "Gửi nhận xét thành công.Chúng tôi sẽ phản hồi sớm nhất có thể"
+        );
+      });
+    } else {
+      setMessageNoti("Vui lòng nhập thông tin chính xác");
+    }
+  };
+  const Done = () => {
+    if (messageNoti === "Vui lòng nhập thông tin chính xác") {
+      setMessageNoti("");
+    } else {
+      window.location.replace("/home");
+    }
+  };
   return (
     <div className={styles.contact}>
       <div className={styles.contactTitle}>
@@ -88,14 +131,39 @@ function Contact() {
           </div>
         </div>
         <div className={styles.contactInforTwo}>
-          <input placeholder="Họ và tên" />
-          <input placeholder="Email" />
-          <input placeholder="Số điện thoại" />
-          <input placeholder="Địa chỉ" />
-          <input className={styles.Input} placeholder="Lời nhắn" />
-          <button>GỬI</button>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Họ và tên"
+          />
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
+          <div style={{ display: "flex" }}>
+            <input
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Số điện thoại"
+            />
+            <Select
+              className={styles.select}
+              value={selectedOption}
+              onChange={setSelectedOption}
+              options={options}
+            />
+          </div>
+          <input
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className={styles.Input}
+            placeholder="Lời nhắn"
+          />
+          <button onClick={() => OnSubmit()}>GỬI</button>
         </div>
       </div>
+      <ModalNoti message={messageNoti} done={Done} />
     </div>
   );
 }

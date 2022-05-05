@@ -50,7 +50,7 @@ function Products() {
         }
       );
       setBody(
-        arrList.map((el, index) => {
+        arrList.reverse().map((el, index) => {
           return dataProduct(el, index);
         })
       );
@@ -65,7 +65,7 @@ function Products() {
         }
       );
       setBody(
-        arrList.map((el, index) => {
+        arrList.reverse().map((el, index) => {
           return dataProduct(el, index);
         })
       );
@@ -88,7 +88,7 @@ function Products() {
     Service.getListProduct().then((res) => {
       setList(res.data);
       setBody(
-        res.data.map((el, index) => {
+        res.data.reverse().map((el, index) => {
           return dataProduct(el, index);
         })
       );
@@ -109,7 +109,7 @@ function Products() {
       });
       setListSearch(result);
       setBody(
-        result.map((el, index) => {
+        result.reverse().map((el, index) => {
           return dataProduct(el, index);
         })
       );
@@ -126,7 +126,7 @@ function Products() {
       });
       setListSearch(result);
       setBody(
-        result.map((el, index) => {
+        result.reverse().map((el, index) => {
           return dataProduct(el, index);
         })
       );
@@ -145,7 +145,7 @@ function Products() {
       return el.price >= value[0] * 20000 && el.price <= value[1] * 20000;
     });
     setBody(
-      arr.map((el, index) => {
+      arr.reverse().map((el, index) => {
         return dataProduct(el, index);
       })
     );
@@ -164,12 +164,15 @@ function Products() {
     if (messageNoti === "Sửa thông tin thành công") {
       setMessageNoti("");
       setMessage("");
+      window.location.reload()
     } else if (messageNoti === "Xóa thông tin thành công") {
       setMessageNoti("");
       setMessageConfirm("");
+      window.location.reload()
     } else if (messageNoti === "Thêm sản phẩm thành công") {
       setMessageNoti("");
       setMessageAdd("");
+      window.location.reload()
     } else {
       setMessageNoti("");
     }
@@ -207,6 +210,7 @@ function Products() {
           amount: parseInt(amount),
         }).then(() => {
           setMessageNoti("Sửa thông tin thành công");
+         
         });
       } else {
         setMessageNoti("Vui lòng nhập đúng thông tin");

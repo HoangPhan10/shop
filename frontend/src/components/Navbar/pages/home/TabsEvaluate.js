@@ -13,6 +13,7 @@ import imageUser from "../../../../assets/images/home/user.png";
 import GetRating from "./GetRating";
 import Service from "../../../api/shopService";
 import ModalNoti from './../ModalNoti/ModalNoti';
+import { GENDER } from './../../../../global/const';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -116,7 +117,7 @@ if(idUser!==0){
         </div>
         <div>
           <strong>GIỚI TÍNH</strong>
-          <span style={{ paddingLeft: 520 }}>{inforProduct.gender}</span>
+          <span style={{ paddingLeft: 520 }}>{inforProduct.gender===GENDER[0].value?"Nam":inforProduct.gender===GENDER[1].value?"Nữ":"Trẻ em"}</span>
         </div>
         <div>
           <strong>MÀU SẮC</strong>
@@ -147,7 +148,6 @@ if(idUser!==0){
               ref={inputRef}
               onChange={(e) => setValueInput(e.target.value)}
             />
-
             <Button variant="contained" onClick={handleSend}>
               GỬI
             </Button>

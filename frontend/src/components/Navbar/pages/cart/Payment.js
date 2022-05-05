@@ -98,7 +98,7 @@ if(message==="Mua sản phẩm thành công."){
               </div>}
         <div>
           <strong>Tổng phụ</strong>
-          <strong>  {FORMAT_PRICE(cart.total)+"đ"}</strong>
+          <strong>  {cart.total?FORMAT_PRICE(cart.total)+"đ":""}</strong>
         </div>
         <div>
           <strong>Giao hàng</strong>
@@ -106,7 +106,7 @@ if(message==="Mua sản phẩm thành công."){
         </div>
         <div>
           <strong>Tổng</strong>
-          <strong>  {FORMAT_PRICE(cart.total)+"đ"}</strong>
+          <strong>  {cart.total?FORMAT_PRICE(cart.total)+"đ":""}</strong>
         </div>
         <div style={{ border: "none" }}>
           <FormControl component="fieldset">

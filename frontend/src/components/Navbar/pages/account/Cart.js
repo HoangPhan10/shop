@@ -11,7 +11,7 @@ function Cart() {
   const [total, setTotal] = useState("0");
   const id = JSON.parse(window.localStorage.getItem("id"));
   useEffect(() => {
-    if (parseInt(id) !== 0) {
+    if (id !== 0) {
       Service.getListOrderCustomer(id).then((res)=>{
        const a= res.data.map((el)=> {
           return {

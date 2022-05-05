@@ -44,6 +44,7 @@ function ViewCart() {
       }).then(()=>{
         setMessage("Xóa sản phẩm thành công")
         setMessageConfirm("")
+        window.location.replace("/home")
       })
     }else{
       setMessageConfirm("")

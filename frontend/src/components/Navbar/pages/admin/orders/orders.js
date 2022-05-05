@@ -16,7 +16,7 @@ import {
   TabPanel,
   a11yProps,
   minDistance,
-  options,headerOrder,dataBodyOrder
+  options,headerOrder,dataBodyOrder, strTrim
 } from "./../../../../../global/const";
 import ModalView from "../../ModalView/ModalView";
 import ModalConfirm from "./../../ModalConfirm/ModalConfirm";
@@ -32,6 +32,7 @@ function Orders() {
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const [id, setId] = useState(0);
   const [valueTab, setValueTab] = useState(0);
+  const [pattern,setPattern]=useState("")
   const handleChangeTab = (event, newValue) => {
     setValueTab(newValue);
   };
@@ -46,7 +47,7 @@ function Orders() {
         );
       });
       setBody(
-        arrList.map((el, index) => {
+        arrList.reverse().map((el, index) => {
           return dataBodyOrder(el, index);
         })
       );
@@ -56,7 +57,7 @@ function Orders() {
         );
       });
       setBodyAwait(
-        arrListAwait.map((el, index) => {
+        arrListAwait.reverse().map((el, index) => {
           return dataBodyOrder(el, index);
         })
       );
@@ -69,7 +70,7 @@ function Orders() {
         );
       });
       setBody(
-        arrList.map((el, index) => {
+        arrList.reverse().map((el, index) => {
           return dataBodyOrder(el, index);
         })
       );
@@ -81,7 +82,7 @@ function Orders() {
         );
       });
       setBody(
-        arrListAwait.map((el, index) => {
+        arrListAwait.reverse().map((el, index) => {
           return dataBodyOrder(el, index);
         })
       );
@@ -111,7 +112,7 @@ function Orders() {
       return el.total >= value[0] * 20000 && el.total <= value[1] * 20000;
     });
     setBody(
-      arr.map((el, index) => {
+      arr.reverse().map((el, index) => {
         return dataBodyOrder(el, index);
       })
     );
@@ -126,7 +127,7 @@ function Orders() {
       return el.total >= value[0] * 20000 && el.total <= value[1] * 20000;
     });
     setBodyAwait(
-      arrAwait.map((el, index) => {
+      arrAwait.reverse().map((el, index) => {
         return dataBodyOrder(el, index);
       })
     );
@@ -136,7 +137,7 @@ function Orders() {
     Service.getOrderDone().then((res) => {
       setListOrder(res.data);
       setBody(
-        res.data.map((el, index) => {
+        res.data.reverse().map((el, index) => {
           return dataBodyOrder(el, index);
         })
       );
@@ -144,7 +145,7 @@ function Orders() {
     Service.getListOrderAwait().then((res) => {
       setListOrderAwait(res.data);
       setBodyAwait(
-        res.data.map((el, index) => {
+        res.data.reverse().map((el, index) => {
           return dataBodyOrder(el, index);
         })
       );
@@ -169,6 +170,41 @@ function Orders() {
       setMessageConfirm("");
     }
   };
+  const OnChangePattern=(e)=>{
+    setPattern(e)
+    if(strTrim(e)!==0){
+      const result = listOrder.find((el)=>el.code===e)
+      const resultAwait = listOrderAwait.find((el)=>el.code===e)
+      if(result){
+        setBody(
+          [result].map((el, index) => {
+            return dataBodyOrder(el, index);
+          })
+        );
+      }else if(resultAwait){
+        setBodyAwait(
+          [resultAwait].map((el, index) => {
+            return dataBodyOrder(el, index);
+          })
+        );
+      }else{
+        setBody([])
+        setBodyAwait([])
+      }
+      
+    }else{
+      setBodyAwait(
+        listOrderAwait.reverse().map((el, index) => {
+          return dataBodyOrder(el, index);
+        })
+      );
+      setBody(
+        listOrder.reverse().map((el, index) => {
+          return dataBodyOrder(el, index);
+        })
+      );
+    }
+  }
   return (
     <div className={styles.products}>
       <div className={styles.title}>
@@ -189,8 +225,18 @@ function Orders() {
               />
             </Box>
           </div>
+          <div>
+          <Label>Tìm kiếm theo mã đơn hàng</Label>
+          <input
+            className="mt-10 ml-30"
+            type="text"
+            value={pattern}
+            onChange={(e)=>OnChangePattern(e.target.value)}
+            placeholder="Tìm mã đơn hàng"
+          />
+        </div>
           <div className=" mb-10 flex">
-            <Label className={styles.labelSelect}>Tìm theo giới tính</Label>
+            <Label className={styles.labelSelect}>Chọn theo sản phẩm</Label>
             <Select
               className={styles.select}
               value={selectedOption}

@@ -206,11 +206,11 @@ export const updateProduct = (data) => {
       value: data.name ? data.name : "",
     },
     {
-      placeHolder: "Giá",
+      placeHolder: "Giá gốc",
       value: data.origin_price ? data.origin_price : "",
     },
     {
-      placeHolder: "Giá giảm",
+      placeHolder: "Giá bán",
       value: data.price ? data.price : "",
     },
     {
