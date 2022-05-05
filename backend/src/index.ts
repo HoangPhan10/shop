@@ -25,6 +25,8 @@ import { NewAuthAPI } from "./auth/auth.api";
 import { CustomerAuthBLLBase } from "./auth/auth.bll.base";
 import { CustomerAuthDALMongo } from "./auth/auth.dal.mongo";
 
+
+import {NewMailAPI} from './mail/mail.api'
 async function main() {
   const config = await ReadConfig();
   console.log(config);
@@ -65,6 +67,7 @@ async function main() {
   app.use("/api/product", NewProductAPI(productBLL));
   app.use("/api/order", NewOrderAPI(orderBLL));
   app.use("/api/auth",NewAuthAPI(authBLL));
+  app.use("/api/mail",NewMailAPI());
   /*******************************************************/
   app.use("/", ExpressStaticFallback(config.app.dir));
   app.use(HttpErrorHandler);
