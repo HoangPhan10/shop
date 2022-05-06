@@ -22,14 +22,13 @@ async function MockData(url) {
     fs.readFile("data.json",(err,data)=>{
         if(err) console.log(err)
         const result=JSON.parse(data);
-        const filterArr= result.map(el=>{
-            if(el.school.includes("(trang không tồn tại)")){
-                el=el.school.slice(0,el.length-22)
-                return el
+        const newData=result.map((el,index)=>{
+            return {
+                _id:index+1,
+                school: el.school
             }
-            return el
-        });
-            fs.writeFile("data.json", JSON.stringify(filterArr), (err) => {
+        })
+            fs.writeFile("data.json", JSON.stringify(newData), (err) => {
         if (err) console.log(err)
         else console.log("write file done")
     });
