@@ -148,9 +148,9 @@ export function a11yProps(index) {
 export const minDistance = 10;
 export const options = [
   { value: "", label: "Tất cả" },
-  { value: "women", label: "Nữ" },
-  { value: "men", label: "Nam" },
-  { value: "children", label: "Trẻ em" },
+  { value: "women", label: "Đồ Nữ" },
+  { value: "men", label: "Đồ Nam" },
+  { value: "children", label: "Đồ Trẻ Em" },
 ];
 
 export const headerUser = [

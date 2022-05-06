@@ -99,7 +99,7 @@ function AddCart(props) {
     setIdProduct(id);
   };
   const handlePayment = (idOrderProduct) => {
-    if (parseInt(id) === 0) {
+    if (id === 0) {
       setMessage("Qúy khách vui lòng đăng nhập");
     } else {
       Service.getOrder(id).then((res) => {
