@@ -10,12 +10,12 @@ export function NewMailAPI() {
         let transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
-                user: 'phuongnam.ltc0203@gmail.com',
-                pass: 'lethicham0203'
+                user: 'acccountShopHaTrung@gmail.com',
+                pass: 'shophatrung123'
             }
         })
         const option = {
-            from: `${req.body.name}<phuongnam.ltc0203@gmail.com>`,
+            from: `${req.body.name}<acccountShopHaTrung@gmail.com>`,
             to: req.body.to,
             subject: req.body.title,
             text: req.body.content
