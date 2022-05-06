@@ -21,7 +21,7 @@ function LayoutRight() {
       Service.searchProduct(search).then((res)=>{
         setArrImageList(res.data);
         setArrImage(res.data.slice((page - 1) * 12, page * 12));
-    window.localStorage.setItem("search", JSON.stringify(""))
+    // window.localStorage.setItem("search", JSON.stringify(""))
       })
     }else{
       Service.getListProduct().then((res) => {
@@ -36,6 +36,9 @@ function LayoutRight() {
       });
     }
   }, [page, pathname,search]);
+  useEffect(()=>{
+setPage(1)
+  },[pathname])
   for (let i = 1; i <= numPage; i++) {
     arrPage.push({ id: i });
   }
