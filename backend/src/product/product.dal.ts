@@ -40,6 +40,10 @@ export class ProductMongoDAL implements ProductNS.DAL{
         return FromMongoData.One<ProductNS.Product>(product)
     }
 
+    async GetProductByName(name:string){
+        const products=await this.col_product.find({"name": {$regex:name}}).toArray()
+        return FromMongoData.Many<ProductNS.Product>(products)
+    }
     async CreateProduct(product: ProductNS.Product){
         const doc=ToMongoData.One<ProductNS.Product>(product)
         try {
