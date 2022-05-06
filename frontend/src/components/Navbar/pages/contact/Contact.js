@@ -100,7 +100,7 @@ function Contact() {
             <strong>
               <MdEmail />
             </strong>
-            phanhoang1022002@gmail.com
+            trangdth16092000@gmail.com
           </p>
           <div style={{ display: "flex" }}>
             <div className={clsx(styles.hover, styles.facebook)}>

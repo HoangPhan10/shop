@@ -27,7 +27,8 @@ const API_ENDPOINT = {
   SET_PASSWORD:"/auth/customer/set_password",
   GET_LOGIN: "/auth/login",
   CREATE_CUSTOMER:"/customer/customer/create",
-  SEND_EMAIL:"/mail/mail/send"
+  SEND_EMAIL:"/mail/mail/send",
+  SEARCH_PRODUCT:"/product/product/get_by_name?name="
 };
 class TransactionService {
   constructor() {
@@ -37,6 +38,10 @@ class TransactionService {
     TransactionService._instance = this;
 
     // ... Your rest of the constructor code goes after this
+  }
+  
+  searchProduct(payload) {
+    return Http.get(API_ENDPOINT.SEARCH_PRODUCT+`${payload}`);
   }
   getListProduct() {
     return Http.get(API_ENDPOINT.LIST_PRODUCT);

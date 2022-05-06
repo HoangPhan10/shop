@@ -25,6 +25,9 @@ function Routess() {
         <Route path="/children">
           <LayoutGeneral title="TRẺ EM" />
         </Route>
+        <Route path="/search">
+          <LayoutGeneral title="TÌM KIẾM" />
+        </Route>
         <Route path="/contact">
           <Contact />
         </Route>

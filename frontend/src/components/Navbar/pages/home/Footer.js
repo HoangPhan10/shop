@@ -43,7 +43,7 @@ function Footer() {
             </div>
             <div>
               <MdEmail className={styles.icon} />
-              <p>phanhoang1022002@gmail.com</p>
+              <p>trangdth16092000@gmail.com</p>
             </div>
           </div>
           <div>

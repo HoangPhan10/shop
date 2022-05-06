@@ -6,7 +6,7 @@ import { Form } from "react-bootstrap";
 import { AiOutlineLeft } from "react-icons/ai";
 import { AiOutlineRight } from "react-icons/ai";
 import Service from "../../../api/shopService";
-import { converseStr, FORMAT_PRICE,SORT } from "../../../../global/const";
+import { converseStr, FORMAT_PRICE,SORT ,strTrim} from "../../../../global/const";
 
 function LayoutRight() {
   const [page, setPage] = useState(1);
@@ -14,19 +14,28 @@ function LayoutRight() {
   const [arrImage, setArrImage] = useState([]);
   const [arrImageList, setArrImageList] = useState([]);
   const pathname = window.location.pathname;
+  const search = JSON.parse(window.localStorage.getItem("search"))
   let arrPage = [];
   useEffect(() => {
-    Service.getListProduct().then((res) => {
-      const arrSale = res.data.filter((el) => {
+    if (pathname.split("/")[1] === "search") {
+      Service.searchProduct(search).then((res)=>{
+        setArrImageList(res.data);
+        setArrImage(res.data.slice((page - 1) * 12, page * 12));
+    window.localStorage.setItem("search", JSON.stringify(""))
+      })
+    }else{
+      Service.getListProduct().then((res) => {
+        const list = res.data.filter((el) => {
         if (pathname.split("/")[1] === "store") {
-          return el;
-        }
-        return el.gender === pathname.split("/")[1];
+            return el;
+          }
+            return el.gender === pathname.split("/")[1];
+        });
+        setArrImageList(list);
+        setArrImage(list.slice((page - 1) * 12, page * 12));
       });
-      setArrImageList(arrSale);
-      setArrImage(arrSale.slice((page - 1) * 12, page * 12));
-    });
-  }, [page, pathname]);
+    }
+  }, [page, pathname,search]);
   for (let i = 1; i <= numPage; i++) {
     arrPage.push({ id: i });
   }
@@ -86,7 +95,7 @@ function LayoutRight() {
         </Form.Select>
       </div>
       <div className={styles.accessoryRightLayout}>
-        {arrImage.map((el, index) => (
+        {arrImage.length!==0&&arrImage.map((el, index) => (
           <div key={index}>
             <img src={el.image[0]} alt="" />
             <p>{converseStr(el.name)}</p>
@@ -101,6 +110,7 @@ function LayoutRight() {
             </Nav.Link>
           </div>
         ))}
+        {arrImage.length===0&&<p style={{marginLeft:400}}>Không tìm thấy kết quả</p>}
       </div>
       {numPage > 1 && (
         <div className={styles.pagination}>

@@ -6,10 +6,13 @@ import { BsCartPlus } from "react-icons/bs";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Service from "../../../api/shopService";
+import {strTrim} from '../../../../global/const'
 function Cart() {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState("0");
+  const [value,setValue] = useState("")
   const id = JSON.parse(window.localStorage.getItem("id"));
+  const [path,setPath]=useState(window.location.pathname)
   useEffect(() => {
     if (id !== 0) {
       Service.getListOrderCustomer(id).then((res)=>{
@@ -44,8 +47,31 @@ function Cart() {
       setTotal("0");
     }
   }, [cart]);
+  const OnChange=(e)=>{
+    setValue(e)
+    if(strTrim(e)>0){
+      setPath("/search")
+    }else{
+      setPath(window.location.pathname)
+    }
+  }
+  const OnSearch=()=>{
+    window.localStorage.setItem("search", JSON.stringify(value))
+    if(path==="/search"){
+      window.location.replace(path)
+    }
+  }
   return (
     <div className={styles.cart}>
+      <div className={styles.Search}>
+        <IoSearchSharp className={styles.cartSearch} />
+        <div className={styles.hoverSearch}>
+          <input value={value} onChange={(e)=>OnChange(e.target.value)} placeholder="Tìm kiếm" />
+          <button  onClick={()=>OnSearch()} className={styles.hoverSearchLink}>
+            <IoSearchSharp />
+          </button>
+        </div>
+      </div>
       <div className={styles.cartPrice}>
         <p>GIỎ HÀNG</p> <CgFormatSlash className={styles.cgFormatSlash} />
         <span>{total}đ</span>
