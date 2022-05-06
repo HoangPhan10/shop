@@ -25,6 +25,11 @@ export function NewProductAPI(bll: ProductNS.BLL) {
     res.json(product);
   });
 
+  router.get("/product/get_by_name",async (req, res)=>{
+    const name=HttpParamValidators.MustBeString(req.query, "name")
+    const products= await bll.GetProductByName(name)
+    res.json(products)
+  })
   router.post("/product/create", async (req, res) => {
     const params: ProductNS.CreateProductParams = {
       name: HttpParamValidators.MustBeString(req.body, "name", 2),

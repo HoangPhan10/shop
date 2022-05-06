@@ -46,6 +46,23 @@ export class NewProductBLLBase implements ProductNS.BLL {
         }
     }
 
+    async GetProductByName(name:string){
+        const products=await this.dal.GetProductByName(name)
+        if(FilterData.Many(products).length==0){
+            throw ProductNS.Errors.ProductNotFound
+        }
+        const viewProductArr:ProductNS.viewProduct[]=[]
+        for(const p of FilterData.Many(products)){
+            const comments=await this.ListComment(p.id)
+            const product:ProductNS.viewProduct={
+                ...p,
+                comments: comments
+            }
+            viewProductArr.push(product)
+        }
+        return viewProductArr
+    }
+
     async GetProductByOrder(id:string){
         const product=await this.dal.GetProduct(id)
         const comments=await this.ListComment(product.id)

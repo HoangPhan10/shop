@@ -85,6 +85,7 @@ export namespace ProductNS{
         ListProduct(gender?:Gender):Promise<viewProduct[]>
         ListProductSales():Promise<viewProduct[]>
         GetProduct(id:string):Promise<viewProduct>
+        GetProductByName(name:string):Promise<viewProduct[]>
         GetProductByOrder(id:string):Promise<viewProduct>
         CreateProduct(params:CreateProductParams):Promise<Product>
         UpdateProduct(id:string,params:UpdateProductParams):Promise<viewProduct>
@@ -97,6 +98,7 @@ export namespace ProductNS{
     export interface DAL{
         ListProduct(gender?:Gender):Promise<Product[]>
         GetProduct(id:string):Promise<Product>
+        GetProductByName(name:string):Promise<Product[]>
         CreateProduct(product:Product):Promise<void>
         UpdateProduct(product:Product):Promise<void>
 
