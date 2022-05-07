@@ -36,14 +36,14 @@ function Statis() {
                     <LinearProgress color="warning" />
                 </Row>
             </> :
-                <>
+                <div>
                     <Row className="label">
                         <Col xs={{size : "2", offset : "2"}}>
                             <Label><b>Thống kê theo:  </b></Label>
                         </Col>
                     </Row>
                     <Row>
-                    <Col style={{marginLeft:120}} xs={{size : "2", offset : "2"}}>
+                    <Col style={{marginLeft:240}} xs={{size : "2", offset : "2"}}>
                             <Input
                                 name="chart_id"
                                 onChange={(el) => handleReportOption(el)} 
@@ -54,9 +54,9 @@ function Statis() {
                         </Col>
                     </Row>
                     <Row>
-                        <BarChart  data={report} type={option}/> 
+                        <BarChart data={report} type={option}/> 
                     </Row>
-                </>}
+                </div>}
         </>
     </div>
   )
