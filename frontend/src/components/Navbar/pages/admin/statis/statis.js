@@ -43,7 +43,7 @@ function Statis() {
                         </Col>
                     </Row>
                     <Row>
-                    <Col style={{marginLeft:240}} xs={{size : "2", offset : "2"}}>
+                    <Col style={{marginLeft:210}} xs={{size : "2", offset : "2"}}>
                             <Input
                                 name="chart_id"
                                 onChange={(el) => handleReportOption(el)} 
