@@ -30,7 +30,7 @@ export const DataTable = (props) => {
   };
 
   return (
-    <div className="table-responsive min-h-95 df-h-30">
+    <div className="table-responsive df-h-30 responsiveTable">
       <Table
         className="serviceListTable table-head-fixed"
         hover

@@ -3,8 +3,16 @@
 @import "./shared";
 @import "./btn";
 @import "./table";
+@import '../../../../global//variables/mixins';
 // @import '~material-design-icons/iconfont/material-icons.css';
 // @import "../Shared/Components/Table/table.scss";
+.responsiveTable{
+  min-height: 430px;
+  @include desktop2{
+    min-height: 700px;
+  }
+}
+
 .modalBody {
   .noti {
     width: 100%;
@@ -21,7 +29,7 @@
     input {
       width: 220px;
       @media (min-width: 1900px) {
-        width: 400px;
+        width: 350px;
       }
     }
     .inputLink {
@@ -32,9 +40,6 @@
     }
     .inputLink2 {
       width: 765px;
-      @media (min-width: 1900px) {
-        width: 530px;
-      }
     }
   }
 }

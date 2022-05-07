@@ -13,7 +13,8 @@ function Admin() {
         <div className={clsx(styles.headerLogSing)}>
           <Singup />
         </div>
-        <h2>HÀ TRUNG</h2>
+        <h2 style={{marginLeft:420}}>HÀ TRUNG</h2>
+        <p></p>
       </div>
       <div className={clsx(styles.headerNav)}>
             <NavbarAdmin />
