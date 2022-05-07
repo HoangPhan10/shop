@@ -69,6 +69,7 @@
       img {
         width: 60px;
         height: 60px;
+     
       }
       p {
         color: $colorgray-700;
@@ -93,6 +94,9 @@
   &Select {
     display: flex;
     margin-left: 380px;
+    @include desktop2{
+    margin-left: 930px;
+    }
     p {
       font-size: 17px;
       margin-right: 20px;
@@ -120,12 +124,19 @@
       }
       border: 1px solid $colorgray-400;
       width: 200px;
+      @include desktop2{
+        width:260px;
+      }
       margin-bottom: 25px;
       text-align: center;
       margin-left: 25px;
       img {
         width: 200px;
         height: 190px;
+        @include desktop2{
+          width: 260px;
+          height: 260px;
+        }
       }
       p {
         margin: 0;
@@ -151,6 +162,9 @@
         background-color: $colorbutton;
         color: white;
         font-weight: bold;
+        @include desktop2{
+          margin-left: 75px;
+        }
       }
     }
   }
@@ -158,6 +172,9 @@
 .pagination{
   display:flex;
 margin:10px 400px;
+@include desktop2{
+  margin:10px 700px;
+}
   p{
     border:1px solid black;
     width:25px;

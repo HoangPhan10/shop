@@ -32,6 +32,9 @@
    margin: 3px;
    display: flex;
    width: 280px;
+   @include desktop2{
+     width: 410px;
+   }
   img{
     width:100px;
     height:100px;
@@ -49,6 +52,7 @@
    justify-content: space-around;
    margin-top:40px;
    display: flex;
+   
    .price1{
      text-decoration:line-through;
      color: #888;
@@ -59,6 +63,9 @@
    display: flex;
    margin: 35px 0 0 40px;
    width:220px;
+   @include desktop2{
+    margin-left: 180px;
+  }
    p {
     border: 1px solid #ccc;
     padding: 5px 8px;
@@ -78,7 +85,10 @@
  }
  .price{
    color: red;
-   margin-top: 40px
+   margin-top: 40px;
+  @include desktop2{
+    margin:40px 100px 0 160px;
+  }
  }
 &Button{
   margin: 35px 0 0 80px;
@@ -109,6 +119,9 @@
   @include Relative;
   margin: 30px 75px;
   display: flex;
+  @include desktop2{
+    margin-left: 310px;
+  }
   .informationCart {
     width: 50%;
     .title {
