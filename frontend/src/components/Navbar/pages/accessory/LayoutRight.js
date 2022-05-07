@@ -37,7 +37,7 @@ function LayoutRight() {
   }, [page, pathname,search]);
   useEffect(()=>{
 setPage(1)
-window.localStorage.setItem("search", JSON.stringify(""))
+// window.localStorage.setItem("search", JSON.stringify(""))
   },[pathname])
   for (let i = 1; i <= numPage; i++) {
     arrPage.push({ id: i });
