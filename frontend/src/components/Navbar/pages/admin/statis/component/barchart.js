@@ -45,5 +45,7 @@ export const BarChart = (props) => {
     labels,
     datasets: convertDataChart(data, type)
   };
-  return <Bar class="chart-container" style={{margin:"0 60px 40px 60px"}} options={options} data={dataChart} />;
+  return <div>
+    <Bar style={{margin:"0 60px 40px 60px"}} options={options} data={dataChart} />
+  </div>;
 }
