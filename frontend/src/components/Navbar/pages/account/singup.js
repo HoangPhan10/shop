@@ -66,7 +66,7 @@ function Singup() {
             ĐĂNG NHẬP
           </span>
 
-          <Modal className={styles.modal} show={show} onHide={handleClose}>
+          <Modal size="lg" className={styles.modal} show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>ĐĂNG NHẬP </Modal.Title>
             </Modal.Header>

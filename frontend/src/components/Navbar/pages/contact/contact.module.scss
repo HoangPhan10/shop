@@ -6,11 +6,18 @@
     position: relative;
     img {
       height: 180px;
+      @include desktop2{
+        height:300px;
+      }
     }
     &Content {
       position: absolute;
       top: 60px;
       left: 560px;
+      @include desktop2{
+        top: 100px;
+        left: 860px;
+      }
       color: white;
       text-align: center;
       div {

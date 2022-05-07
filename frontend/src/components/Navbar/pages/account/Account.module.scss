@@ -16,6 +16,10 @@
 .modal2{
   margin-top: 50px;
   width: 100%;
+  @include desktop2{
+    margin-top: 250px !important;
+    width:900px;
+  }
   .login{
     .success{
       color:blue;
@@ -38,6 +42,11 @@
 .modal {
   margin-top: 150px;
   width: 600px;
+  @include desktop2{
+    width: 1000px;
+    margin-top: 350px;
+
+  }
   &Content {
     p {
       color: $colordark;
@@ -306,6 +315,10 @@
       margin-left: 50px;
       width: 87% !important;
     }
+    @include desktop2 {
+      margin-left: 225px;
+      width: 76% !important;
+    }
     @include tablet {
       margin-left: 16px;
       width: 96% !important;
@@ -390,40 +403,6 @@
   }
 }
 
-.dowload {
-  @include desktop {
-    @include Relative;
-    margin-top: 20px;
-    margin-left: 76px;
-  }
-  @include tablet {
-    @include Relative;
-    margin-top: 20px;
-    margin-left: 86px;
-  }
-  @include mobile {
-    @include Relative2;
-    margin-left: 23px;
-    margin-top: 20px;
-  }
-  .Button {
-    @include mobile {
-      height: 40px;
-      font-size: 15px;
-      color: #fff;
-    }
-    @include desktop {
-      height: 40px;
-      font-size: 15px;
-      color: #fff;
-    }
-    @include tablet {
-      height: 40px;
-      font-size: 15px;
-      color: #fff;
-    }
-  }
-}
 
 @keyframes fadeIn {
   from {
@@ -577,6 +556,7 @@
 
   .Search {
     margin-top: -3px;
+    position: relative;
     .cartSearch {
       font-size: 20px;
       cursor: pointer;
@@ -588,8 +568,8 @@
     .hoverSearch {
       position: absolute;
       z-index: 2;
-      top: 70px;
-      right: 70px;
+      top: 40px;
+      left: -80px;
       width: 250px;
       height: 100px;
       background-color: $colorgray-100;

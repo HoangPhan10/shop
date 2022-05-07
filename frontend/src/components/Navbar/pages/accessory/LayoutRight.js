@@ -20,24 +20,24 @@ function LayoutRight() {
     if (pathname.split("/")[1] === "search") {
       Service.searchProduct(search).then((res)=>{
         setArrImageList(res.data);
-        setArrImage(res.data.slice((page - 1) * 12, page * 12));
-    // window.localStorage.setItem("search", JSON.stringify(""))
+        setArrImage(res.data.slice((page - 1) * 15, page * 15));
       })
     }else{
       Service.getListProduct().then((res) => {
         const list = res.data.filter((el) => {
-        if (pathname.split("/")[1] === "store") {
+          if (pathname.split("/")[1] === "store") {
             return el;
           }
             return el.gender === pathname.split("/")[1];
         });
         setArrImageList(list);
-        setArrImage(list.slice((page - 1) * 12, page * 12));
+        setArrImage(list.slice((page - 1) * 15, page * 15));
       });
     }
   }, [page, pathname,search]);
   useEffect(()=>{
 setPage(1)
+window.localStorage.setItem("search", JSON.stringify(""))
   },[pathname])
   for (let i = 1; i <= numPage; i++) {
     arrPage.push({ id: i });
@@ -62,7 +62,7 @@ setPage(1)
     window.scrollTo(0, 0);
   }, [page]);
   useEffect(() => {
-    setNumPage(Math.ceil(arrImageList.length / 12));
+    setNumPage(Math.ceil(arrImageList.length / 15));
   }, [arrImageList]);
   const OnAddProduct = (id) => {
     window.localStorage.setItem("idProduct", JSON.stringify(id));
