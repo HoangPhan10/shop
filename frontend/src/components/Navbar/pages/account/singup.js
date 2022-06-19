@@ -22,15 +22,15 @@ function Singup() {
     Service.getLogin({
       username:valueNameUser,
       password:valuePassword
-    }).then((res)=>{
-      Service.getCustomer(res.data.customer_id).then((res)=>{
+    }).then((respon)=>{
+      Service.getCustomer(respon.data.customer_id).then((res)=>{
         window.localStorage.setItem("role", JSON.stringify(res.data.role));
-      })
-        window.localStorage.setItem("id", JSON.stringify(res.data.customer_id));
+        window.localStorage.setItem("id", JSON.stringify(respon.data.customer_id));
         setToggle(false);
         handleClose();
         setShow2(false);
         window.location.href = "/home";
+      })
     }).catch(()=>{
       setToggle(true);
     })
